@@ -1,0 +1,68 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="head">
+  <view class="carp">证件类型</view>
+  <view class="iscar">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio" wx:for="{{items}}" wx:key="index">
+        <radio value="{{item.name}}" checked="{{item.checked}}" />
+        {{item.value}}
+      </label>
+    </radio-group>
+  </view>
+</view>
+
+<view class="cont">
+<!-- 个人实名 -->
+  <view class="cont1" wx:if="{{value==1}}">
+    <view>真实姓名</view>
+    <input placeholder='请填写您的真实姓名' bindinput='ip1' />
+  </view>
+  <view class="cont1" wx:if="{{value==1}}">
+    <view>身份证号</view>
+    <input placeholder='请填写身份证号码' bindinput='ip2' />
+  </view>
+<!-- 企业实名 -->
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>法人姓名</view>
+    <input placeholder='请填写企业法人代表的真实姓名' bindinput='ip3' />
+  </view>
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>身份证号</view>
+    <input placeholder='请填写企业法人代表的身份证号码' bindinput='ip4' />
+  </view>
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>企业名称</view>
+    <input placeholder='请填写企业的全称' bindinput='ip5' />
+  </view>
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>执照号码</view>
+    <input placeholder='请填写企业的营业执照号码' bindinput='ip6' />
+  </view>
+</view>
+
+<view class="ph" wx:if="{{value==2}}">
+  <view class="phtop">上传企业法人身份证照片</view>
+  <view class="phcen">
+    <view bindtap='chooseImageUpload1'><image src="{{src1}}"></image></view>
+    <view bindtap='chooseImageUpload2'><image src="{{src2}}"></image></view>
+  </view>
+</view>
+
+<view class="ph" wx:if="{{value==2}}">
+  <view class="phtop">上传企业营业执照照片</view>
+  <view class="phcen">
+    <view bindtap='chooseImageUpload'><image src="{{src3}}"></image></view>
+    <view></view>
+  </view>
+</view>
+
+<view style="height:200rpx;"></view>
+
+<view class="btn" wx:if="{{value==1}}">
+  <view class="btns" bindtap='pers'>提交</view>
+</view>
+
+<view class="btn" wx:if="{{value==2}}">
+  <view class="btns" bindtap='pers1'>提交</view>
+</view>

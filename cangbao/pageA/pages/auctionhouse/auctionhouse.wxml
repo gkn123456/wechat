@@ -1,0 +1,32 @@
+<!--pageA/pages/auctionhouse/auctionhouse.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view style='width:100%;padding-top:p{{navH}}px;padding:0 12px;box-sizing:border-box;'>
+  <view class='spbox_li' wx:for="{{auction_house_list}}" wx:for-item="item" wx:key="index" bindtap='goauction_house' data-id='{{item.user_id}}'>
+        <view class='spbox_img'>
+          <image src='{{item.user.user_icon}}' mode="aspectFit" wx:if="{{item.logo_type=='1'}}" lazy-load="true"></image>
+          <view class='logo_font' wx:if="{{item.logo_type=='2'}}">{{item.user.nick_name}}</view>
+        </view>
+        <view class='spbox_cont'>
+          <view class='spbox_head'>{{item.user.nick_name}}</view>
+          <view class='spbox_cont1'>
+            <view class='spbox_cont1_l'>
+              <view class='spbox_c1_l_1'>近期</view>
+              <view class='spbox_c1_l_2'>{{item.auctions_num}}</view>
+              <view class='spbox_c1_l_1'>场拍卖会</view>
+            </view>
+            <view class='spbox_cont1_c'></view>
+            <view class='spbox_cont1_l'>
+              <view class='spbox_c1_l_1'>共</view>
+              <view class='spbox_c1_l_2'>{{item.goods_num}}</view>
+              <view class='spbox_c1_l_1'>件拍品</view>
+            </view>
+          </view>
+          <view class='spbox_cont2'>
+            <image src='../img/loct.png'></image>
+            {{item.address}}
+          </view>
+        </view>
+      </view>
+</view>
+

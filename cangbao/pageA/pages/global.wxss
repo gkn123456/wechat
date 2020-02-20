@@ -1,0 +1,196 @@
+.Selectedcont{
+  width:100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.selectli{
+  width:46%;
+  background:#ECECEC;
+  box-shadow:0px 0px 13px 0px rgba(216,216,216,0.63);
+  border-radius:3px;
+  margin-bottom:8px;
+  overflow: hidden;
+  position: relative;
+}
+.selectlis{
+  width:46%;
+  height:263px;
+  background:#fff;
+}
+.selectli:nth-child(odd){
+  margin-right: 8px;
+}
+.selectliimg{
+  width:100%;
+  height:168px;
+  border-radius:1px 1px 0px 0px;
+  vertical-align: top; 
+}
+.selcbox{
+  width:100%;
+  padding:6px 9px 15px 10px;
+  box-sizing: border-box;
+  background: #fff;
+}
+.selc1{
+  width:100%;
+  font-size:13px;
+  color:rgba(68,68,68,1);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.selc2{
+  width:100%;
+  display: flex;
+  align-items: center;
+}
+.selc2 image{
+  width:20rpx;
+  height:22rpx;
+  margin-right:14rpx;
+}
+.selc2text{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:10px;
+  color:rgba(111,111,111,1);
+  width:90%;
+}
+.selprices{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-top:10px;
+}
+.selprice1{
+  font-size:13px;
+  color:rgba(68,68,68,1);
+}
+.selprice2{
+  font-size:16px;
+  font-weight:bold;
+  color:rgba(68,68,68,1);
+}
+.groomimg{
+  width: 100%;
+  height:168px;
+  background: url(https://images.cangbaopai.com/zwpic.png) center/cover no-repeat;
+  background-size:72rpx 72rpx;
+}
+.iscolor{
+  width:56rpx;
+  height:56rpx;
+}
+.auc_housebox{
+  width:100%;
+  padding-top:40px;
+  box-sizing: border-box;
+}
+.auchousehead{
+  width:100%;
+}
+.auchouli{
+  width:287px;
+  height:139px;
+  border-radius:4px;
+  margin-right: 10px;
+  overflow: hidden;
+  background: #ECECEC;
+  position: relative;
+}
+.auchouli image{
+  width:100%;
+  height: 100%;
+}
+.auchoulicont{
+  width:100%;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left:0;
+}
+.auchouliconts{
+  width:276px;
+  height:52px;
+  background:rgba(255,255,255,.9);
+  border-radius:4px;
+  position: absolute;
+  bottom:6px;
+  left: 50%;
+  margin-left: -138px;
+  display: flex;
+  align-items: center;
+}
+.auchoulilogo{
+  width:46px;
+  height:46px;
+  border-radius: 50%;
+  border:1px solid rgba(214,214,214,1);
+  background: #fff;
+  margin-left: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.auchoulilogo image{
+  width:46px;
+  height:46px;
+  border-radius: 50%;
+}
+.auchoulilogo text{
+  font-size:16px;
+  font-weight:bold;
+  color:rgba(68,68,68,1);
+}
+.auchoulitop{
+  display: flex;
+  align-items: center;
+}
+.auchoulitoptt1{
+  font-size:16px;
+  font-weight:bold;
+  color:rgba(68,68,68,1);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  width:100px;
+}
+.auchoulitoptt2{
+  width:46px;
+  height:16px;
+  background:rgba(48,49,52,1);
+  border-radius:0px 4px 4px 4px;
+  font-size:10px;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  line-height: 16px;
+  margin-left: 4px;
+}
+.auchoulibom{
+  display: flex;
+  align-items: center;
+  margin-top:6px;
+}
+.auchoulibom image{
+  width:9px;
+  height: 11px;
+}
+.auchoulibomt1{
+  font-size:12px;
+  color:rgba(68,68,68,1);
+  margin-left: 4px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  width:90%;
+}
+.nopage {
+  width:314rpx;
+  height:338rpx;
+  margin-top:50px;
+}
+.nopageimg{
+  width:314rpx;
+  height:338rpx;
+  margin-top:50px;
+}

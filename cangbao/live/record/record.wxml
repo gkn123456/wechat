@@ -1,0 +1,25 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="page">
+  <view wx:for="{{list}}" wx:key="index" class="li">
+    <view class="li_title">
+      <view class="li_title1">藏宝直播</view>
+      <view class="li_title2">{{item.duration}}个月</view>
+    </view>
+    <view>
+    </view>
+    <view class="li_c1">有效期至：{{time[index].text1}}</view>
+    <view class="li_c1">开通时间：{{time[index].text2}}</view>
+  </view>
+  <view wx:if="{{pagefooter}}" class="line">
+    <view class="lines"></view>
+    <view class="line_font">已经是全部的开通记录了</view>
+    <view class="lines"></view>
+  </view>
+  <view wx:if="{{list==null}}" class="line" style="margin-top:30px;">
+    <view class="lines"></view>
+    <view class="line_font" style="font-size:12px;">暂无开通记录</view>
+    <view class="lines"></view>
+  </view>
+</view>
+

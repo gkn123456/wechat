@@ -1,0 +1,65 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="t" wx:if="{{user.class==1}}">
+  请绑定持卡人本人的银行卡
+</view>
+
+<view class="con">
+  <view class="con1" wx:if="{{user.class==1}}">
+    <text class="text1">持卡人</text>
+    <view class='c_tex'>
+      <text class="input1">{{user.real_name}}</text>
+      <image class="sjihaoimg" src="../../img/sm.png" bindtap='tkuan'></image>
+    </view>
+    
+  </view>
+
+  <view class="con1" wx:if="{{user.class==2}}">
+    <text class="text1">企业名称</text>
+    <view class='c_tex'>
+      <text class="input1">{{user.real_name}}</text>
+      <image class="sjihaoimg" src="../../img/sm.png" bindtap='tkuan1'></image>
+    </view>
+    
+  </view>
+
+  <view class="con1" wx:if="{{user.class==2}}">
+    <text class="text1">开户行</text>
+
+    <view class="textarea">
+      <view class="section">
+  
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{banks}}" range-key="{{'bank_name'}}">
+      <view class="picker">
+        {{banks[index].bank_name}}
+      </view>
+    </picker>
+  </view>
+
+      <image src="../../img/my/icon-next.png" class="ttt"></image>
+    </view>
+  </view>
+
+  <view class="con1">
+    <text class="text1">银行卡号</text>
+    <input bindinput='val2' class="input1" type="number" placeholder="请填写银行卡号" />
+  </view>
+
+  <view class="con1" wx:if="{{user.class==2}}">
+    <text class="text1">开户行地址</text>
+    <input bindinput='val4' class="input1" placeholder="请填写开户行地址" />
+  </view>
+
+  <view class="con1">
+    <text class="text1">手机号</text>
+    <input bindinput='val3' class="input1" type="number" placeholder="请填写银行卡预留手机号" />
+  </view>
+</view>
+
+<view class="btn" wx:if="{{user.class==1}}">
+  <view class="bt" bindtap='band'>绑定</view>
+</view>
+
+<view class="btn1" wx:if="{{user.class==2}}">
+  <view class="bt1" bindtap='band1'>提交</view>
+</view>

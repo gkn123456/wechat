@@ -1,0 +1,102 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<template is="payquota" wx:if="{{quota==1}}"></template>
+<!-- 收货地址 -->
+
+<navigator hover-class='none' url='../../pages/my/install/address?t=1'>
+<view class="address">
+  <view class="adz">
+    <image class="address1" src="../../pages/img/my/weitpayicon.png"></image>
+    <view class="address2" wx:if="{{det.length!==0}}">
+      <view class="addtop"><text style="color:font-size:14px;color:rgba(68,68,68,1);;">{{det.accept_name}}</text><text>86-{{det.mobile}}</text></view>
+      <view class="addbottom">{{det.pca_text}}{{det.address}}</view>
+    </view>
+    <view class="address2" wx:if="{{det.length==0}}">
+      添加收货地址
+    </view>
+  </view>
+  
+  <image class="address3" src="../../pages/img/my/right.png"></image>
+</view>
+</navigator>
+<!-- 拍品详情 -->
+<view class="buyheader">
+  <view style='display:flex;padding-top:10px;' bindtap='gopares'>
+    <image src='{{details.user.user_icon}}' style='width:20px;height:20px;border-radius:50%;'></image>
+    <view style='font-size:14px;color:rgba(68,68,68,1);margin-left:10px;'>{{details.user.nick_name}}</view>
+  </view>
+  <view class="bu1">
+    <view class="buyheaderimg">
+      <image src="{{details.cover}}" mode="aspectFill"></image>
+      <view class="buytype">商品</view>
+    </view>
+    <view class="buyheaderdetails">
+      <view class="buytext">{{details.title}}</view>
+      <view style="font-size:14px;color:rgba(136,136,136,1);">¥{{details.sell_price}} × {{num}}</view>
+      <view class="bubo">
+        <view class="buymarkup">商品金额：¥{{selprice}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="bu2">
+    <text class="bu1text">注：提交订单后，请您在60分钟内付款，若超时未支付，订单自动取消并不能对此商品二次购买</text>
+  </view>
+</view>
+<!-- 选择支付部分 -->
+<view class="paym" style='{{sty1}}' bindtap='close'>
+  <view class="payments" catchtap='open'>
+    <view style="position:absolute;bottom:0;left:0;width:100%;">
+        <view class="ispay">
+          <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;" size="mini" catchtap='ispay'>
+            立即支付 
+          </button>
+        </view>
+    </view>
+    <view class='payh'>
+      <view class='quotabox' catchtap='goquota'>
+        <text>限额说明</text>
+        <image src='../../pages/img/quan_shiyi.png' id='it'/>
+      </view>
+      <image src='../../pages/img/addprice/chujia-btn-close.png' catchtap='godetails'></image>
+    </view>
+    <view class="payheader">
+        <view>
+          <text class="paytitle">付款金额：</text>
+          <text class="payprices">¥{{selprice}}</text>
+        </view>
+        <view>
+        </view>
+    </view>
+    <view class="page__bd" catchtap="cc">
+        <view class="section section_gap">
+            <radio-group class="radio-group" catchchange="radioChange">
+              <view class="balance" id="balancebox" wx:for="{{paymode}}" wx:key="index">
+                <view class='rechargebutton' catchtap='gorecharge' wx:if="{{isrecharge==1&&item.pay_mark=='balance'}}">
+                  <text>立即充值</text>
+                  <image src='../../pages/img/my/right.png'/>
+                </view>
+                <view class="balcontent">
+                <block wx:if="{{true}}">
+                   <image src="../../pages/img/yezf-icon.png" wx:if="{{paymode[index].default==0}}"></image>
+                   <image src="../../pages/img/wxzf-icon.png" wx:else="{{paymode[index].default==1}}"></image>
+                </block>
+                  <text class="baltext1">{{paymode[index].pay_name}}</text>
+                  <text class="baltext2">{{paymode[index].ext}}</text>
+                </view>
+                <radio class="radio" value="{{paymode[index].pay_mark}}" checked="{{paymode[index].pay_mark==paytype?true:false}}"></radio>
+              </view>
+            </radio-group>
+        </view>
+    </view>
+  </view>
+</view>
+  <view style="position:fixed;bottom:0;left:0;width:100%;" bindtap='pays'>
+    <view class="ispay">
+      <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;" size="mini" wx:if="{{address_id!==''}}">
+         提交 
+      </button>
+      <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;background:#A2A2A2;" size="mini" wx:elif="{{address_id==''}}">
+         提交 
+      </button>
+    </view>
+  </view>

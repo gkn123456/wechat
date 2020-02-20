@@ -1,0 +1,106 @@
+/* pages/my/install/Modifyaddress.wxss */
+@import "../../template/template.wxss";
+.header{
+  background: #fff;
+  width: 100%;
+  padding:0 32rpx;
+  box-sizing: border-box;
+}
+.headertop .detail1{
+  margin-top:20rpx;
+  height: 84rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom:2rpx solid rgba(236,236,236,1);
+}
+.headertop .detail1 text{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(78,62,62,1);
+  
+}
+.headertop .detail1 input{
+  text-align: right;
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(78,62,62,1);
+  width:80%;
+ 
+}
+.to1{
+  width: 16rpx;
+  height: 28rpx;
+  margin-left:36rpx;
+}
+.headerend{
+  padding:32rpx 0;
+}
+.headerend textarea{
+  width: 100%;
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(78,62,62,1);
+  line-height:34rpx;
+}
+.is{
+  width:100%;
+  height:88rpx;
+  background:rgba(255,255,255,1);
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:0 26rpx;
+  box-sizing: border-box;
+}
+.is1{
+  width:100%;
+  height:88rpx;
+  background:rgba(255,255,255,1);
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:0 26rpx;
+  box-sizing: border-box;
+}
+.is text{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(78,62,62,1);
+}
+.hold{
+  width:100%;
+  height:98rpx;
+  background:rgba(244,67,54,1);
+  box-shadow:0rpx 0rpx 2rpx 0rpx rgba(183,28,28,1);
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:98rpx;
+  text-align: center;
+  position: fixed;
+  bottom:0;
+  left:0;
+}
+.picker{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(78,62,62,1);
+  text-align: right;
+}
+
+.istext{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(244,67,54,1);
+  line-height:88rpx;
+}
+.body-view{
+  display: flex;
+  align-items: center;
+}
+.body-view switch{
+  zoom: .6;
+}

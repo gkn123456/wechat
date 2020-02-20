@@ -1,0 +1,57 @@
+<import src="../template/template.wxml"/>
+<template is="template_f" data="{{navH,headtitle}}"></template>
+<cover-view class='xiala' wx:if="{{goodstitle==0&&ids==1}}" style='top:{{navH}}px;' bindtap='is_title'>
+  <cover-image src='../img/it.png' class='xl1'></cover-image>
+  <cover-view class='xl2s'><cover-image src='../img/next_xiala.png' class='xl2'></cover-image></cover-view>
+</cover-view>
+<view class="classbox" catchtap=''>
+  <view class="content-container" style="display:flex;width:100%;">
+    <scroll-view class="classify-container" scroll-y="true" scroll-into-view="m_{{toView2}}" scroll-with-animation="true">
+      <view class="classify {{classid==-1?'classify_s':''}}" data-id="-1" catchtap="tapClassify">
+        <view class="on {{classid==-1?'ons':''}}"></view><view class="name {{classid==-1?'active':''}}">全球拍</view>
+      </view>
+      <view class="classify {{classid==index?'classify_s':''}}" wx:for="{{class}}" wx:for-item="{{class[index].cate_name}}" wx:key="index" data-id="{{index}}" catchtap="tapClassify" id="m_{{index}}">
+        <view class="on {{classid==index?'ons':''}}"></view><view class="name {{classid==index?'active':''}}">{{class[index].cate_name}}</view>
+      </view>
+    </scroll-view>
+    <scroll-view class="goods-container" scroll-y="true" scroll-into-view="m_{{toView}}" scroll-with-animation="true">
+      <block>
+        <view class='all_goods' wx:if="{{ids==0}}">
+          <view wx:for="{{class}}" wx:for-item="item1" wx:key="index" style='width:100%;display:flex;justify-content: space-between;flex-wrap: wrap;' id='m_{{index}}' bindtap='setScrollTop2' data-id='{{index}}'>
+            <view class='pgood_font'>{{item1.cate_name}}</view>
+            <view class="goods" wx:for="{{item1.children}}" wx:for-item="item2" wx:key="index" data-id='{{item2.cate_id}}' catchtap='classify_jump' data-name='{{item2.cate_name}}'>
+              <image class='goods_images' src='{{item2.cate_icon}}' mode="aspectFill"></image>
+              <view class='subtitle'>{{item2.cate_name}}</view>
+            </view>
+            <view class='goods'></view>
+          </view>
+        </view>
+        <view class='allgoods' wx:if="{{ids==1}}">
+          <scroll-view scroll-x='true' class='global_title_all' style='top:{{navH}}px' scroll-into-view="t_{{toView1}}" scroll-with-animation="true">
+            <view class='global_title'>
+              <view class="global_title_list {{curId==class1[index].cate_id?'global_title_list_s':''}}" wx:for="{{class1}}" wx:key="index" bindtap="setScrollTop" data-id="{{class1[index].cate_id}}" id='t_{{class1[index].cate_id}}'>{{class1[index].cate_name}}</view>
+            </view>
+          </scroll-view>
+          <view class='global_title_all1' wx:if="{{goodstitle==1}}" bindtap='is_title1'>
+            <image src='../img/next_shanghua.png' class='shua' catchtap='is_title1'></image>
+            <view class='global_title_all1_box' catchtap='is_title'>
+              <view class="global_title_list1 {{curId==class1[index].cate_id?'global_title_list_s1':''}}" wx:for="{{class1}}" wx:key="index" catchtap="setScrollTop3" id='m_{{items.cate_id}}' data-id="{{class1[index].cate_id}}">{{class1[index].cate_name}}</view>
+            </view>
+          </view>
+          <view style='height:88rpx;width:100%;'></view>
+          <view class="goods_s1" wx:for="{{class1}}" wx:key="index" data-id='{{items.cate_id}}' data-name='' wx:for-item="items" id='m_{{items.cate_id}}' bindtap='setScrollTop1'>
+            <view class='first_level_title'>{{items.cate_name}}</view>
+            <view class='children_title'>
+              <view wx:for="{{items.children}}" wx:for-item="item" wx:key="index1" class='subelement' catchtap='global_classify_jump' data-id='{{item.cate_id}}' data-name='{{item.cate_name}}'>
+                <image class='goods_images' src='{{item.cate_icon}}' mode="aspectFill"></image>
+                <view class='subtitle'>{{item.cate_name}}</view>
+              </view>
+              <view class='subelement'></view>
+            </view>
+          </view>
+          <view class='goods'></view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+</view>

@@ -1,0 +1,247 @@
+/* pageA/pages/shopadmin/shopadmin.wxss */
+@import "../template/template.wxss";
+.bg-white{
+  background: #393939;
+}
+.nav-title{
+  color:#fff;
+  font-size: 36rpx;
+}
+.swiper-tab {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding:15rpx 32rpx;
+  box-sizing: border-box;
+  height: 66px;
+  position: relative;
+  background: #393939;
+}
+.admbtn{
+  width:50px;
+  height: 100%;
+  position: absolute;
+  top:0;
+  right:0;
+  font-size:28rpx;
+  line-height: 70rpx;
+  color:rgba(68,68,68,1);
+  text-align: right;
+  padding-right:16px;
+  box-sizing: border-box;
+}
+.admbtns{
+  width:50px;
+  height: 100%;
+  position: absolute;
+  top:0;
+  left:0;
+  font-size:28rpx;
+  line-height: 70rpx;
+  color:rgba(68,68,68,1);
+  text-align: left;
+  padding-left:16px;
+  box-sizing: border-box;
+}
+.tab-item {
+  text-align: center;
+  margin-left:92px;
+  font-size: 30rpx;
+  color: #8F8F8F;
+}
+.tab-item:nth-child(1) {
+  margin-left:0;
+}
+.on {
+  color: #fff;
+  font-size: 30rpx;
+}
+.selection{
+  width: 40rpx;
+  height: 6rpx;
+  background:rgba(68,68,68,0);
+  margin: 12rpx auto;
+  border-radius:20rpx;
+}
+.on1{
+  background: #EAEAEA;
+}
+.qh{
+  width: 100%;
+  height:54px;
+  display: flex;
+  background:#F8F8F8;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top:88rpx;
+  left: 0;
+  z-index: 1;
+  padding:0 40rpx;
+  box-sizing: border-box;
+}
+.qh_h{
+  height:52rpx;
+  border-radius:32rpx;
+  border:1px solid  #393939;
+  box-sizing: border-box;
+  display: flex; 
+  align-items: center;
+  justify-content: space-between;
+  width:100%;
+}
+.ah_h1{
+  width: 25%;
+  height:52rpx;
+  border-radius:32rpx;
+  font-size:28rpx;
+  color: #AAAAAA;
+  line-height: 52rpx;
+  text-align: center;
+  border:1px solid rgba(0,0,0,0);
+  box-sizing: border-box;
+
+}
+.ah_hs{
+  background:#393939;
+  color: #FDFDFD;
+  border:1px solid #393939;
+}
+/* 拍品页面 */
+.main{
+  width: 100%;
+  height: 100%;
+}
+.bt{
+  width: 100%;
+  height: 88rpx;
+}
+.d_box{
+  background: #fff;
+  margin-top:20rpx;
+  padding-left: 32rpx;
+  box-sizing: border-box;
+}
+.d_boxs{
+  background: #fff;
+  padding-left: 32rpx;
+  box-sizing: border-box;
+}
+.d_b_t{
+  display: flex;
+  padding:40rpx 0;
+  box-sizing: border-box;
+  border-bottom:0.5rpx solid #ECECEC;
+  position: relative;
+}
+.d_b_img{
+  width:180rpx ;
+  height: 180rpx;
+}
+.d_b_r{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 20rpx;
+}
+.d_b_title{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.d_b_clas{
+  
+}
+.d_b_b{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:16rpx 32rpx 16rpx 0;
+  box-sizing: border-box;
+}
+.d_b_b_time{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(255,55,64,1);
+}
+.btn{
+  display: flex;
+}
+.jtime{
+  display: flex;
+  align-items: center;
+}
+.jtime image{
+  width:40rpx;
+  height: 40rpx;
+  margin-right: 8rpx;
+}
+.bt{
+  height:30px;
+  width: 96px;
+  line-height: 30px;
+  text-align: center;
+  border: 1rpx solid #B9B9B9;
+  box-sizing: border-box;
+  border-radius:4rpx;
+  font-size:28rpx;
+  font-weight:400;
+  color: #444444;
+}
+.nowprice{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.panum{
+  font-size: 24rpx;
+  color: #AAAAAA;
+}
+.chenpay{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.chentime{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.shipyuany{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.shiptime{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.cjtime{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.typ{
+  width:57px;
+  height:24px;
+  position: absolute;
+  top:40rpx;
+  left:-16rpx;
+}
+.nopageimg{
+  width:314rpx;
+  height:338rpx;
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-top:-169rpx;
+  margin-left:-118rpx;
+}
+.bton{
+  border: 1px solid #F44336;
+  color:#F44336;
+}

@@ -1,0 +1,31 @@
+<!--pageA/pages/attestation/attestsuccess.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_s" data="{{navH,headtitle}}"></template>
+<view class='page'>
+  <view class='page1'>
+    <image src='../img/rz/icon_shenhe.png'></image>
+  </view>
+  <view class='page2'>
+    <text>恭喜您，认证成功</text>
+  </view>
+  <view class='page3'>
+    <view class='page3s'>
+      <view class='li' wx:if="{{user.class==1}}"><text class='li1'>真实姓名</text><text class='li2'>{{user.name}}</text></view>
+      <view class='li' wx:if="{{user.class==2}}"><text class='li1'>法人姓名</text><text class='li2'>{{user.name}}</text></view>
+      <view class='li'><text class='li1'>身份证号</text><text class='li2'>{{user.card}}</text></view>
+      <view class='li'><text class='li1'>联系电话</text><text class='li2'>{{user.mobile}}</text></view>
+      <view class='li'><text class='li1'>微信号</text><text class='li2'>{{user.wechat}}</text></view>
+      <view class='li' wx:if="{{user.class==1}}"><text class='li1'>店铺类型</text><text class='li2'>个人</text></view>
+      <view class='li' wx:if="{{user.class==2}}"><text class='li1'>店铺类型</text><text class='li2'>企业</text></view>
+      <view class='li' wx:if="{{user.class==2}}"><text class='li1'>商家名称</text><text class='li2'>{{user.company_name}}</text></view>
+      <view class='li'><text class='li1'>主营类目</text><text class='li2'>{{user.project}}</text></view>
+      <view class='li'><text class='li1'>所在地区</text><text class='li2'>{{user.pca_text}}</text></view>
+      <view class='li' wx:if="{{user.class==1}}"><text class='li1'>详细地址</text><text class='li2'>{{user.address}}</text></view>
+      <view class='li' wx:if="{{user.class==2}}"><text class='li1'>店铺地址</text><text class='li2'>{{user.address}}</text></view>
+    </view>
+  </view>
+</view>
+
+<view class='page4'>
+  <image src='../img/rz/close.png' bindtap='back'></image>
+</view>

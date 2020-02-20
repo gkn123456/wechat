@@ -1,0 +1,22 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="head">
+  <view class="head_title">店主</view>
+  <view class="head_count">
+    <image src="{{room.user.user_icon}}"></image>
+    <view>{{room.user.nick_name}}</view>
+  </view>
+</view>
+<view class="room_line">
+  <view class="room_line_title">在线（{{room.viewer_count}}）</view>
+  <view>
+    <!-- <view class="li" wx:for="{{list}}" wx:key="index">
+      <image src="{{item.user_icon}}"></image>
+      <view>{{item.nick_name}}</view>
+    </view> -->
+    <view class="li" wx:for="list" wx:key="index">
+      <image src="{{room.user.user_icon}}"></image>
+      <view>{{room.user.nick_name}}</view>
+    </view>
+  </view>
+</view>

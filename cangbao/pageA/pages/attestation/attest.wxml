@@ -1,0 +1,207 @@
+<!--pageA/pages/attestation/attest.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="head">
+  <view class="carp">店铺类型</view>
+  <view class="iscar">
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio" wx:for="{{items}}" wx:key="index">
+        <radio value="{{item.name}}" checked="{{item.checked}}" />
+        {{item.value}}
+      </label>
+    </radio-group>
+  </view>
+</view>
+
+<view class="cont">
+<!-- 个人实名 -->
+  <view class="cont1" wx:if="{{value==1}}">
+    <view>真实姓名</view>
+    <input placeholder='请填写您的真实姓名' bindinput='ip1' />
+  </view>
+  <view class="cont1" wx:if="{{value==1}}">
+    <view>身份证号</view>
+    <input placeholder='请填写身份证号码' bindinput='ip2' />
+  </view>
+  <view class="cont1" wx:if="{{value==1}}">
+    <view>联系电话</view>
+    <input placeholder='请填写您的联系电话' bindinput='ip3' />
+  </view>
+  <view class="cont1" wx:if="{{value==1}}">
+    <view>微信号</view>
+    <input placeholder='请填写微信号' bindinput='ip4' />
+  </view>
+  <view class="cont1" wx:if="{{value==1}}" style='padding-right:10px;' bindtap='isCategory' data-id='1'>
+    <view>主营类目</view>
+    <view style="display:flex;align-items:center;">
+      <text class="fot" style='color:{{namecolor}}'>{{classname}}</text>
+      <image class="to2" src="../img/icon-next.png"></image>
+    </view>
+  </view>
+  <view class="detail1" bindtap='selectDistrict' wx:if="{{value==1}}">
+      <text>所在地区</text>
+      <view style="display:flex;align-items:center;">
+          <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{region[index+1]}}">
+            <view class="picker" style="width:200px;">
+              {{region[0]}}{{region[1]}}{{region[2]}}
+            </view>
+          </picker>
+        <image class="to1" src="../img/icon-next.png"></image>
+      </view>
+  </view>
+  <view class="cont1" wx:if="{{value==1}}">
+    <view>详细地址</view>
+    <input placeholder='请填写详细地址' bindinput='ip5' />
+  </view>
+<!-- 企业实名 -->
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>法人姓名</view>
+    <input placeholder='请填写法人真实姓名' bindinput='sp1' />
+  </view>
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>身份证号</view>
+    <input placeholder='请填写企业法人代表的身份证号码' bindinput='sp2' />
+  </view>
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>联系电话</view>
+    <input placeholder='请填写您的联系电话' bindinput='sp3' />
+  </view>
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>微信号</view>
+    <input placeholder='请填写微信号' bindinput='sp4' />
+  </view>
+  <view class="cont1" wx:if="{{value==2}}" style='padding-right:10px;' bindtap='isCategory' data-id='1'>
+    <view>主营类目</view>
+    <view style="display:flex;align-items:center;">
+      <text class="fot" style='color:{{namecolor}}'>{{classname}}</text>
+      <image class="to2" src="../img/icon-next.png"></image>
+    </view>
+  </view>
+  <view class="detail1" bindtap='selectDistrict' wx:if="{{value==2}}">
+      <text>所在地区</text>
+      <view style="display:flex;align-items:center;">
+          <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{region[index+1]}}">
+            <view class="picker" style="width:200px;">
+              {{region[0]}}{{region[1]}}{{region[2]}}
+            </view>
+          </picker>
+        <image class="to1" src="../img/icon-next.png"></image>
+      </view>
+  </view>
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>商家名称</view>
+    <input placeholder='请填写营业执照上名称' bindinput='sp5' />
+  </view>
+  <view class="cont1" wx:if="{{value==2}}">
+    <view>店铺地址</view>
+    <input placeholder='请填写详细真实地址' bindinput='sp6' />
+  </view>
+</view>
+
+<view class="ph" wx:if="{{value==1}}">
+  <view class="phtop">上传身份证照片</view>
+  <view class="phcen">
+    <view class='chooseImageUpload'>
+      <view class='imgbox'>
+        <image src='../img/rz/identitycard_zheng@2x(2).png'></image>
+        <view class='texts'>身份证照片示例</view>
+      </view>
+      <view class='imgbox'>
+        <image src="{{src1}}" bindtap='chooseImageUpload1'></image>
+        <view class='texts'>点击上传身份证照片</view>
+      </view>
+    </view>
+    <view class='chooseImageUpload' style='margin-top:48rpx;'>
+      <view class='imgbox'>
+        <image src='../img/rz/identitycard_zheng@2x.png'></image>
+        <view class='texts'>手持身份证示例</view>
+      </view>
+      <view class='imgbox'>
+        <image src="{{src2}}" bindtap='chooseImageUpload2'></image>
+        <view class='texts'>点击上传手持身份证照片</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="ph" wx:if="{{value==2}}">
+  <view class="phtop">上传企业法人身份证照片</view>
+  <view class="phcen">
+    <view class='chooseImageUpload'>
+      <view class='imgbox'>
+        <image src='../img/rz/identitycard_zheng@2x(2).png'></image>
+        <view class='texts'>身份证照片示例</view>
+      </view>
+      <view class='imgbox'>
+        <image src="{{src1}}" bindtap='chooseImageUpload1'></image>
+        <view class='texts'>点击上传身份证照片</view>
+      </view>
+    </view>
+    <view class='chooseImageUpload' style='margin-top:48rpx;'>
+      <view class='imgbox'>
+        <image src='../img/rz/identitycard_zheng@2x.png'></image>
+        <view class='texts'>手持身份证示例</view>
+      </view>
+      <view class='imgbox'>
+        <image src="{{src2}}" bindtap='chooseImageUpload2'></image>
+        <view class='texts'>点击上传手持身份证照片</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="ph" wx:if="{{value==2}}">
+  <view class="phtop">上传商家营业执照照片</view>
+  <view class="phcen">
+    <view bindtap='chooseImageUpload3'><image src="{{src3}}"></image></view>
+    <view></view>
+  </view>
+</view>
+
+<view style="height:200rpx;"></view>
+
+<view class="btn" wx:if="{{value==1}}">
+  <view class="btns" bindtap='pers' data-id='1'>下一步</view>
+</view>
+
+<view class="btn" wx:if="{{value==2}}">
+  <view class="btns" bindtap='pers' data-id='2'>下一步</view>
+</view>
+
+<!-- 经营类目弹框 -->
+<view class="class" bindtap='isCategory' data-id='0' catchtouchmove="preventTouchMove"  wx:if="{{isCategory==1}}">
+  <view class="classbox" catchtap='isCategory1' data-id='1'>
+      <view style='width:100%;height:63px;text-align:center;line-height:63px;font-size:16px;color:rgba(28,28,28,1);'>主营类目已选{{json.length}}个，不超过10个</view>
+      <view class="content-container" style="display:flex;width:100%;">
+        <scroll-view class="classify-container" scroll-y="true" scroll-into-view="m_{{classid}}" scroll-with-animation="true">
+        <view class="classify" wx:for="{{class}}" wx:key="index" data-id="{{index}}" catchtap="setScrollTop1" id='m_{{index}}' data-name='{{class[index].cate_name}}'>
+          <view class="on {{classid==index?'ons':''}}"></view>
+          <view class="name {{classid==index?'active':''}}">{{class[index].cate_name}}</view>
+        </view>
+        </scroll-view>
+        <scroll-view class="goods-container" scroll-y="true" scroll-into-view="m_{{classid}}" bindscroll="onGoodsScroll" scroll-top="{{scrollTop}}">
+       
+          <view class="goods_s1" wx:for="{{class}}" wx:key="index" wx:for-item="items" data-name='{{items.cate_name}}' id='m_{{index}}' bindtap='setScrollTop1' data-id='{{index}}'>
+              <view class='first_level_title'>
+                <view class='hline'></view>
+                {{items.cate_name}}
+                <view class='hline'></view>
+              </view>
+                <view class='children_title'>
+                  <view wx:for="{{items.children}}" wx:for-item="item" wx:key="index1" class='subelement' bindtap='allclass' data-id='{{index}}' data-name='{{item.cate_name}}' data-type='{{item.type}}' data-cid="{{item.cate_id}}">
+                      <view class="{{item.type!=='5'?'subtitle':'subtitle subtitleon'}}">
+                      {{item.cate_name}}
+                        <image src='../img/publish_select.png' wx:if="{{item.type=='5'}}"></image>
+                      </view>
+                  </view>
+                  <view class='subelement'></view>
+              </view>
+          </view>
+       
+        </scroll-view>
+      </view>
+      <view class="btn">
+        <view class='btns' catchtap='isCategory2' data-id='0'>确定</view>
+      </view>
+  </view>
+</view>

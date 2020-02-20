@@ -1,0 +1,27 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='head' style="top:{{navH}}px" bindtap='back'>
+  <input disabled="true" placeholder-style="color:rgba(198,198,198,1);" value="{{value}}" maxlength="50"/>
+  <view class='vdelbox' wx:if="{{value!==''}}"></view>
+</view>
+
+<view style="padding:0 16px;box-sizing:border-box;">
+  <view class='pagescont'>
+    <view wx:if="{{list==null}}" style='display:flex;justify-content: center;width:100%;'>
+      <image src='../img/classify/ic_nopage.png' class='nopage'></image>
+    </view>
+    <view class='gllibox' id='globalgoods' style='align-items: center;' wx:for="{{list}}" wx:key="index" bindtap='gopersonal' data-id='{{item.user_id}}'>
+      <view style='display:flex;align-items: center;'>
+        <view id='lileft'><image src='{{item.user_icon}}'/></view>
+        <view class='liright' style='margin-left:16px;'>
+          <view id='titlte'>{{item.nick_name}}
+            <image src='../img/q-r.png' class='rz' wx:if="{{item.authenticate==2}}"/>
+            <image src='../img/p-r.png' class='rz' wx:if="{{item.authenticate==1}}"/>
+          </view>
+          <view class='aucbox' style="margin-top:6px;"><view id='aucfont'>店铺评分：{{item.score}}</view></view>
+        </view>
+      </view>
+      <image src='../img/search/right.png' class='rig'></image>
+    </view>  
+  </view>
+</view>

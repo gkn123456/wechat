@@ -1,0 +1,73 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="head">
+  <view class="top">
+    <image src='{{odetails.seller.user_icon}}'></image>
+    <text>{{odetails.seller.nick_name}}</text>
+  </view>
+  <view class="bottom">
+    <image class="left" src='{{odetails.goods.cover}}' mode="aspectFill"></image>
+    <view class="right">
+      <text class="rtext1">{{odetails.goods.title}}</text>
+      <text class="rtext2">完成时间：{{clock}}</text>
+      <view class="rtext3">
+        <text class="rtext3_1">成交额：</text>
+        <text class="rtext3_2">¥{{odetails.real_amount}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="evalcont">
+  <view class="evalconthead">
+    <image src="../img/log/logicon.png"></image>
+    <text>商品评价</text>
+  </view>
+
+  <view class="stars1">
+    <view class="star-pos" style="display:flex;flex-direction:row;">
+      <view class="stars  {{flag>=1? 'on': ''}}" bindtap="changeColor1"></view>
+      <view class="stars  {{flag>=2? 'on': ''}}" bindtap="changeColor2"></view>
+      <view class="stars  {{flag>=3? 'on': ''}}" bindtap="changeColor3"></view>
+      <view class="stars  {{flag>=4? 'on': ''}}" bindtap="changeColor4"></view>
+      <view class="stars  {{flag>=5? 'on': ''}}" bindtap="changeColor5"></view>
+    </view>
+  </view>
+<!-- 标签 -->
+  <view class="label">
+    <view class="label1">
+    <!-- 一，二星评价 -->
+      <view style="display:{{hides}}" class="lablist {{item.state==1? 'c': ''}}" data-key='{{index}}' wx:for="{{label1}}" wx:key="index" bindtap="changelabe">{{label1[index].name}}</view>
+    <!-- 三星评价 -->
+      <view style="display:{{hides1}}" class="lablist {{item.state==1? 'c': ''}}" data-key='{{index}}' wx:for="{{label2}}" wx:key="index" bindtap="changelabe1">{{label2[index].name}}</view>
+      <!-- 四五星评价 -->
+      <view style="display:{{hides2}}" class="lablist {{item.state==1? 'c': ''}}" data-key='{{index}}' wx:for="{{label3}}" wx:key="index" bindtap="changelabe2">{{label3[index].name}}</view>
+    </view>
+    
+    
+    
+  </view>
+
+  <view class="weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <textarea class="weui-textarea" bindinput="bindTextAreaChange" placeholder="写下你对藏品和商家的评价吧～" placeholder-style="font-size:28rpx;color:#D0D0D0;" auto-height value="{{info}}" maxlength="{{noteMaxLen}}" />
+        <view class="weui-textarea-counter">{{noteNowLen}}/{{noteMaxLen}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tip">
+    <view class="tipz">
+      <image wx:if="{{v==0}}" src="../img/log/logw.png" bindtap='tipz1'></image>
+      <image wx:if="{{v==1}}" src="../img/log/logy.png" bindtap='tipz2'></image>
+      <text>匿名</text>
+    </view>
+    <view class="tipy" wx:if="{{v==0}}">你的评价能帮助其他藏友哦</view>
+    <view class="tipy" wx:if="{{v==1}}">您写的评价将以匿名形式展现</view>
+  </view>
+</view>
+
+<view class='bt' bindtap='pubeval'>
+  发布
+</view>

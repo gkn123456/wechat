@@ -1,0 +1,268 @@
+@import "../template/template.wxss";
+page{
+  background: #fff;
+}
+.head{
+  width:100%;
+  height: 36px;
+  background: #fff;
+  padding:0 16px;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  z-index: 9;
+}
+input{
+  width:100%;
+  height:36px;
+  background:rgba(238,238,238,.5);
+  border-radius:18px;
+  padding:0 29px 0 19px;
+  box-sizing: border-box;
+  line-height: 36px;
+  font-size:14px;
+  color:rgba(68,68,68,1);
+}
+/* 搜索历史 */
+.labelbox{
+  width:100%;
+  padding:22px 16px;
+  box-sizing: border-box;
+}
+.vdelbox{
+  width:26px;
+  height:100% ;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top:0;
+  right:16px;
+}
+.vdel{
+  width:16px;
+  height: 16px;
+}
+.labelhead{
+  width:100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.labelheadtext{
+  font-size:16px;
+  color:rgba(170,170,170,1);
+}
+.labelheadimg{
+  width:19px;
+  height: 20px;
+}
+.labelpage1{
+  width:100%;
+  display: flex;
+  justify-content: center;
+  padding-top:38px;
+}
+.labelpage1 text{
+  font-size:18px;
+  font-weight:bold;
+  color:rgba(236,236,236,1);
+}
+.labelpage2{
+  width:100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding-top:24px;
+}
+.labelpage2box{
+  height:28px;
+  background:rgba(238,238,238,.5);
+  border-radius:14px;
+  text-align: center;
+  line-height: 28px;
+  font-size:14px;
+  color:rgba(68,68,68,1);
+  margin-right: 10px;
+  margin-bottom: 15px;
+  padding:0 18px;
+  box-sizing: border-box;
+}
+/* 搜索结果页 */
+.searchpage{
+  width:100%;
+}
+.pages{
+  width:100%;
+  padding:30px 16px 10px 16px;
+  box-sizing: border-box;
+}
+.pageshead{
+  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.headleft{
+  display: flex;
+  align-items: center;
+}
+.hl1{
+  font-size:18px;
+  font-weight:bold;
+  color:rgba(68,68,68,1);
+}
+.hl2{
+  margin-left: 10px;
+  height:20px;
+  line-height: 20px;
+  background:rgba(238,238,238,.5);
+  border-radius:2px;
+  text-align: center;
+  font-size:11px;
+  color:rgba(160,160,160,1);
+  padding:0 8px;
+  box-sizing: border-box;
+}
+.headright{
+  display: flex;
+  align-items: center;
+}
+.hr1{
+  font-size:14px;
+  color:rgba(111,111,111,1);
+  line-height: 14px;
+}
+.hr2{
+  width:6px;
+  height: 11px;
+  margin-left: 8px;
+}
+.pagescont{
+  width:100%;
+  padding-top:15px;
+}
+.gllibox{
+  width:100%;
+  display: flex;
+  margin-top:10px;
+}
+#globalgoods:first-child{
+  margin-top:0;
+}
+.lileft{
+  width:90px;
+  height:90px;
+  border-radius:2px;
+  border:1px solid rgba(236,236,236,1);
+  margin-right: 10px;
+}
+.lileft_logo{
+  width:100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.lileft_logo view{
+  font-size: 14px;
+  white-space:nowrap;
+}
+.lileft image{
+  width:90px;
+  height:90px;
+  border-radius:2px;
+}
+.liright{
+  width:73%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.titlte{
+  font-size:14px;
+  color:rgba(68,68,68,1);
+  line-height:20px;
+  text-overflow:-o-ellipsis-lastline;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  line-clamp:2;
+  -webkit-box-orient:vertical;
+}
+#titlte{
+  font-size:14px;
+  color:rgba(68,68,68,1);
+  line-height:20px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.chtitle{
+  width:100%;
+  display: flex;
+  align-items: center;
+  margin-top:4px;
+}
+.pufy{
+  width:12px;
+  height: 12px;
+  margin-right: 6px;
+}
+.chtitle_font{
+  font-size:12px;
+  color:rgba(68,68,68,1);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  width:90%;
+}
+.pricebox{
+  display: flex;
+  margin-top:4px;
+  align-items: flex-end;
+}
+.pric1{
+
+}
+.pric1_o{
+  font-size:12px;
+  color:rgba(244,67,54,1);
+}
+.pric1_t{
+  font-size:20px;
+  font-weight:bold;
+  color:rgba(244,67,54,1);
+}
+.pric2{
+  margin-left: 4px;
+}
+.pric2 text{
+  font-size:12px;
+  color:rgba(168,168,168,1);
+}
+#aucfont{
+  font-size:12px;
+  color:rgba(111,111,111,1);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.aucbox{
+  width:100%;
+}
+#lileft{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  border:1px solid rgba(236,236,236,1);
+}
+#lileft image{
+  width:56px;
+  height:56px;
+  border-radius:50%;
+}
+.rz{
+  width:56px;
+  height:18px;
+  margin-left: 8px;
+}

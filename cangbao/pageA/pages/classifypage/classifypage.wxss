@@ -1,0 +1,3 @@
+/* pageA/pages/classifypage/classifypage.wxss */
+@import "../template/template.wxss";
+@import "../goods.wxss";

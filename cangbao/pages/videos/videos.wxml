@@ -1,0 +1,519 @@
+<import src="../template/template.wxml"/>
+<!-- 分享 -->
+<template is="share" wx:if="{{whethershare==1}}"></template>
+<!-- 举报 -->
+<template is="report" wx:if="{{whethereport==1}}" data="{{report}}"></template>
+<!-- 海报 -->
+<template is="poster" wx:if="{{whetherposter==1}}" data="{{sharePicUrl,coverimg}}"></template>
+<view class='nav bg-white' style='height:{{navHs}}px'>
+    <view class='nav-title'>
+      <view class='nav-title_icon'>
+        <view class='fh_box' wx:if="{{scene==2}}">
+          <image src='../img/f_h.png' class='f_hback'></image>
+          <view style='width:100%;height:100%;position:absolute;top:0;left:0;display:flex;justify-content:space-between;'>
+            <view style='width:50%;height:100%;' bindtap='back'><image src='../img/f_h1.png' mode='aspectFit' class='back'></image></view>
+            <view style='width:50%;height:100%;' bindtap='backhome'><image src='../img/f_h2.png' mode='aspectFit' class='backhome'></image></view>
+          </view>
+        </view>
+        <view class='fh_box1' wx:if="{{scene==1}}">
+          <image src='../img/f_h2.png' mode='aspectFit' class='backhome1' bindtap='backhome'></image>
+        </view>
+      </view>
+    </view>
+</view>
+<form bindsubmit="formSubmit" report-submit='true'>
+<view  class="video" style="display:{{n}};" bindtap="videoshow">
+  <video class="myVideo" src="{{videos}}" direction="0" objectFit="{{videofit}}" controls="{{false}}" autoplay="true" enable-progress-gesture="{{false}}" loop="true" show-play-btn="{{false}}" custom-cache="{{false}}" muted="{{iss}}" poster="{{covers}}" bindtap="doubleClick" data-time="{{lastTapTime}}"></video>
+  <view class="right-v" wx:if="{{videoshow==true}}" catchtap='openvideo'>
+    <view class="r-o">
+      <view class="a" bindtap='jump'>
+        <image class="aimg1" src="{{user_icon}}"></image>
+        <image class="aimg2" wx:if="{{details.user.authenticate==1}}" src="../img/video/renzheng.png"></image>
+      </view>
+      <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" wx:if="{{follow==0&&details.is_self!==1}}" bindgetuserinfo='follow' open-type="getUserInfo">
+        <view class="follow">+关注</view>
+      </button>
+      <view class="follow1" wx:if="{{follow==1&&details.is_self!==1}}" bindtap='tofollow'>已关注</view>
+    </view>
+    <view class="b">
+      <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" wx:if="{{collection==0}}" bindgetuserinfo='collection' open-type="getUserInfo">
+        <image src="../img/btn-shoucang-unpre.png"></image>
+    </button>
+    <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" wx:if="{{collection==1}}" bindtap='tocollection'>
+        <image src="../img/btn-shoucang-pre.png"></image>
+      </button>
+      <view style="color:#fff;font-size:20rpx;" wx:if="{{collection==0}}">收藏</view>
+      <view style="color:#fff;font-size:20rpx;" wx:if="{{collection==1}}">已收藏</view>
+    </view>
+    <view bindtap="" class="c">
+      <image src="../img/pinglun.png" bindtap='openevalss'></image>
+      <view style="color:#fff;font-size:20rpx;">评论({{comment_count}})</view>
+    </view>
+    <!--分享转发-->
+    <view id="share" class="d" bindtap='openshare' style='display:flex;flex-direction:column;align-items:center;justify-content:center;'>
+      <image src="../img/fenxian.png" style="width:82rpx;height:76rpx;"></image>
+      <view style="color:#fff;font-size:20rpx;">分享</view>
+    </view>
+  </view>
+  <view class="left-v" wx:if="{{videoshow==true}}" catchtap='openvideo'>
+    <view class="e">
+      <view wx:if="{{details.bid_count==0&&(details.status==1||details.status==2)}}" class="e1">
+        <view class="e1a">起拍价</view>
+        <view class="e1b">¥ {{details.start_price}}</view>
+      </view>
+      <view wx:if="{{details.bid_count>0&&(details.status==1||details.status==2)}}" class="e2">
+        <view class="e2a">{{details.mini_bidder[0].user.nick_name}}</view>
+        <view class="e2b">¥ {{details.now_price}}</view>
+        <view class="e2c">领先</view>
+      </view>
+      <view wx:if="{{details.now_price!==0&&(details.status==4||details.status==5)}}" class="e2">
+        <view class="e2c">成交价</view>
+        <view class="e2b">¥ {{details.now_price}}</view>
+      </view>
+      <view wx:if="{{details.now_price==0&&(details.status==5||details.status==4)}}" class="e2">
+        <view class="e2c1">无人出价</view>
+      </view>
+    </view>
+    <view class="f">{{details.title}}</view>
+    <view class="h" wx:if="{{details.status==1||details.status==2}}">
+      <view class="h1" wx:if="{{details.status==1}}">距结束{{clock}}</view>
+      <view class="h1" wx:if="{{details.status==2}}">延时中{{clock}}</view>
+    </view>
+    <view class="hcopy" wx:if="{{details.status==4||details.status==5}}"><view class="h1">已结束</view></view>
+    <scroll-view class="g" scroll-y="true" bindscrolltolower="videoallcomt">
+      <view style="padding-left:32rpx;box-sizing: border-box;">
+        <view class="cont-p" wx:for="{{comdetilsf}}" wx:key="index" bindtap="reply" data-name="{{item.user.nick_name}}" data-id="{{item.comment_id}}">
+          <view class="comtp">{{item.user.nick_name}}：<text wx:if="{{item.parent!==null}}">@{{item.parent.user.nick_name}} </text><text style="color:#fff;">{{item.comment}}</text></view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <!-- 出价按钮 -->
+  <view class='offcombox' wx:if="{{videoshow==true}}" catchtap='openvideo'>
+    <view wx:if="{{details.is_self==0}}">
+      <view class="offer" wx:if="{{details.status==1||details.status==2}}">
+        <button formType="submit" type="view" plain="true" bindgetuserinfo='addoffer' open-type="getUserInfo" hover-class="none">出价</button>
+      </view>
+      <view class="offer1" wx:if="{{details.status==3||details.status==4||details.status==5||clock==''}}">出价</view>
+      <!-- 评论按钮 -->
+      <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;background:rgba(0,0,0,0.1);border-radius:8rpx;" size="mini"  bindgetuserinfo='gocomm' open-type="getUserInfo" class='video_discuss'>
+        <image src='../img/video/vdiscu.png'></image><view class='video_di'>喜欢就要说出来…</view>
+      </button>
+    </view>
+    <view wx:if="{{details.is_self==1}}">
+      <view style='width:100%;display:flex;justify-content: center;'>
+        <view style='width:343px;height:32px;background:rgba(154,154,154,1);border-radius:4px;font-size:14px;color:rgba(255,255,255,1);text-align:center;line-height:32px;'>自己的拍品不能出价</view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 切换 -->
+<view class="detail" style="background:{{bg.a}};top:{{navHs}}px;" wx:if="{{details.class == 2}}">
+  <view class="d-left">
+    <view class="radtext" style="font-size:36rpx;font-weight:{{weight.a}};color:{{color.a}};" bindtap="vibn">视频</view>
+    <view class="radtext1"></view>
+  </view>
+  <view class="d-right">
+    <view class="d-right1" style="font-size:36rpx;font-weight:{{weight.b}};color:{{color.b}};" bindtap="debn">详情</view>
+    <view style="display:{{b}};" class="d-right2"></view>
+    <view wx:if="{{iss==1}}"><image src='../img/icon_share_black@2x.png' id="vshare" bindtap='openshare'/></view>
+    <view class="zan" style="height:{{heights}};">
+    <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" wx:if="{{is_up==0}}" bindtap='is_up' open-type="getUserInfo">
+      <image src="../img/video/btn-zan-nor.png"></image>
+    </button>
+    <image src="../img/video/btn-zan-pre.png" wx:if="{{is_up==1}}"></image>
+    <view class="zancont" wx:if="{{is_up==0}}">{{up_count}}</view>
+    <view class="zancont1" wx:if="{{is_up==1}}">{{up_count}}</view>
+  </view>
+  </view>
+</view>
+<view class="detail1" wx:if="{{details.class == 1}}">
+</view>
+<!-- 详情页 -->
+<view style="display:{{b}};" class="detapage">
+  <view class="detapage1" wx:if="{{details.class==1}}" style='margin-top:{{navHs}}px;position:relative;'>
+    详情
+    <image src='../img/icon_share_black@2x.png' id="vshare" bindtap='openshare'/>
+  </view>
+  <view class="detapage1" wx:if="{{details.class==2}}" style='margin-top:{{navHs}}px;'></view>
+  <view class="detapage2">
+    <view class="detapage2-a">
+      <view class="detapage2-ah" bindtap='jump'><image src="{{user.user_icon}}"></image></view>
+      <text class="user_name">{{user.nick_name}} </text>
+      <view class="detapage2-a1">
+        <image wx:if="{{details.user.authenticate==1}}" src="../img/p-r.png"></image>
+        <image wx:if="{{details.user.authenticate==2}}" src="../img/q-r.png"></image>
+      </view>
+      <view class="detapage2-a2"></view>
+    </view>
+    <!-- 关注按钮 -->
+    <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" wx:if="{{follow==0&&details.is_self!==1}}" bindgetuserinfo='follow' open-type="getUserInfo">
+      <text class="detapage2-b">关注</text>
+    </button>
+    <!-- 取消关注按钮 -->
+    <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" wx:if="{{follow==1&&details.is_self!==1}}" bindtap='tofollow'>
+      <text class="detapage2-b1">已关注</text>
+    </button>
+  </view>
+  <view class="shopname">{{details.title}}</view>
+  <view class="shopdetail" wx:if="{{details.desc!==null}}">
+    <view>
+      <text style='{{descstyle}}'>{{details.desc}}</text>
+      <text class="shopdetailss" bindtap='openss' wx:if="{{op==1}}">展开</text>
+      <text class="shopdetailss1" bindtap='closess' wx:if="{{op==2}}">收起</text>
+    </view>
+  </view>
+  <view class="shopcs" wx:if="{{details.attr!==null}}">
+    <view class="shopcsh">
+      <view class="shopcs1"><view wx:for="{{arrt}}" wx:key="index" class="shopcs1h">{{arrt[index].key}}</view></view>
+      <view class="shopcs2"><view class="shopcs2h" wx:for="{{arrt}}" wx:key="index">{{arrt[index].name}}</view></view>
+    </view>
+  </view>
+  <!-- 图片 -->
+  <view class="userimg" wx:if="{{details.preview_images!==null}}">
+    <view class="userimg1" wx:for="{{details.preview_images}}" wx:key="index" style="width:{{sizeheight}};height:{{sizeheight}};" bindtap='previewImg' data-index='{{index}}'>
+      <image src="{{item}}" mode="aspectFill"></image>
+    </view>
+    <view class="userimg1" style="width:{{sizeheight}};"></view>
+  </view>
+  <!-- 当前价格，时间 -->
+  <view class="prices">
+    <view class="pri1" wx:if="{{details.status==1||details.status==2||details.status==3}}">
+      <text class="pritext1" wx:if="{{details.now_price!==0}}">当前价</text>
+      <text class="pritext3" wx:if="{{details.now_price!==0}}">￥{{details.now_price}}</text>
+      <text class="pritext1" wx:if="{{details.now_price==0}}">起拍价</text>
+      <text class="pritext3" wx:if="{{details.now_price==0}}">￥{{details.start_price}}</text>
+    </view>
+    <view class="pri1" wx:if="{{(details.status==4||details.status==5)&&details.now_price!==0}}">
+      <text class="pritext1">成交价</text>
+      <text class="pritext4">￥{{details.now_price}}</text>
+    </view>
+    <view class="pri1" wx:if="{{(details.status==4||details.status==5)&&details.now_price==0}}">
+      <text class="pritext1">当前价</text>
+      <text class="pritext4">￥{{details.now_price}}</text>
+    </view>
+  </view>
+  <!-- 倒计时 -->
+  <view class="clockdown" style="background-image:{{backgrounds}};">
+    <text class="clockdown1" wx:if="{{details.status==1&&clock!==''}}">距结束</text>
+    <text class="clockdown1" wx:if="{{details.status==2}}">延时中</text>
+    <text class="clockdown1" wx:if="{{details.status==3}}">已下架</text>
+    <text class="clockdown1" wx:if="{{details.status==4||details.status==5||clock==''}}">已结束</text>
+    <text class="clockdown2" wx:if="{{details.status==1||details.status==2}}">{{clock}}</text>
+  </view>
+  <view class="yidui" bindtap='openwel'>
+    <view class="yiduileft">
+      <view class="yi1"><view>起</view><text>￥{{details.start_price}}</text></view>
+      <view class="yi1"><view>加</view><text>￥{{details.range_price}}</text></view>
+      <view class="yi1" wx:if="{{details.deposit_price!==0}}"><view>保</view><text>￥{{details.deposit_price}}</text></view>
+      <view class="yi1" wx:if="{{details.direct_price!==0}}"><view>一</view><text>￥{{details.direct_price}}</text></view>
+      <view class="yi1" wx:if="{{details.hide_guide==0}}"><view>参</view><text>￥{{details.guide_price}}</text></view>
+      <view class="yi1"><view>延</view><text>5分钟</text></view>
+      <view class="yi1"><view>邮</view><text>包邮</text></view>
+      <view class="yi1" wx:if="{{details.return==1}}"><view>退</view><text>七天包退</text></view>
+    </view>
+    <image class="yiduiright" src="../img/video/xiangqing-main1-btn-next-right.png"></image>
+  </view>
+<view class="prices1">
+    <view class="prices1-r">
+      <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" bindtap='is_up' wx:if="{{details.event.is_up==0}}">
+        <image src="../img/video/main1-icon-dianzan.png"></image>
+      </button>
+      <image wx:if="{{details.event.is_up==1}}" src="../img/video/btn-zan-pre.png"></image>
+      {{up_count}}
+    </view>
+    <view class="prices1-c">
+      <image src="../img/video/main1-icon-redu.png"></image>
+      {{details.play_count}}
+    </view>
+    <view class="prices1-l">
+      <image src="../img/video/fabushijian.png" class="doenclodc"></image>
+      {{releasetime}}
+    </view>
+  </view>
+  <view class="payuimg" style="height:{{auto}};">
+    <image src="{{item.user}}" wx:for="{{cct1}}" wx:key="index"></image>
+    <view class="limage" wx:if="{{details.up.length>29}}"><image src="../img/video/xiangqing-main1-btn-next-down.png"></image></view>
+  </view>
+  <view class="pri2text"></view>
+<!-- 出价 -->
+  <view class="jilu">
+    <view class="jl">
+      <!-- 出价记录头部 -->
+      <view class="jlheader">
+        <view class="jlheader1"></view><text class="jlheader2">出价记录</text><text class="jlheader3">({{details.bid_count}})</text>
+      </view>
+      <view class="jlheadery" bindtap='openevalss1' wx:if="{{details.bid_count!== 0}}">
+        <text>查看全部</text><image class="yiduiright" src="../img/video/xiangqing-main1-btn-next-right.png"></image>
+      </view>
+    </view>
+    <!-- 出价记录内容 -->
+    <view class="pricecommit">
+      <view class="jilu1">
+        <view class="jilu1img"><image src="{{evaluate[0].user.user_icon}}"></image></view>
+        <view class="jilu1name">{{evaluate[0].user.nick_name}}</view>
+        <view class="jilu1price" style="color:#F44336;">￥{{evaluate[0].price}}</view>
+        <view class="jilu1pl">
+        <text style="color:red;" wx:if="{{details.status==1||details.status==2}}">领先</text>
+        <text style="color:red;" wx:if="{{details.status==4||details.status==5}}">成交</text>  
+        </view>
+        <view class="jilu1pldata">{{timeSpanStra1[0].text}}</view>
+      </view>
+      <view class="jilu1" wx:for="{{evaluate}}" wx:key="index">
+        <view class="jilu1img"><image src="{{evaluate[index+1].user.user_icon}}"></image></view>
+        <view class="jilu1name">{{evaluate[index+1].user.nick_name}}</view>
+        <view class="jilu1price">￥{{evaluate[index+1].price}}</view>
+        <view class="jilu1pl"><text>出局</text></view>
+        <view class="jilu1pldata">{{timeSpanStra1[index+1].text}}</view>
+      </view>
+    </view>
+  </view>
+<!-- 评论 -->
+  <view class="comment">
+    <view class="commenth">
+      <view style="" class="commenthz">
+        <view></view><text class="commtext1">拍品评论</text><text class="commtext2">({{comment_count}})</text>
+      </view>
+      <view class="commenthy" bindtap='openevalss' wx:if="{{details.comment_count!== 0}}">
+        <text>查看全部</text><image class="yiduiright" src="../img/video/xiangqing-main1-btn-next-right.png"></image>
+      </view>
+    </view>
+    <!-- 评论内容 -->
+    <view class="commtbuilld">
+      <view wx:for="{{assess}}" wx:key="index" class="commt">
+        <view>
+          <view catchtap="reply" data-id="{{item.comment_id}}" data-name="{{item.user.nick_name}}">
+            <view class="imgname">
+              <view class="imgnametop">
+                <image src="{{item.user.user_icon}}"></image><view class="commname">{{item.user.nick_name}}</view>
+              </view>
+              <view class="commview">{{timeSpanStra[index].text}}</view>
+          </view>
+        </view>
+        <view style="padding-left:80rpx;">
+          <view class="cont" catchtap="reply" data-id="{{item.comment_id}}" data-name="{{item.user.nick_name}}">{{item.comment}}</view>
+          <view id="vice_reply" catchtap="reply" data-id="{{item.parent.comment_id}}" data-name="{{item.parent.user.nick_name}}" wx:if="{{item.parent!==null}}">
+          {{item.parent.user.nick_name}}：<text id="vice_replyr" decode="{{true}}">{{item.parent.comment}}&nbsp;</text>{{reply_time1[index].text}}
+          </view>
+        </view>
+        </view>
+      </view>
+    </view>
+  </view>
+<!-- 规则 -->
+  <view class="rule">
+    <view class="ruleheader"><view class="ruleheaderz"><view></view><text>拍卖规则</text></view><view class="ruleheadery"></view></view>
+    <view class="rules"><view>限时拍卖，价高者得</view><view>担保交易，为您保价护航</view><view>全场包邮，拍卖无忧</view></view>
+  </view>
+  <view class="kbb"><view class="kbb1"></view></view>
+  <view class="getoffer">
+    <view class="getleft">
+      <view class="getoff">
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini"  bindgetuserinfo='gocomm' open-type="getUserInfo">
+          <image src="../img/video/xiangqing-tab-btn-pinglun.png"></image>
+        </button>
+        <text>评论</text>
+      </view>
+      <view class="getoff">
+        <button open-type="contact" class="service" formType="submit" session-from="app" show-message-card="true" send-message-img="../img/logo.png" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini">
+            <image src="../img/video/xiangqing-tab-btn-sixin.png"></image><text>私信</text>
+        </button>
+      </view>
+      <view class="getoff">
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" bindtap='collection' wx:if="{{collection==0}}" open-type="getUserInfo">
+          <image src="../img/xiangqing_icon_shoucang_nor@2x.png"></image>
+        </button>
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" bindtap='collection' wx:if="{{collection==1}}" bindtap='tocollection'>
+          <image src="../img/xiangqing_icon_shoucang_pre@2x.png"></image>
+        </button>
+        <text wx:if="{{collection==0}}">收藏</text><text wx:if="{{collection==1}}">已收藏</text>
+      </view>
+    </view>
+    <view class="getoffer4">
+      <button type="view" plain="true" bindgetuserinfo='addoffer' open-type="getUserInfo" hover-class="none" wx:if="{{details.is_self==0&&(details.status==1||details.status==2)}}">出价</button>
+      <button id="getoffer41" type="view" plain="true" hover-class="none" wx:if="{{details.is_self==0&&(clock==''||details.status==3||details.status==4||details.status==5)}}">出价</button>
+      <button id="getoffer41" type="view" plain="true" hover-class="none" wx:if="{{details.is_self==1}}">自己的拍品不能出价</button>
+    </view>
+  </view>
+</view>
+<!-- 评论弹框 -->
+<view class="gocom" style='display:{{commblock}};'>
+  <view class="kbcomm" bindtap='closecomm'></view>
+  <view class="gocomment">
+    <view class="gocomment1">
+      <view class="cominput">
+      <image src="../img/video/edit.png"></image>
+      <input placeholder='{{placeholder}}' maxlength="50" placeholder-style="color:rgba(170,170,170,1);" adjust-position="false" bindinput='gocommton' value="{{substance}}" cursor-spacing="12" focus="{{focus}}"/>
+    </view>
+    <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" bindtap='sendcommt' open-type="getUserInfo">
+      <view class="combtn">发送</view>
+    </button>
+    </view>
+  </view>
+</view>
+<view class="welfare" style="display:{{wel}};" catchtouchmove="preventTouchMove">
+  <view class="welfareh">
+    <view class="welfarelist">
+      <image src="../img/video/xiangqing_tanchuang_icon_qi@3x.png"></image><text>拍品起拍的价格</text>
+    </view>
+    <view class="welfarelist">
+      <image src="../img/video/xiangqing_tanchuang_icon_jia@3x.png"></image><text>每次出价的加价幅度</text>
+    </view>
+    <view class="welfarelist" wx:if="{{details.deposit_price!==0}}">
+      <image src="../img/video/xiangqing_tanchuang_icon_bao@3x.png"></image><text>参与拍卖需冻结的保证金金额</text>
+    </view>
+    <view class="welfarelist" wx:if="{{details.direct_price!==0}}">
+      <image src="../img/video/xiangqing_tanchuang_icon_yi@3x.png"></image><text>直接以一口价拍下该拍品</text>
+    </view>
+    <view class="welfarelist" wx:if="{{details.hide_guide==0}}">
+      <image src="../img/video/xiangqing_tanchuang_icon_can@3x.png"></image><text>拍品参考价格</text>
+    </view>
+    <view class="welfarelist" style="margin-bottom: 0rpx;">
+      <image src="../img/video/xiangqing_tanchuang_icon_yan@3x.png"></image><text>若拍品结拍前5分钟有人出价，结拍时</text>
+    </view>
+    <view class="welfarelist"><image src=""></image><text>间顺延5分钟</text></view>
+    <view class="welfarelist" wx:if="{{details.return==1}}">
+      <image src="../img/video/xiangqing_tanchuang_icon_tui@3x.png"></image><text>拍品签收后七天内不满意可退货</text>
+    </view>
+    <view class="welfareh1" bindtap='closewel'>我知道了</view>
+  </view> 
+</view>
+<view class="evaluatesh" style="display:{{evalvis}};" bindtap='closeevalss' catchtouchmove="preventTouchMove">
+  <view class="evaluates" catchtap="openevalss">
+    <image src="../img/addprice/chujia-btn-close.png" class="closes" catchtap='closeevalss'></image>
+    <view class="evaluatesnum"><view>{{comment_count}}条评论</view></view>
+    <scroll-view class="commtbuilld1" scroll-y="true" bindscrolltolower="all_commt">
+      <view class="commtchild">
+        <view wx:for="{{comdetilsf1}}" wx:key="index" class="commt111" id="commt111">
+          <view>
+            <view catchtap="reply" data-id="{{item.comment_id}}" data-name="{{item.user.nick_name}}">
+              <view class="imgname1">
+                <view class="imgnametop">
+                  <image src="{{item.user.user_icon}}" class="evaluatesuic" mode="aspectFill"></image>
+                  <view class="commname1">{{item.user.nick_name}}</view>
+                </view>
+                <view class="imgnamright"><view class="commview">{{timeSpanStra2[index].text}}</view></view>
+              </view>
+            </view>
+            <view style="padding-left:80rpx;">
+              <view class="cont1t" catchtap="reply" data-id="{{item.comment_id}}" data-name="{{item.user.nick_name}}">{{item.comment}}</view>
+              <view id="vice_reply" style="margin-top:12px;" catchtap="reply" data-id="{{item.parent.comment_id}}" data-name="{{item.parent.user.nick_name}}" wx:if="{{item.parent!==null}}">
+                {{item.parent.user.nick_name}}：<text id="vice_replyr" decode="{{true}}">{{item.parent.comment}}&nbsp;</text>{{reply_time2[index].text}}
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+  <view class='evaluatebtn' catchtap='toevaluatebtn'>
+    <view class='evbtns'><image src='../img/video/edit.png'></image><view>喜欢就要说出来</view></view>
+  </view>
+</view>
+<view class="puildins" style="display:{{evalvis1}};" bindtap='closeevalss1' catchtouchmove="preventTouchMove">
+  <view class="puildin">
+    <image src="../img/addprice/chujia-btn-close.png" class="closes" catchtap='closeevalss1'></image>
+    <view class="evaluatesnum"><view>{{details.bid_count}}条出价记录</view></view>
+    <scroll-view class="pricecommit1" catchtap="openevalsss1" scroll-y="true" bindscrolltolower="all_pricecommt">
+      <view class="jilu11" style="display:flex;align-items:center;justify-content:space-between;">
+        <view class="jilu1img"><image src="{{comdetilsf3[0].user.user_icon}}"></image></view>
+        <view class="jilu1name">{{comdetilsf3[0].user.nick_name}}</view>
+        <view class="jilu1price" style="color:#F44336;">{{comdetilsf3[0].comment}}</view>
+        <view class="jilu1pl" wx:if="{{details.now_price!==0}}">
+        <text style="color:red;" wx:if="{{(details.status==1||details.status==2)&&details.now_price!==0}}">领先</text>
+        <text style="color:red;" wx:if="{{(details.status==4||details.status==5)&&details.now_price!==0}}">成交</text>  
+        </view>
+        <view class="jilu1pldata">{{timeSpanStra1[0].text}}</view>
+      </view>
+      <view class="jilu11" wx:if="{{comdetilsf3.length>1}}" wx:for="{{comdetilsf3}}" wx:key="index" style="display:flex;align-items:center;justify-content:space-between;">
+        <view class="jilu1img"><image src="{{comdetilsf3[index+1].user.user_icon}}"></image></view>
+        <view class="jilu1name">{{comdetilsf3[index+1].user.nick_name}}</view>
+        <view class="jilu1price">{{comdetilsf3[index+1].comment}}</view>
+        <view class="jilu1pl"><text>出局</text></view>
+        <view class="jilu1pldata">{{timeSpanStra3[index+1].text}}</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+<view class="idtan" bindtap='close_pay' wx:if="{{is_pay==1}}" catchtouchmove="preventTouchMove">
+  <view class="tankuang" catchtap="open_pay">
+    <image src="../img/addprice/chujia-btn-close.png" class="closes" catchtap='close_pay'></image>
+    <view class="nowph"><view class="nowp">当前价：￥{{details.now_price}}</view></view>
+    <view class="plint">
+      <view class="plinttext">出价金额</view>
+      <image class="reduce" src="{{redprice}}" catchtap='redp'></image>
+      <view class="plintpayprice">{{addprices}}</view>
+      <image class="plus" src="{{redprice1}}" catchtap='addp'></image>
+    </view>
+    <view class="addprice">
+      <view class="labeltap" wx:if="{{details.start_price!==0}}">
+        <image src="../img/addprice/chujia_icon_qi.png"></image><view class="labeltapp">￥{{details.start_price}}</view>
+      </view>
+      <view class="labeltap" wx:if="{{rangeprices!==0}}">
+        <image src="../img/addprice/chujia_icon_jia.png"></image><view class="labeltapp">￥{{rangeprices}}</view>
+      </view>
+      <view class="labeltap" wx:if="{{details.deposit_price!==0}}">
+        <image src="../img/addprice/chujia_icon_bao.png"></image><view class="labeltapp">￥{{details.deposit_price}}</view>
+      </view>
+      <view class="labeltap" wx:if="{{details.direct_price!==0}}">
+        <image src="../img/addprice/chujia_icon_yi.png"></image><view class="labeltapp">￥{{details.direct_price}}</view>
+      </view>
+      <view class="labeltap" wx:if="{{details.hide_guide==0}}">
+        <image src="../img/addprice/chujia_icon_can.png"></image><view class="labeltapp">￥{{details.guide_price}}</view>
+      </view>
+      <view class="labeltap">
+        <image src="../img/addprice/chujia_icon_yan.png"></image><view class="labeltapp">5分钟</view>
+      </view>
+      <view class="labeltap" wx:if="{{details.return==1}}">
+        <image src="../img/addprice/chujia_icon_tui.png"></image><view class="labeltapp">七天包退</view>
+      </view>
+      <view class="labeltap">
+        <image src="../img/addprice/chujia_icon_you.png"></image><view class="labeltapp">包邮</view>
+      </view>
+    </view>
+    <view class="tantital" catchtap='goread'>
+      <view class="tantitals">
+      <view>注:出价即表示同意</view><view style="color:#F45136;">《北京藏宝科技有限公司交易服务用户协议》</view>
+      </view>
+    </view>
+    <!-- 保证金为0 -->
+    <view class="plin" wx:if="{{details.is_self==0&&details.deposit_status!==2}}">
+      <view wx:if="{{details.direct_price!==0}}" style="width:28%;" class="bite" catchtap='yputprice'>一口价</view>
+      <view wx:if="{{details.direct_price!==0}}" class="put" style="width:72%;" catchtap='is_offer'>确认出价</view>
+      <view wx:if="{{details.direct_price==0}}" class="put" style="width:100%;" catchtap='is_offer'>确认出价</view>
+    </view>
+    <block wx:if="{{true}}">
+      <!--自己的拍品-->
+      <view style="display:flex;justify-content:center;width:100%;" wx:if="{{details.is_self==1}}">
+        <view class="ban">自己的拍品不能出价</view>
+      </view>
+      <!--未缴保证金 -->
+      <view class="plino" wx:elif="{{details.deposit_status==2}}"><view class="ensure" catchtap='Paydeposit'>去缴纳保证金</view></view>
+    </block>
+  </view>
+</view>
+<!-- 确认出价弹框 -->
+<view class="idtan" wx:if="{{is_pay1==1}}" catchtouchmove="preventTouchMove">
+  <view class="isadd">
+    <view class="isadd-top">确定出价：{{addprices}}元</view>
+    <view class="isadd-bottom">
+      <button plain="true" formType="submit" hover-class="none" bindtap='isputs' style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;margin-left:120rpx;" size="mini">是</button>
+      <view bindtap='isputf'>否</view>
+    </view>
+  </view>
+</view>
+<!-- 确认一口价弹框 -->
+<view class="idtan" wx:if="{{is_pay2==1}}" catchtouchmove="preventTouchMove">
+  <view class="yisadd">
+    <view class="yisadd-top">确定以一口价：{{details.direct_price}}元拍下该藏品</view>
+    <view class="yisadd-bottom">
+      <button plain="true" formType="submit" hover-class="none" bindtap='yisputs' style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;margin-left:120rpx;" size="mini">是</button>
+      <view bindtap='yisputf'>否</view>
+    </view>
+  </view>
+</view>
+</form>
+<button open-type="launchApp" app-parameter="{{openAPPurl}}" binderror="launchAppError" style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' type="primary" wx:if="{{iss==1&&scenes==1036}}">
+  <image src='../img/openApp.png' id='openApps'></image>
+</button>
+<template is="template_downloadapp" wx:if="{{iss==1&&scenes!==1036}}"></template>

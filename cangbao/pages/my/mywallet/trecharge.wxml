@@ -1,0 +1,17 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="head">
+  <view class="t1">可提现余额</view>
+  <view>
+    <text class="t2">￥</text>
+    <text class="t3">{{user.amount}}</text>
+  </view>
+</view>
+
+<view class="pay">
+  <view bindtap='rech'>充值</view>
+</view>
+
+<view class="pay1">
+  <view bindtap='cash'>提现</view>
+</view>

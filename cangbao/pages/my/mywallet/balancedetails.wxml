@@ -1,0 +1,20 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="cont">
+    <view class="licont" wx:for="{{bonddetails}}" wx:key="index">
+      <view class="litop">
+        <view class="toptext1">{{item.mode}}</view>
+        <view class="toptext2">{{cdd[index].text}}</view>
+      </view>
+      <view class="libottom">
+        <view class="bottomtext1" wx:if="{{item.status==1}}">完成</view>
+        <view class="bottomtext1" wx:if="{{item.status==2}}">处理中</view>
+        <view class="bottomtext1" wx:if="{{item.status==3}}">冻结中</view>
+        <view class="bottomtext1" wx:if="{{item.status==4}}">失败</view>
+        <view class="bottomtext1" wx:if="{{item.status==5}}">已返回</view>
+        <view class="bottomtext2" wx:if="{{item.class==1}}">+{{item.amount}}</view>
+        <view class="bottomtext3" wx:if="{{item.class==2}}">-{{item.amount}}</view>
+      </view>
+    </view>
+</view>
+

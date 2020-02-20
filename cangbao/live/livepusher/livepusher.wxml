@@ -1,0 +1,62 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view>直播标题:<input bindinput="input"/></view>
+<view bindtap="create_room" class="create_room">创建直播间</view>
+<view wx:for="{{message}}" wx:key="index">{{item}}</view>
+<view wx:for="{{num}}" wx:key="index">{{item.nick_name}}</view>
+<view>在线人数:{{number}}</view>
+<view class="room">
+  聊天室
+  <view wx:for="{{chat}}" wx:key="index">{{item}}</view>
+</view>
+<view wx:if="{{hotgoods!==null}}" class="room2">
+  <view>
+    热推拍品
+    <text wx:if="{{hotgoods.type==5}}">(拍卖)</text><text wx:if="{{hotgoods.type==4}}">(一口价)</text>
+  </view>
+  <view>
+    <image src="https://images.cangbaopai.com/Fvhosxm-6Ek8o3b0YRXJkdOBGooi-nweicxce" style="width:20px;height:20px;"/>
+    {{hotgoods.title}}
+    价格：{{hotgoods.sell_price}}
+    起拍价：{{hotgoods.start_price}}
+    当前价：{{hotgoods.now_price}}
+    加价幅度：{{hotgoods.range_price}}
+    拍卖状态：{{hotgoods.status}}
+  </view>
+  <view class="start" bindtap="start" wx:if="{{hotgoods.type==5}}">开拍</view>
+</view>
+<view class="room1">
+  <view class="room1_s" bindtap="create_hotgoods">拍卖上新</view>
+  <view class="room1_s" bindtap="create_fixgoods">一口价上新</view>
+</view>
+<view class="room3">
+  <view class="room3s">
+    <view class="room1_s1" >拍卖列表</view>
+    <view class="room1_s1">一口价列表</view>
+  </view>
+  <view class="room3s">
+    <view class="room1_s2" >
+      <view wx:for="{{goods1}}" wx:key="index" style="margin-bottom:10px;">
+        【{{index}}】
+        <image src="https://images.cangbaopai.com/Fvhosxm-6Ek8o3b0YRXJkdOBGooi-nweicxce" style="width:20px;height:20px;"/>
+        {{item.title}}
+        起拍价:{{item.start_price}}
+        当前价:{{item.now_price}}
+        是否热推:{{item.order}}
+        <view class="hottop" bindtap="hottop" data-id="{{item.goods_id}}" data-hot="{{item.order}}" data-type="5"><text wx:if="{{item.order==0}}">上</text><text wx:if="{{item.order==1}}">下</text> 热推</view>
+      </view>
+    </view>
+    <view class="room1_s2">
+      <view wx:for="{{goods2}}" wx:key="index" style="margin-bottom:10px;">
+        【{{index}}】
+        <image src="https://images.cangbaopai.com/Fvhosxm-6Ek8o3b0YRXJkdOBGooi-nweicxce" style="width:20px;height:20px;"/>
+        {{item.title}}
+        价格:{{item.sell_price}}
+        库存:{{item.stock}}
+        是否热推:{{item.order}}
+        <view class="hottop" bindtap="hottop" data-id="{{item.goods_id}}" data-hot="{{item.order}}" data-type="4"><text wx:if="{{item.order==0}}">上</text><text wx:if="{{item.order==1}}">下</text> 热推</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="xf" bindtap="xf">一口价发单</view>

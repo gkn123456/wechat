@@ -1,0 +1,40 @@
+@import "../template/template.wxss";
+@import "common.wxss";
+.couhead{
+  width:100%;
+  background: #fff;
+  height: 48px;
+  position: fixed;
+  left: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cou_nav{
+  width:33.3%;
+  height:100%;
+  line-height: 48px;
+  text-align: center;
+  font-size:14px;
+  color:rgba(59,59,59,1);
+  position: relative;
+}
+.cou_nav.on{
+  font-size:14px;
+  font-weight:bold;
+  color:rgba(59,59,59,1);
+}
+.cou_navline{
+  width:20px;
+  height:2px;
+  background:rgba(255,55,64,0);
+  position: absolute;
+  bottom:7px;
+  left: 50%;
+  margin-left:-10px;
+}
+.cou_navline.on{
+  background:rgba(255,55,64,1);
+}
+

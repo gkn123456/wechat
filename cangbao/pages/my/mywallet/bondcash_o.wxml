@@ -1,0 +1,26 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="head">
+  <view style="display:flex;align-items:center;">
+    <image class="cadimg1" src="../../img/myimg/bondcasho.png"></image>
+    <view class="cadcenter">
+      <view class="cadcenter2">钱包</view>
+    </view>
+  </view>
+</view>
+<view style="width:100%;height:20rpx;background:#F8F8F8;"></view>
+<view class="heads"> 
+  <view class="text1">提现金额</view>
+  <view class="text2">
+    <text>￥</text>
+    <input value="{{amount}}" bindinput='val1' type="number" focus="true"></input> 
+  </view>
+  <view class="text3">
+    <view class="text4">立即到账</view>
+    <view class="text5" bindtap='allcash'>全部提现</view>
+  </view>
+</view>
+
+<view class="btn">
+  <view class="{{paystyle==1?'btns':'btns btnson'}}" bindtap='gopass'>提现</view>
+</view> 

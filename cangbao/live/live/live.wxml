@@ -1,0 +1,36 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="paddingbox"></view>
+<view class="headnav" style="top:{{navH}}px">
+  <view wx:for="{{headnav}}" wx:key="index" class="headnav_li" data-id="{{item.id}}" bindtap="switch_head">
+    <view class="{{nav_id==item.id?'':'fonton'}} headnav_lifont">{{item.type}}</view>
+    <view class="{{nav_id==item.id?'':'lineon'}} headnav_line"></view>
+  </view>
+</view>
+<!-- 内容 -->
+<view wx:if="{{nav_id==0}}" class="room">
+  <view wx:for="{{hotroom}}" wx:key="index" class="roomli" bindtap="goliveplayer" data-id="{{item.live_id}}">
+    <image src="{{item.cover}}" mode="aspectFill" class="room_cover"/>
+    <view class="room_top"><image src="../img/live/roomtips.gif" /><view>{{item.viewer_count}}观看</view></view>
+    <view class="room_bom">
+      <image src="{{item.user.user_icon}}"></image>
+      <view class="room_bom_count">
+        <view class="room_bom_title">{{item.title}}</view>
+        <view class="room_bom_name">{{item.user.nick_name}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view wx:elif="{{nav_id==1}}" class="room">
+  <view wx:for="{{room}}" wx:key="index" class="roomli" bindtap="goliveplayer" data-id="{{item.live_id}}">
+    <image src="{{item.cover}}" mode="aspectFill" class="room_cover"/>
+    <view class="room_top"><image src="../img/live/roomtips.gif" /><view>{{item.viewer_count}}观看</view></view>
+    <view class="room_bom">
+      <image src="{{item.user.user_icon}}"></image>
+      <view class="room_bom_count">
+        <view class="room_bom_title">{{item.title}}</view>
+        <view class="room_bom_name">{{item.user.nick_name}}</view>
+      </view>
+    </view>
+  </view>
+</view>

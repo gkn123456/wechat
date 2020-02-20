@@ -1,0 +1,40 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="swiper-tab" style="position:fixed;top:{{navH}}px;left:0;width:100%;z-index:8;">
+    <view style="display:flex;margin:0 auto;align-items:center;">
+      <view wx:for="{{nav}}" data-index="{{index}}" wx:key="{{index}}" data-mark='{{item.mark}}' class="tab-item {{currentTab==index ? 'on' : ''}}" data-current="{{index}}" bindtap="swichNav">{{item.nav_name}}
+        <view class="selection {{currentTab==index ? 'on1' : ''}}"></view>
+      </view>
+    </view>
+</view>
+<view class="touo" wx:if="{{currentTab==0}}">
+  <view class="touo_li" wx:for="{{vlist}}" wx:key="index" bindtap="jump_details" data-id="{{item.vote_id}}">
+    <view class="touo_litop">
+      <image src="{{item.cover}}" mode="aspectFill" />
+      <view class="touo_litop_s" wx:if="{{item.status==1}}">
+        <text >投票中</text>
+      </view>
+      <view class="touo_litop_s" wx:if="{{item.status==2}}" style="background:rgba(0,0,0,.5);">
+        <text >已开奖</text>
+      </view>
+    </view>
+    <view class="touo_libom">
+      <view class="touo_libom_1">{{item.title}}</view>
+      <view class="touo_libom_2">{{starttime[index]}} 自动开奖</view>
+    </view>
+  </view>
+</view>
+<view class="touw" wx:if="{{currentTab==1}}">
+  <view class="touwbox">
+    <view class="touwli" wx:for="{{m_vlist}}" wx:key="index"  bindtap="jump_details" data-id="{{item.vote_id}}">
+      <view class="imgbox"><image src="{{item.vote.cover}}" mode="aspectFill" /></view>
+      <view class="contbox">
+        <view class="contbox_title">奖品：{{item.vote.prize_desc}}</view>
+        <view class="touo_libom_2" style="text-align: left;">{{m_starttime[index]}} 自动开奖</view>
+        <view class="contbox_state" wx:if="{{item.status==0}}">未开奖</view>
+        <view class="contbox_state" wx:if="{{item.status==1}}">中奖</view>
+        <view class="contbox_state" wx:if="{{item.status==2||item.status==3}}">未中奖</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,23 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="page">
+  <view class="pa1">
+    <image src="../img/loadimg.png" class="img1"></image>
+  </view>
+  <view class="pa2">
+    <image src="" class="img2"></image>
+  </view>
+  <view class="pa3">
+    <view class="text1">下载方法</view>
+    <view>
+      <view class="text2">1.复制链接到手机浏览器中打开；</view>
+      <view class="text3">2.在各大应用商店搜索“藏宝”免费下载</view>
+    </view>
+  </view>
+  <view class="pa4">
+    <image src="https://images.cangbaopai.com/main.png" class="img3" bindtap='copy'></image>
+  </view>
+</view>
+<view class='back' style=''>
+  <image src='https://images.cangbaopai.com/bg@2x.png'></image>
+</view>

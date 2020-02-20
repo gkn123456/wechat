@@ -1,0 +1,56 @@
+/* pages/my/mywallet/paypage.wxss */
+@import "../../template/template.wxss";
+page{
+  width:100%;
+  height: 100%;
+  background: #fff;
+}
+.Toptitle{
+  text-align: center;
+  margin: 60rpx auto 46rpx;
+  font-size: 26rpx;
+}
+.content{
+  padding:0 45rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 145px;
+}
+.iptbox{
+  width: 100rpx;
+  height: 100rpx;
+  border:1rpx solid #AAAAAA;
+  border-right: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.iptbox:last-child{
+  border-right:1rpx solid #AAAAAA;
+}
+.ipt{
+  width: 0;
+  height: 0;
+}
+.btn-area{
+  width:335px;
+  height:44px;
+  border-radius:4px;
+  margin-top: 60rpx;
+}
+button[disabled] {
+color:#fff;
+
+}
+button[disabled][type=primary] {
+background:rgba(255,55,64,0.6);
+
+}
+button[type=primary] {
+color:#FFFFFF;
+background:rgba(255,55,64,1);
+
+}

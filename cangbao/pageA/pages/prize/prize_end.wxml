@@ -1,0 +1,17 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="p_head">
+  <button open-type="share" style='border:0;margin:0;padding:0;background-color:#fff;display:flex;' formType="submit" plain="true" hover-class="none" size="mini" class="share">
+    <image src="../img/share.png"/>
+  </button>
+  <view class="p_title">投票标题</view>
+  <view class="p_desc">说明：浣溪沙写的是什么人的生活<text>[多选]</text></view>
+  <view class="p_desc">正确答案：浣溪沙写的是什么人的生活</view>
+  <view class="p_desc">猜中人数：100</view>
+  <view class="p_desc">中奖人：高大上</view>
+  <view class="p_title" style="margin-top:20px;font-size:16px;">我的答案:</view>
+  <view class="p_desc" style="display:flex;align-items: center;justify-content: space-between;">
+    <view>不好办</view>
+    <text style="color:red;">对</text>
+  </view>
+</view>

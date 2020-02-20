@@ -1,0 +1,24 @@
+<!--pageA/pages/follow/follow.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+
+<view class="pa">
+    <image src="../img/nopages.png" class="nopageimg" style="display:{{displays1}};"></image>
+    <view class="sell" wx:for="{{list}}" wx:key="index">
+      <view class="sel" bindtap='goperson' data-id='{{item.seller.user_id}}'>
+        <view class="selleft">
+        <image class="uimg" src="{{item.seller.user_icon}}"></image>
+        <view class="selt">
+          <view class="selttop">
+            <view>{{item.seller.nick_name}}</view>
+            <image src='../img/follow/p-r.png' wx:if="{{item.seller.authenticate == 1}}"></image>
+            <image src='../img/follow/q-r.png' wx:if="{{item.seller.authenticate == 2}}"></image>
+          </view>
+          <view class="seltbom" wx:if="{{item.seller.profile!==''}}">{{item.seller.profile}}</view>
+          <view class="seltbom" wx:if="{{item.seller.profile==''}}">这个家伙很懒，什么也没留下~</view>
+        </view>
+      </view>
+      <image src='../img/follow/right.png' class='selrighimg'></image>
+      </view>
+    </view>
+</view>

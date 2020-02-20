@@ -1,0 +1,87 @@
+/* pages/my/mywallet/trecharge.wxss */
+@import "../../template/template.wxss";
+page{
+  background: #fff;
+}
+.head{
+  background: #fff;
+  padding:60rpx 40rpx;
+  box-sizing: border-box;
+}
+.ctbut{
+  width:343px;
+  height:48px;
+  background:rgba(244,67,54,1);
+  border-radius:3px;
+}
+.t1{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.t2{
+  font-size:52rpx;
+  font-weight:500;
+  color:rgba(28,28,28,1);
+  display: flex;
+  align-items: flex-end;
+  line-height: 46px;
+}
+.t3{
+  font-size:136rpx;
+  font-weight:500;
+  color:rgba(28,28,28,1);
+}
+.pay{
+  display: flex;
+  justify-content: center;
+  margin-top:218rpx;
+}
+.pays1{
+  width:670rpx;
+  height:88rpx;
+  background:#F44336;
+  border-radius:8rpx;
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height: 88rpx;
+  text-align: center;
+  
+}
+.pays1on{
+  background:rgba(244,67,54,0.4);
+}
+.pay1{
+  display: flex;
+  justify-content: center;
+  margin-top:32rpx;
+}
+.pay1 view{
+  width:670rpx;
+  height:88rpx;
+  background:rgba(255,255,255,1);
+  border-radius:8rpx;
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(0,0,0,1);
+  line-height: 88rpx;
+  text-align: center;
+  
+}
+input{
+  font-size:80rpx;
+  font-weight:500;
+  color:rgba(28,28,28,1);
+  min-height:122rpx;
+
+}
+/* input {
+  padding: 0!important;
+  margin: 0!important;
+  line-height: 1!important;
+}
+
+input:before, input:after {
+  display: none!important;
+} */

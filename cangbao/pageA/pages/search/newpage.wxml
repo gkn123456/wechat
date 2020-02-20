@@ -1,0 +1,158 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='head' style="top:{{navH}}px" bindtap='back'>
+  <input disabled="true" placeholder-style="color:rgba(198,198,198,1);" value="{{value}}" maxlength="50"/>
+  <view class='vdelbox' wx:if="{{value!==''}}"></view>
+</view>
+<view style="position:fixed;top:{{navHs}}px;left:0;width:100%;z-index:9;">
+  <view class='sortbox'>
+      <view class='sort_li'>
+        <view bindtap='sort1' wx:if="{{sort1==0&&sortname1=='价格'}}" data-id="1" style='display:flex;align-items:center;'>
+          <view class='sort_font'>价格</view>
+          <image class='sort_img' src="../img/con_tr.png"></image>
+        </view>
+
+        <view bindtap='sort1' wx:if="{{sort1==1||sortname1!=='价格'}}" data-id="0" style='display:flex;align-items:center;'>
+          <view class='sort_fonts'>{{sortname1}}</view>
+          <image class='sort_img' src="../img/con_tr.png" wx:if="{{sort1==0}}"></image>
+          <image class='sort_img' src="../img/sort_top.png" wx:if="{{sort1==1}}"></image>
+        </view>
+        <view class='sort_line'></view>
+      </view>
+      
+      <view class='sort_li'>
+        <view bindtap='sort2' wx:if="{{sort2==0&&sortname2=='开拍时间'}}" data-id="1" style='display:flex;align-items:center;'>
+          <view class='sort_font'>开拍时间</view>
+          <image class='sort_img' src="../img/con_tr.png"></image>
+        </view>
+
+        <view bindtap='sort2' wx:if="{{sort2==1||sortname2!=='开拍时间'}}" data-id="0" style='display:flex;align-items:center;'>
+          <view class='sort_fonts'>{{sortname2}}</view>
+          <image class='sort_img' src="../img/con_tr.png" wx:if="{{sort2==0}}"></image>
+          <image class='sort_img' src="../img/sort_top.png" wx:if="{{sort2==1}}"></image>
+        </view>
+
+        <view class='sort_line'></view>
+      </view>
+      
+      <view class='sort_li'>
+        <view bindtap='sort3' wx:if="{{sort3==0&&sortname3=='分类'}}" data-id="1" style='display:flex;align-items:center;'>
+          <view class='sort_font'>分类</view>
+          <image class='sort_img' src="../img/con_tr.png"></image>
+        </view>
+
+        <view bindtap='sort3' wx:if="{{sort3==1||sortname3!=='分类'}}" data-id="0" style='display:flex;align-items:center;'>
+          <view class='sort_fonts'>{{sortname3}}</view>
+          <image class='sort_img' src="../img/con_tr.png" wx:if="{{sort3==0}}"></image>
+          <image class='sort_img' src="../img/sort_top.png" wx:if="{{sort3==1}}"></image>
+        </view>
+        <view class='sort_line'></view>
+      </view>
+      
+      <view class='sort_li'>
+        <view bindtap='sort4' wx:if="{{sort4==0}}" data-id="1" style='display:flex;align-items:center;'>
+          <view class='sort_font'>筛选</view>
+          <image class='sort_img' src="../img/con_tr.png"></image>
+        </view>
+
+        <view bindtap='sort4' wx:if="{{sort4==1}}" data-id="0" style='display:flex;align-items:center;'>
+          <view class='sort_fonts'>筛选</view>
+          <image class='sort_img' src="../img/con_tr.png" wx:if="{{sort4==0}}"></image>
+          <image class='sort_img' src="../img/sort_top.png" wx:if="{{sort4==1}}"></image>
+        </view>
+      </view>
+  </view>
+<view class='cla_box' style='height:{{height}}px' bindtap='close' wx:if="{{sort4==1||sort3==1||sort1==1||sort2==1}}">
+
+    <view class='cla_page' wx:if="{{sort1==1}}" catchtap='open' data-id='1'>
+      <view class='cla_li' wx:for="{{class_p}}" wx:key="index" catchtap='cla_close1' data-name='{{class_p[index].n}}' data-type='{{class_p[index].type}}'>{{class_p[index].n}}</view>
+    </view>
+    
+    <view class='cla_page' wx:if="{{sort2==1}}" catchtap='open' data-id='2'>
+      <view class='cla_li' wx:for="{{class_t}}" wx:key="index" catchtap='cla_close2' data-name='{{class_t[index].n}}' data-type='{{class_t[index].type}}'>{{class_t[index].n}}</view>
+    </view>
+
+    <view class='cla_page' wx:if="{{sort4==1}}" catchtap='open' data-id='4'>
+        <view class='sx_title'>币种</view>
+        <view class='sx_box'>
+          <view class="currency {{item.state==1? 'c': ''}}" wx:for="{{currency}}" wx:key="index" data-key='{{index}}' data-id='{{currency[index].id}}' bindtap='changelabe' data-type="{{item.state}}">{{currency[index].name}}</view>
+        </view>
+        <view class='sx_title'>价格区间</view>
+        <view class='price_section_box'>
+          <input placeholder='最低价' placeholder-style="color:rgba(170,170,170,1);" bindinput='min_price' value='{{min_price}}'></input>
+          <view class='price_section_line'></view>
+          <input placeholder='最高价' placeholder-style="color:rgba(170,170,170,1);" bindinput='max_price' value='{{max_price}}'></input>
+        </view>
+        <view class='sx_title'>开拍时间</view>
+        <view class='start_time_sectionbox'>
+          <view class="currencys {{start_time_section[index].tg==1? 'c': ''}}" wx:for="{{start_time_section}}" wx:key="index" bindtap='changelabe1' data-key='{{index}}'>{{start_time_section[index].t}}</view>
+        </view>
+        <view class='price_section_box1'>
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" value="{{multiIndex}}" range="{{multiArray}}">
+            <view class="picker">
+                <view class='input' wx:if="{{start_time!==''}}">{{multiArray[0][multiIndex[0]]}}</view>
+                <view class='input_s' wx:if="{{start_time==''}}">选择时间</view>
+                <view class='price_section_line'></view>
+                <view class='input' wx:if="{{end_time!==''}}">{{multiArray[1][multiIndex[1]]}}</view>
+                <view class='input_s' wx:if="{{end_time==''}}">选择时间</view>
+            </view>
+          </picker>
+        </view>
+        <view class='cla_btn'>
+          <view class='c_b_r' catchtap='reset'>重置</view>
+          <view class='c_b_l' catchtap='screen_confirm'>确认</view>
+        </view>
+      </view>
+      
+      <view class="classbox" wx:if="{{sort3==1}}" catchtap='open' data-id='3'>
+        <view class="content-container" style="display:flex;width:100%;">
+          <scroll-view class="classify-container" scroll-y="true">
+          <view class="name {{all_id==1?'active':''}}" catchtap="all_tapClassify" style='margin-bottom:56rpx;'>全部</view>
+          <view class="classify" wx:for="{{class}}" wx:for-item="{{class[index].cate_name}}" wx:key="index" data-id="{{index}}" catchtap="tapClassify">
+            <view class="name {{classid==index?'active':''}}">{{class[index].cate_name}}</view>
+          </view>
+          </scroll-view>
+          <scroll-view class="goods-container" scroll-y="true" scroll-into-view="{{'inToView' + typeIndex}}" scroll-top="{{scrollTop}}" style='padding:28rpx 0;'>
+          <view>
+            
+            <view class="goods {{g_name==class[classid].children[index].cate_name?'active':''}}" wx:for="{{class[classid].children}}" wx:key="index" data-id='{{class[classid].children[index].cate_id}}' catchtap='gain' data-name='{{class[classid].children[index].cate_name}}' wx:if="{{all_id!==1}}">
+              {{class[classid].children[index].cate_name}}
+            </view>
+            <view class="goods {{g_name==all_clss[index].name?'active':''}}" wx:for="{{all_clss}}" wx:key="index" data-id='{{all_clss[index].id}}' catchtap='all_gain' data-name='{{all_clss[index].name}}' wx:if="{{all_id==1}}">
+              {{all_clss[index].name}}
+            </view>
+          </view>
+          </scroll-view>
+        </view>
+      </view>
+  </view>
+</view>
+<!-- 拍品列表 -->
+<view class='listpage'>
+  <view class='Selectedcont'>
+    <view wx:if="{{select==null}}" style='display:flex;justify-content: center;width:100%;'>
+      <image src='../img/classify/ic_nopage.png' class='nopage'></image>
+    </view>
+    <view class='selectli' wx:for="{{select}}" wx:key="index" wx:for-item="item" data-id="{{item.goods_id}}" catchtap='goglobalgoods'>
+      <view style='width:28px;height:28px;position:absolute;top:12px;right:12px;'>
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:28px;height:28px;display:flex;" size="mini" catchtap='collect' wx:if="{{select_s[index].state==0}}" data-id="{{item.goods_id}}" data-ids="{{index}}" open-type="getUserInfo">
+          <image src='../img/homepage/icon_shoucang_xian.png' class='iscolor'></image>
+        </button>    
+        <image src='../img/homepage/icon_shoucang_mian.png' class='iscolor' wx:if="{{select_s[index].state==1}}" catchtap='offcollect' data-id="{{item.goods_id}}" data-ids="{{index}}"></image>
+      </view>
+      <view class='groomimg' style='height:{{goodheight}}px'><image class='selectliimg' src='{{item.cover}}' mode='aspectFill'></image></view>
+      <view class='selcbox'>
+        <view class='selc1'>{{item.title}}</view>
+        <view class='selc2' style='margin-top:4px;'><image class='' src='../img/quan_icon_time_black.png'></image><view class='selc2text'>{{starttime1[index]}}</view></view>
+        <view class='selc2'><image style='width:23rpx;' class='' src='../img/pmai.png'></image><view class='selc2text'>{{item.auction_name}}</view></view>
+        <view class='selprices' wx:if="{{item.now_price!==0}}">
+          <view class='selprice1'>当前价:</view><view class='selprice2'>{{item.currency_symbol}}{{item.now_price}}</view>
+        </view>
+        <view class='selprices' wx:if="{{item.now_price==0}}">
+          <view class='selprice1'>起拍价:</view><view class='selprice2'>{{item.currency_symbol}}{{item.start_price}}</view>
+        </view>
+      </view>
+    </view>
+    <view class='selectlis'></view>
+  </view>
+</view>

@@ -1,0 +1,11 @@
+@import "../template/template.wxss";
+page{
+  background: #fff;
+}
+#sq{
+  background:#00b26a;width: 335px;height: 44px;text-align:center;line-height:44px;color:#fff;font-size:16px;
+  position:fixed;
+  top:45%;
+  left:50%;
+  margin-left:-167.5px;
+}

@@ -1,0 +1,12 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='head'>
+  <view class='h1'>
+    <image src="../img/my/success.png"></image>
+    评价成功
+  </view>
+  <view class='h2'>
+    <view class='bt1' bindtap='toindex'>返回首页</view>
+    <view class='bt2' bindtap='toev'>继续评价</view>
+  </view>
+</view>

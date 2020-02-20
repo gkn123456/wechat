@@ -1,0 +1,25 @@
+<!--pageA/pages/fans/fans.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+
+<view class="pa">
+    <image src="../img/nopages.png" class="nopageimg" style="display:{{displays1}};"></image>
+    <view class="sell" wx:for="{{list}}" wx:key="index">
+      <view class="sel" bindtap='goperson' data-id='{{item.user_id}}'>
+        <view class="selleft">
+          <image class="uimg" src="{{item.fans.user_icon}}"></image>
+          <view class="selt">
+            <view class="selttop">
+              <view>{{item.fans.nick_name}}</view>
+              <image src='../img/follow/p-r.png' wx:if="{{item.fans.authenticate==1}}"></image>
+              <image src='../img/follow/q-r.png' wx:if="{{item.fans.authenticate==2}}"></image>
+            </view>
+            <view class="seltbom" wx:if="{{item.fans.profile!==''}}">{{item.fans.profile}}</view>
+            <view class="seltbom" wx:if="{{item.fans.profile ==''}}">这个家伙很懒，什么也没留下~</view>
+          </view>
+        </view>
+        <view class="selrigh1" wx:if="{{item.is_follow==0}}" catchtap='sellers' data-id='{{item.fans.user_id}}'>+关注</view>
+        <image src='../img/follow/right.png' class='selrighimg' wx:if="{{item.is_follow==1}}"></image>
+      </view>
+    </view>
+</view>

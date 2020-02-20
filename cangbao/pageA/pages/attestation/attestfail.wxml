@@ -1,0 +1,16 @@
+<!--pageA/pages/attestation/attestfail.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='page'>
+  <view class='page1'>
+    <image src='../img/rz/icon_examine_fail@2x.png' class='pg'></image>
+  </view>
+  <view class='page2'>
+    <text>失败原因：{{user.fail_reason}}</text>
+  </view>
+  <view class='page3'>
+    <view class='pagebtn1' bindtap='goatt'>重新提交</view>
+    <button open-type="contact" class='pagebtn2'>联系客服</button>
+  </view>
+  <image src='../img/rz/icon-close.png' class='close' bindtap='back'></image>
+</view>

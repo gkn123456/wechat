@@ -1,0 +1,94 @@
+@import "../template/template.wxss";
+.create_room{
+  width:120px;
+  height: 50px;
+  border:1px solid blue;
+  margin:22px auto; 
+  text-align: center;
+  line-height: 50px;
+}
+.room2{
+  width:100%;
+  border:2px solid yellow;
+  margin-top:20px;
+  background: rgba(0,0,0,.5);
+  border-radius: 10px;
+  padding:5px 6px;
+  box-sizing: border-box;
+  color:#fff;
+  box-shadow:0px 0px 4px 0px rgba(230,230,230,1);
+}
+.room3{
+  width:100%;
+  border:1px solid #000;
+}
+.room3s{
+  display: flex;
+}
+.room{
+  width:100%;
+  border:2px solid #000;
+  margin-top:20px;
+}
+.room1{
+  width:100%;
+  margin-top:10px;
+  display: flex;
+  justify-content: space-between;
+  padding:0 16px;
+  box-sizing: border-box;
+  margin-bottom:10px;
+}
+.room1_s{
+  width:39%;
+  height:40px;
+  text-align: center;
+  line-height: 40px;
+  background:linear-gradient(132deg,rgba(253,215,50,1) 0%,rgba(245,184,16,1) 100%);
+  border-radius: 25px;
+  color:#fff;
+}
+.room1_s1{
+  width:50%;
+  height:50px;
+  border:1px solid red;
+  text-align: center;
+  line-height: 50px;
+}
+.room1_s2{
+  width:50%;
+  border:1px solid #000;
+}
+.start{
+  width:80px;
+  height: 30px;
+  border-radius: 10px;
+  border:1ps solid #ccc;
+  background: red;
+  color:#fff;
+  text-align: center;
+  line-height: 30px;
+}
+.hottop{
+  width:60px;
+  height:25px;
+  border:1px solid #ccc;
+  line-height: 25px;
+  text-align: center;
+  color:#fff;
+  background:linear-gradient(132deg,rgba(253,215,50,1) 0%,rgba(245,184,16,1) 100%);
+}
+.xf{
+  width:99px;
+  height:34px;
+  background:linear-gradient(233deg,rgba(244,67,54,1) 0%,rgba(244,67,54,0.1) 100%);
+  border-radius:100px 0px 0px 100px;
+  position: fixed;
+  top:200px;
+  right:0;
+  font-size:12px;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:34px;
+  text-align: center;
+}

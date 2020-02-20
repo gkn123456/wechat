@@ -1,0 +1,45 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<!-- 分享 -->
+<template is="shareapp" wx:if="{{whethershare==1}}"></template>
+<!-- 海报 -->
+<template is="posterapp" wx:if="{{whetherposter==1}}" data="{{sharePicUrl,coverimg}}"></template>
+<view class="setheader">
+  <view class="header1" bindtap='modify'>
+    <view class="header1z">
+      <image class="header1zimg1" src="{{icon}}"></image>
+      <text>{{name}}</text>
+    </view>
+    <image class="header1y" src="../../img/my/right.png"></image>
+  </view>
+  <view class="header2"></view>
+  <view class="header3" bindtap='addressmanage'>
+    <text>收货地址管理</text>
+    <image class="header3to" src="../../img/my/right.png"></image>
+  </view>
+  <view class="header2"></view>
+  <view class="header3" bindtap='papermanage'>
+    <text>清关证件管理</text>
+    <image class="header3to" src="../../img/my/right.png"></image>
+  </view>
+</view>
+
+<view class="setheader">
+  <view class="header3" bindtap='gofeed'>
+    <text>意见反馈</text>
+    <image class="header3to" src="../../img/my/right.png"></image>
+  </view>
+  <view class="header2" style='height:2rpx;'></view>
+  <view class="header3" bindtap='goabout'>
+    <text>关于藏宝</text>
+    <view class='b_n'>
+      <view class='b_num'>{{version}}</view>
+      <image class="header3to" src="../../img/my/right.png"></image>
+    </view>
+  </view>
+  <view class="header2" style='height:2rpx;'></view>
+  <view class="header3" bindtap='openshare'>
+    <text>分享App</text>
+    <image class="header3to" src="../../img/my/right.png"></image>
+  </view>
+</view>

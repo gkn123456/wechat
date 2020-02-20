@@ -1,0 +1,203 @@
+<!-- 头部信息 -->
+<form bindsubmit="formSubmit" report-submit='true'>
+<view id="usernames" style="">{{user.nick_name}}</view>
+<view class='myhead'>
+  <!--适配头部填充  -->
+  <view class='headpadding' style='height:{{navH}}px;'></view>
+  <!-- 头部内容 -->
+  <view class='headcontbox'>
+    <!-- 未登录 -->
+    <view class='notloginbox' wx:if="{{isblock=='1'}}">
+      <image class='user_img' src="../img/myimg/usericons.png"></image>
+      <button open-type="getUserInfo" bindgetuserinfo='btn_sub' class='logintext' formType="submit">点击登陆/注册</button>
+    </view>
+    <!-- 买-卖家端用户信息 -->
+    <view class='buyersidebox' wx:if="{{isblock=='0'}}">
+      <view class='buyerside_left'>
+        <view class='buyerside_usericon' bindtap='jumpedit'>
+          <image class='user_img' src="{{user.user_icon}}"></image>
+          <image class='user_authentication_img' src='../img/myimg/wode_icon_renzheng.png' wx:if="{{user.authenticate!==0}}"></image>
+        </view>
+        <view class='user_namebox'>
+          <view class='user_name' id="username" bindtap='jumpedit'>
+            <view style="{{wstyle}}">{{user.nick_name}}</view><image src='../img/myimg/myedit.png' id="myedit" style="{{bstyle}}"/>
+          </view>
+          <view class='gouser' bindtap='goparse'><text>查看个人主页</text><image src='../img/myimg/wode_btn_next_white.png'></image></view>
+        </view>
+      </view>
+      <view class='terminalchange' bindtap='terchange' data-id='0' wx:if="{{terminal=='0'}}"><text>买家端</text><image class='terminalimg' src="../img/myimg/wode_brn_transfer.png"></image></view>
+      <view class='terminalchange' bindtap='terchange' data-id='1' wx:if="{{terminal=='1'}}"><text>商家端</text><image class='terminalimg' src="../img/myimg/wode_brn_transfer.png"></image></view>
+    </view>
+    <!-- 买家端功能信息 -->
+    <view class='buyersidepage' wx:if="{{terminal=='0'}}">
+      <!-- 关注。收藏等列表 -->
+      <view class='buylist'>
+        <view class='list_li' bindtap='jump' data-type='1'><text class='list_li_font1'>{{user.follow_count}}</text><text class='list_li_font2'>关注</text></view>
+        <view class='list_li' bindtap='jump' data-type='2'>
+          <text class='list_li_font1'>{{user.collection_count}}</text><text class='list_li_font2'>收藏</text>
+        </view>
+        <view class='list_li' bindtap='jump' data-type='3'>
+          <text class='list_li_font1'>{{user.bidder_goods_count}}</text><text class='list_li_font2'>参拍</text>
+        </view>
+        <view class='list_li' bindtap='jump' data-type='4'>
+          <text class='list_li_font1'>{{user.seller_follow_count}}</text><text class='list_li_font2'>粉丝</text>
+        </view>
+      </view>
+      <!-- 余额 -->
+      <view class='walletbalance' bindtap='jump' data-type='5'>
+        <view class='walletbalancebox'><text class='balan_font1'>余额</text><text class='balan_font2'>¥ {{user.amount}}</text></view>
+      </view>
+      <!-- 我的订单 -->
+      <view class='myorderbox'>
+        <view class='myorder_head'>
+          <view class='myorder_head_left'>我的订单</view>
+          <view class='myorder_head_right' bindtap='jump' data-type='6'><text>全部订单</text><image class='nextimg' src='../img/myimg/wode_btn_next.png'></image>
+          </view>
+        </view>
+        <view class="logistics">
+          <view class="log" bindtap='jump' data-type='7'>
+              <image src="../img/myimg/wode_icon_daizhifu.png"></image>
+              <text>待付款</text>
+              <view wx:if="{{type==2&&num.pay!==0}}" class="num" style='background:{{s1}};'>{{num.pay}}</view>
+          </view>
+          <view class="log" bindtap='jump' data-type='8'>
+            <image src="../img/myimg/wode_icon_daifahuo.png"></image>
+            <text>待发货</text>
+            <view wx:if="{{type==2&&num.send!==0}}" class="num" style='background:{{s2}};'>{{num.send}}</view>
+          </view>
+          <view class="log" bindtap='jump' data-type='9'>
+            <image src="../img/myimg/wode_icon_daishouhuo.png"></image>
+            <text>待收货</text>
+            <view wx:if="{{type==2&&num.receive!==0}}" class="num" style='background:{{s3}};'>{{num.receive}}</view>
+          </view>
+          <view class="log" bindtap='jump' data-type='10'>
+            <image src="../img/myimg/wode_icon_daipingjia.png"></image>
+            <text>待评价</text>
+            <view wx:if="{{type==2&&num.comment!==0}}" class="num" style='background:{{s4}};'>{{num.comment}}</view>
+          </view>
+          <view class="log" bindtap='jump' data-type='11'>
+            <image src="../img/myimg/wode_icon_shouhou.png"></image>
+            <text>售后</text>
+            <view wx:if="{{type==2&&num.after_sale!==0}}" class="num" style='background:{{s5}};'>{{num.after_sale}}</view>
+          </view>
+        </view>
+      </view>
+      <!-- 我的服务 -->
+      <view class='myorderbox'>
+        <view class='myorder_head'><view class='myorder_head_left'>我的服务</view><view class='myorder_head_right'></view></view>
+        <view class="logistics">
+          <view class="log" bindtap='jump' data-type='12'><image src="../img/myimg/wode_icon_qianbao.png"></image><text>钱包/充值</text></view>
+          <view class="log" bindtap='jump' data-type='17'><image src="../img/myimg/coupon_icon.png"/><text>优惠券</text></view>
+          <view class="log" bindtap='jump' data-type='13'><image src="../img/myimg/wode_icon_baozhengjin.png"></image><text>保证金</text></view>
+          <view class="log" bindtap='jump' data-type='14'><image src="../img/myimg/wode_icon_dizhi.png"></image><text>收货地址</text></view>
+        </view>
+        <view class="logistics">
+          <view class="log" bindtap='jump' data-type='15'>
+            <button open-type="{{contact}}" class="service" formType="submit"><image src="../img/myimg/wode_icon_kefu.png"></image></button>
+            <text>平台客服</text>
+          </view>
+          <view class="log" bindtap='goread'><image src="../img/myimg/wode_icon_help.png"></image><text>帮助中心</text></view>
+          <view class="log" bindtap='go_live'><image src="../img/myimg/wode_icon_help.png"></image><text>直播入口</text></view>
+          <!-- <view class="log" bindtap='jump' data-type='16'><image src="../img/myimg/wode_icon_shezhi.png"></image><text>更多设置</text></view> -->
+          <view class="log" bindtap='jump' data-type='15'>
+            <button open-type="contact" class="service" formType="submit" session-from="app" show-message-card="true" send-message-img="../img/logo.png">
+              <image src="../img/myimg/load.png"></image>
+              <text>下载APP</text>
+            </button>
+          </view>
+        </view>
+        <view class="logistics" style="justify-content: none;">
+          <view class="log" bindtap='go_pay'><image src="../img/myimg/wode_icon_help.png"></image><text>开直播</text></view>
+          <view class="log" bindtap='go_pay1'><image src="../img/myimg/wode_icon_help.png"></image><text>商家直播</text></view>
+        </view>
+      </view>
+    </view>
+    <!-- 买家端功能信息 -->
+    <view class='buyersidepage' wx:if="{{terminal=='1'}}">
+      <!-- 数量 -->
+      <view class='head_num'>
+        <view class='num1'><view class='num1_o'>{{seller_user.history_amount}}元</view><view class='num1_t'>成交总额</view></view>
+        <view class='num2'>
+          <view class='num2_l'></view>
+          <view class='num2_c'><view class='num2_o'>{{seller_user.history_order_count}}</view><view class='num2_t'>成交总数</view></view>
+          <view class='num2_l'></view>
+        </view>
+        <view class='num3' bindtap='go_stor'><view class='num3_o'>{{seller_user.score}}</view><view class='num3_t'>店铺评分</view></view>
+      </view>
+      
+      <!-- 我的订单 -->
+      <view class='myorderbox'>
+        <view class='myorder_head'>
+          <view class='myorder_head_left'>店铺订单</view>
+          <view class='myorder_head_right' bindtap='goselor' data-type='0'><text>全部订单</text><image class='nextimg' src='../img/myimg/wode_btn_next.png'></image>
+          </view>
+        </view>
+        <view class="logistics">
+          <view class="log" bindtap='goselor' data-type='1'>
+              <image src="../img/myimg/wode_icon_daizhifu.png"></image>
+              <text>待支付</text>
+              <view wx:if="{{seller_num.pay!==0}}" class="num" style='background:{{sl1}};'>{{seller_num.pay}}</view>
+          </view>
+          <view class="log" bindtap='goselor' data-type='2'>
+            <image src="../img/myimg/wode_icon_daifahuo.png"></image>
+            <text>待发货</text>
+            <view wx:if="{{seller_num.send!==0}}" class="num" style='background:{{sl2}};'>{{seller_num.send}}</view>
+          </view>
+          <view class="log" bindtap='goselor' data-type='3'>
+            <image src="../img/myimg/wode_icon_daishouhuo.png"></image>
+            <text>待收货</text>
+            <view wx:if="{{seller_num.receive!==0}}" class="num" style='background:{{sl3}};'>{{seller_num.receive}}</view>
+          </view>
+          <view class="log" bindtap='goselor' data-type='5'>
+            <image src="../img/myimg/wode_icon_shouhou.png"></image>
+            <text>售后</text>
+            <view wx:if="{{seller_num.after_sale!==0}}" class="num" style='background:{{sl4}};'>{{seller_num.after_sale}}</view>
+          </view>
+          <view class="log"><image src=""></image><text style='color:rgba(0,0,0,0)'>售后</text></view>
+        </view>
+      </view>
+      <!-- 我的服务 -->
+      <view class='myorderbox'>
+        <view class='myorder_head'><view class='myorder_head_left'>经营工具</view><view class='myorder_head_right'></view></view>
+        <view class="logistics">
+          <view class="log" bindtap='goparse'><image src="../img/myimg/wode_icon_dianpu.png"></image><text>进入店铺</text></view>
+          <view class="log" bindtap='jump' data-type='12'><image src="../img/myimg/wode_icon_qianbao.png"></image><text>钱包/提现</text></view>
+          <view class="log" bindtap='goshopadmin'><image src="../img/myimg/wode_icon_shangpin.png"></image><text>商品管理</text></view>
+          <view class="log" bindtap='openpub'><image src="../img/myimg/wode_icon_fabu.png"></image><text>发布</text></view>
+        </view>
+        <view class="logistics">
+          <view class="log" bindtap='openewm'><image src="../img/myimg/wode_icon_erweima.png"></image><text>二维码</text></view>
+          <view class="log" bindtap='goreal'><image src="../img/myimg/wode_icon_zheng.png"></image><text>认证资质</text></view>
+          <view class="log" bindtap='goread'><image src="../img/myimg/wode_icon_help.png"></image><text>帮助中心</text></view>
+          <view class="log" bindtap='jump' data-type='16'><image src="../img/myimg/wode_icon_shezhi.png"></image><text>更多设置</text></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 店铺二维码 -->
+<view class="dpewm" style="display:{{v1}};">
+  <image class='closeewm' src="../img/paysuccess/close.png" bindtap='closeewm'></image>
+  <image class='emimg' src='{{ewm}}'></image>
+  <view class='btns'><view class='btn1' bindtap='goapplycard'>官方寄送</view><view class='btn2' bindtap='sav'>保存到相册</view></view>
+</view>
+<!-- 发布拍品 -->
+<view class='publishbox' wx:if="{{ispublish==1}}" bindtap='closepub'>
+  <view class='publish' catchtap='openpub'>
+    <view class='pub_box1'>
+      <view class='pub_b_1' catchtap='closepub1'>
+        <image class='pub_b_img' src='../img/my/seller/sellerpin.png'></image><view class='pub_b_text'>发拍品</view>
+      </view>
+      <view class='pub_b_2' catchtap='closepub2'>
+        <image class='pub_b_img' src='../img/my/seller/sellergpin.png'></image><view class='pub_b_text'>发商品</view>
+      </view>
+    </view>
+    <image class='pub_img' src='../img/my/seller/seller_btn_close.png' catchtap='closepub'></image>
+  </view>
+</view>
+</form>
+
+
+
+
+

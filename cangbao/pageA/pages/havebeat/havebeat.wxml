@@ -1,0 +1,93 @@
+<!--pageA/pages/havebeat/havebeat.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+
+<view class='qh'style='top:{{navH}}px;'>
+  <view class='qh_h'>
+    <view class="ah_h1 {{ahh2==1 ? 'ah_hs' : ''}}" bindtap='switch' data-id='1'>
+      全球拍
+      <view class="redline {{ahh2==1 ? 'redlines' : ''}}"></view>
+    </view>
+    <view class="ah_h1 {{ahh2==0 ? 'ah_hs' : ''}}" bindtap='switch' data-id='0'>
+      国内拍
+      <view class="redline {{ahh2==0 ? 'redlines' : ''}}"></view>
+    </view>
+  </view>
+</view>
+<!-- 拍品 -->
+<view class="pa" wx:if="{{ahh2==0}}">
+    <view class='pa_lin'></view>
+    <image src="../img/nopages.png" class="nopageimg" style="display:{{displays1}};"></image>
+    <view style='display:flex;flex-wrap:wrap;justify-content:center;'>
+      <view class="videol" wx:for="{{list1}}" wx:key="index" style='position:relative;'>
+        <navigator url="../../../pages/videos/videos?id={{item.goods.goods_id}}">
+          <image src="{{item.goods.cover}}" class="v" mode="aspectFill" lazy-load="true"></image>
+          <view style='position:absolute;top:0;right:32rpx;'>
+                <view wx:if="{{item.bid_status==1}}">
+                  <image src='https://images.cangbaopai.com/icon_chengjiao.png' class='status_img'></image>
+                </view>
+                <view wx:if="{{item.bid_status==2}}">
+                  <image src='https://images.cangbaopai.com/icon_%E9%A2%86%E5%85%88@3x.png' class='status_img'></image>
+                </view>
+                <view wx:if="{{item.bid_status==3}}">
+                  <image src='https://images.cangbaopai.com/icon_chuju@3x.png' class='status_img'></image>
+                </view>
+            </view>
+          <view class="z1" style=''>
+            <view class="zhots">
+              <text class="nowprictext" style='font-size:36rpx;'>¥{{item.goods.now_price}}</text>
+              <view class='ip_z' wx:if="{{item.goods.status==1}}">竞拍中</view>
+              <view class='ip_z' wx:if="{{item.goods.status==4||item.goods.status==5}}">已结拍</view>
+            </view>
+            <view class="hotl">
+              <view style='font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'>{{item.goods.title}}</view>
+            </view>
+          </view>
+        </navigator>
+      </view>
+      <view class="videol"></view>
+    </view>
+</view>
+<!-- 全球拍 -->
+<view class="pa" wx:if="{{ahh2==1}}">
+    <view class='pa_lin'></view>
+    <image src="../img/nopages.png" class="nopageimg" style="display:{{displays1}};"></image>
+    <view style='display:flex;flex-wrap:wrap;justify-content: center;'>
+      <view class="global" wx:for="{{list2}}" wx:key="index" style='position:relative;'>
+        <view class='global_status'>
+          <image src='https://images.cangbaopai.com/icon_%E9%A2%86%E5%85%88@3x.png' class='status_img' wx:if="{{item.goods.status==1&&item.bid_status==1||item.bid_status==2}}"></image>
+          <image src='https://images.cangbaopai.com/icon_chuju@3x.png' class='status_img' wx:if="{{item.bid_status==3}}"></image>
+          <image src='https://images.cangbaopai.com/icon_chengjiao.png' class='status_img' wx:if="{{item.goods.status!==1&&item.bid_status==1}}"></image>
+        </view>
+        <navigator url="../../../pages/videos/global?id={{item.goods.goods_id}}" style='display:flex;width:100%;' hover-class='none'>
+          <view class="global_imgtype">
+            <image src="{{item.goods.cover}}" class="global_imgs" mode="aspectFill" lazy-load="true"></image>
+            <view class='global_imgtypefont'>
+              <text wx:if="{{item.goods.status==1||item.goods.status==2}}">竞拍中</text>
+              <text wx:if="{{item.goods.status==4||item.goods.status==5}}">已结拍</text>
+            </view>
+            <view class='global_imgtypes' wx:if="{{item.goods.status==3}}">已失效</view>
+          </view>
+          <view class='global_right'>
+            <view class='global_right_title'>{{item.goods.title}}</view>
+            <view class='global_right_myprice'>
+              <text class='g_r_mt1'>我的出价:</text>
+              <text class='g_r_mt1' style="font-weight:bold;font-size:32rpx;">{{item.goods.currency_symbol}}{{item.price}}</text>
+              <text wx:if="{{item.bid_status==4}}" style='font-size:24rpx;color:rgba(111,111,111,1);line-height:24rpx;'>(已取消)</text>
+            </view>
+            
+            <view class='global_right_cprice' wx:if="{{item.goods.deal_price!==0&&(item.goods.status==3||item.goods.status==4||item.goods.status==5)}}">
+              <text class='g_r_mt1'>成交价：</text>
+              <text class='g_r_mt2' style="font-weight:bold;">{{item.goods.currency_symbol}}{{item.goods.deal_price}}</text>
+            </view>
+            <view class='isbondbox' wx:if="{{item.paid_deposit!=='0.00'}}">已缴保证金：<text>￥{{item.paid_deposit}}</text></view>
+            <view class='global_btn' wx:if="{{item.goods.status==1||item.goods.status==2}}">
+              <view class='g_btn_2' catchtap='cancel_price' data-id='{{item.goods.goods_id}}' wx:if="{{item.bid_status!==4}}">取消出价</view>
+              <view class='g_btn_2' style='color:rgba(68,68,68,.4);border:1rpx solid rgba(111,111,111,.4);' wx:if="{{item.bid_status==4}}" catchtap="ct">取消出价</view>
+              <view class='g_btn_1' wx:if="{{item.goods.status==1}}" catchtap='go_glabal' data-id='{{item.goods.goods_id}}'>继续出价</view>
+            </view>
+          </view>
+        </navigator>
+      </view>
+    </view>
+  </view>

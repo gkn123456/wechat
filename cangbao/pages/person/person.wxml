@@ -1,0 +1,154 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="header">
+		<image src="{{details.user_icon}}" style="filter:blur(5px);width:100%;height: 100%;" alt="" />
+		<view class="heads">
+			<view class="userheaders">
+			<view style="width:64px;height:100%;position: relative;">
+				<view class="us-image" style="width: 100%;height: 100%;display: flex;align-items: center;" bindtap='shopdetail'>
+					<image style="width: 64px;height: 64px;border-radius: 50%;" src="{{details.user_icon}}" alt="用户头像" title="用户头像"/>
+				</view>
+				<view style="position: absolute;bottom:0;left: 50%;margin-left: -28px;width:56px;height: 18px;">
+					<image class="Authentication" wx:if="{{details.authenticate_class==1}}" style="position:absolute;width: 100%;height: 100%;" src="../img/p-r.png" alt="" />
+          <image class="Authentication" wx:if="{{details.authenticate_class==2}}" style="position:absolute;width: 100%;height: 100%;" src="../img/q-r.png" alt="" />
+				</view>
+			</view>
+      
+			<view class="canyoucot">
+				<view class="us-name" style="font-size:24px;font-weight:400;color:rgba(255,255,255,1);">{{details.nick_name}}</view>
+				<view style="display: flex;margin-top: 8px;">
+					<view style="font-size:10px;font-weight:400;color:rgba(179,179,179,1);">藏友号：<text class="us-num">{{details.user_id}}</text></view>
+					<view class="us-city" style="font-size:10px;font-weight:400;color:rgba(179,179,179,1);margin-left: 16px;" wx:if="{{details.area_info!==null}}">
+            <image src="../img/city.png" style="width:8px;height:10px;"></image>
+            {{details.area_info}}
+          </view>
+				</view>
+			</view>
+			</view>
+
+			<view class="us-pname" wx:if="{{details.profile!==''}}">{{details.profile}}</view>
+      <view class="us-pname" wx:if="{{details.profile==''}}">这个家伙很懒，什么也没留下~</view>
+
+			<view style="display: flex;padding:8px 0;">
+				<view class="us-class" wx:if="{{details.authenticate==0}}" style="font-size:12px;font-weight:400;color:rgba(187,185,185,1);display: flex;width: 22%;">感兴趣：</view>
+        <view class="us-class" wx:if="{{details.authenticate==1}}" style="font-size:12px;font-weight:400;color:rgba(187,185,185,1);display: flex;width: 22%;">经营类目：</view>
+        <view class="us-like" wx:if="{{details.tag.length == 0}}" style="width:77%;color:rgba(187,185,185,1);font-size:12px;">
+					暂无类目
+				</view>
+        <view class="us-like" wx:if="{{details.tag.length !== 0}}" style="width:77%;color:rgba(187,185,185,1);font-size:12px;overflow:hideden;height:16px;">
+					<view style="width:100%;height:{{heights}};overflow:hidden;">
+            <view wx:for="{{details.tag}}" wx:key="index" style="background: rgba(155,155,155,0.4);border-radius: 9px;font-size: 12px;font-weight: 400;color: rgba(213,213,213,1);height: 16px;line-height:16px;padding: 0 5px;margin-right:8px;float: left;overflow:hidden;margin-bottom:4px;"> 
+              {{item.cate_name}}
+            </view>
+          </view>
+				</view>
+        <view style="display:flex;align-items:flex-start;">
+          <image wx:if="{{details.tag.length > 5}}" src="../img/xiala.png" style="width:16px;height:16px;display:{{block}};" bindtap='xiala'></image>
+          <image src="../img/xiala1.png" style="width:16px;height:16px;display:{{block1}};" bindtap='xiala1'></image>
+        </view>
+				
+			</view>
+			<view style="display: flex;height:58px;justify-content: space-between;margin-top:8px;">
+				<view style="display: flex;align-items: center;">
+					<view style="display: flex;flex-direction: column;align-items: center;justify-content: space-between;height: 30px;">
+						<text class="us-ponse" style="font-size:14px;font-weight:400;color:rgba(219,219,219,1);line-height:10px;">{{details.follow_count}}</text>
+						<text style="font-size:10px;font-weight:400;color:rgba(175,175,175,1);line-height:10px;">关注</text>
+					</view>
+					<view style="margin-left:26px;display: flex;flex-direction: column;align-items: center;justify-content: space-between;height: 30px;">
+						<text class="us-fanse" style="font-size:14px;font-weight:400;color:rgba(219,219,219,1);line-height:10px;">{{details.seller_follow_count}}</text>
+						<text style="font-size:10px;font-weight:400;color:rgba(175,175,175,1);line-height:10px;">粉丝</text>
+					</view>
+
+          <view style="margin-left:26px;display: flex;flex-direction: column;align-items: center;justify-content: space-between;height: 30px;" bindtap='shopdetail'>
+						<text class="us-fanse" style="font-size:36rpx;font-weight:600;color:rgba(219,219,219,1);line-height:10px;">{{details.score}}</text>
+						<text style="font-size:24rpx;font-weight:600;color:rgba(255,255,255,1);line-height:10px;">评分</text>
+					</view>
+				</view>
+				<view style="display: flex;align-items: center;" wx:if="{{details.is_self==0}}">
+					<view style="width:126rpx;height:60rpx;border-radius:3px;border:2rpx solid #fff;">
+            <button open-type="contact" class="service" formType="submit" session-from="app" show-message-card="true" send-message-img="../img/logo.png" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;width:100%;height:100%;background:rgba(0,0,0,0);font-size:14px;font-weight:400;color:rgba(255,255,255,1);display: flex;align-items: center;justify-content: center;box-sizing: border-box;">私信</button>
+          </view>
+					<view class="tt" wx:if="{{follow==0}}" bindtap='follow'>+关注</view>
+          <view class="tt1" wx:if="{{follow==1}}" bindtap='tofollow'>已关注</view>
+				</view>
+			</view>
+		</view>
+		
+	</view>
+  <!-- 滑动状态栏 -->
+  <view class='zt' style='{{style}}top:{{navH}}px;'>
+    <view class='ztl'>
+      <image src='{{details.user_icon}}'></image>
+      <text>{{details.nick_name}}</text>
+    </view>
+    <view class='ztr'>
+      <image class='ztrimg1' src='../img/my/wgz.png' wx:if="{{follow==0&&details.is_self==0}}" bindtap='follow'></image>
+      <button type="primary" open-type="share"  plain="true" hover-class="none" style="border:0;padding:0;margin:0;display:flex;" size="mini">
+        <image class='ztrimg2' src='../img/my/zf.png'></image>
+      </button>
+    </view>
+  </view>
+  <!-- 竞拍中 -->
+  <view class="tab">
+			<view class="tab_cut">
+				<view class="auction1 {{type==0? 'on' : ''}}" bindtap='switch' data-type='0'>
+					竞拍中
+            <view class="xz1 {{type==0? 'ons' : ''}}"></view>
+				</view>
+        <view class="auction2 {{type==1? 'on' : ''}}" bindtap='switch' data-type='1'>
+					宝库
+          <view class="xz2 {{type==1? 'ons' : ''}}"></view>
+				</view>
+			</view>
+	</view>
+  <!-- 竞拍拍品 -->
+
+<image src="../img/nopages.png" class="nopageimg" wx:if="{{type==0&&details1==null}}"></image>
+<image src="../img/nopages.png" class="nopageimg" wx:if="{{type==1&&bk==null}}"></image>
+<view class="videos" wx:if="{{type==0}}">
+    <view class="videol" wx:for="{{details1}}" wx:key="index">
+      <navigator url="../videos/videos?id={{item.goods_id}}">
+        <image src="{{item.cover}}" mode="aspectFill" class="v" lazy-load="true"></image>
+        <image src="../img/video_play.png" class="isvideo" wx:if="{{item.video!==null}}"></image>
+        <view class="z">
+          <view class="zhot">
+              <view>
+                <text wx:if="{{item.now_price==0}}">¥{{item.start_price}}</text>
+                <text wx:if="{{item.now_price!==0}}">¥{{item.now_price}}</text>
+              </view>
+              <view class="heat">
+                <image src="../img/redu.png"></image>
+                <text style='color:rgba(236,236,236,1);font-size:10px;'>{{item.play_count}}</text>
+              </view>
+          </view>
+          <view class="zhots">
+            <text>{{item.title}}</text>
+          </view>
+          
+        </view>
+      </navigator>
+    </view>
+    <view class="videol"></view>
+</view>
+
+<!-- 宝库 -->
+<view class='baoku' wx:if="{{type==1}}">
+  <view class='baokus'>
+    <view class='boxlist' wx:for="{{bk}}" wx:key="index" style='width:{{sizeheight}}' bindtap='gopers' data-id='{{bk[index].goods_id}}' data-type='{{bk[index].class}}'>
+        <image mode="aspectFill" src='{{bk[index].cover}}' class='boxliimg' lazy-load="true"></image>
+        <view class='boxbot'>
+          <image src='../img/my/chushou.png' class='boxprimg1' wx:if="{{bk[index].shop_class==1}}"></image>
+          <image src='../img/my/yijia.png' class='boxprimg2' wx:if="{{bk[index].shop_class==2}}"></image>
+          <text class='boxprfont' wx:if="{{bk[index].shop_class==1}}">{{bk[index].sell_price}}</text>
+          <text class='boxprfont' wx:if="{{bk[index].shop_class==2}}">议价</text>
+        </view>
+    </view>
+    <view class='boxlist1' style='width:{{sizeheight}}'>
+    
+    </view>
+  </view>
+</view>
+<button open-type="launchApp" app-parameter="{{openAPPurl}}" binderror="launchAppError" style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' type="primary" wx:if="{{scene==1036}}">
+  <image src='../img/openApp.png' id='openApps'></image>
+</button>
+<template is="template_downloadapp" wx:if="{{scene!==1036}}"></template>

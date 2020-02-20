@@ -1,0 +1,22 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="addressall">
+<image src="../../img/nopages.png" class="nopageimg" wx:if="{{list==null}}"></image>
+  <view class="addrtr" wx:for="{{list}}" wx:key="index">
+    <image class="moren" src="../../img/my/address/label.png" wx:if="{{item.default==1}}"></image>
+    <view class="addtop" bindtap='goorder' data-id='{{item.address_id}}' data-wareid='{{index}}'>
+        <view class="addtpy">
+          <view class="addtopy1">
+            <text class="adtext1">{{item.accept_name}}</text>
+            <text class="adtext2">{{item.mobile}}</text>
+          </view>
+          <view class="addtopy">{{item.pca_text}}{{item.address}}</view>
+        </view>
+    </view>
+    <navigator url="./Modifyaddress?id={{item.address_id}}&pro={{item.pca_text}}" hover-class="none">
+        <image class="bianimg" src="../../img/my/address/bianji.png"></image>
+    </navigator>
+  </view>
+  <view class="addres1"></view>
+  <view class="addres" bindtap='addnew'>添加新地址</view>
+</view>

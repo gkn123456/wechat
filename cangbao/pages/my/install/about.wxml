@@ -1,0 +1,32 @@
+<!--pages/my/install/about.wxml-->
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class='head'>
+  <view class='logo'>
+    <image src='../../img/logo.png' class='logo_img'></image>
+    <view class='version'>{{version}}</view>
+  </view>
+</view>
+<view class='main1'>
+  <view class='lis' bindtap='goxieyi1'>
+    <view class='lis_text'>北京藏宝科技有限公司交易服务用户协议</view>
+    <image src='../../img/my/right.png' class='lisimg'></image>
+  </view>
+  <view class='lis' bindtap='goxieyi2'>
+    <view class='lis_text'>藏宝隐私政策</view>
+    <image src='../../img/my/right.png' class='lisimg'></image>
+  </view>
+</view>
+<view class='main1'>
+  <view class='lis'>
+    <view class='lis_text'>微信公众号</view>
+    <view class='lisimgs' style='font-size:14px;color:rgba(68,68,68,1);'>
+      {{public}}
+    </view>
+  </view>
+  <view class='lis' bindtap='phonecall'>
+    <view class='lis_text'>联系电话</view>
+    <view class='lisimgs' style='font-size:14px;color:rgba(68,68,68,1);'>{{phone}}</view>
+  </view>
+</view>
+<view class='br'>版权所有 北京藏宝科技有限公司</view>

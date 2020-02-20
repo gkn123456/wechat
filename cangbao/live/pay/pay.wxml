@@ -1,0 +1,79 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<template is="payquota" wx:if="{{quota==1}}"></template>
+<view class="record">
+  <view bindtap="record">开通记录</view>
+</view>
+<view class="moneybox">
+  <view class="m_li {{item.state==1?'on':''}}" wx:for="{{m.expiry_type}}" wx:key="index" bindtap="choice" data-id="{{index}}">
+    <view class="discount" wx:if="{{item.discount!==0}}">{{item.discount}}折优惠</view>
+    <view class="mli_c1">{{item.duration}}个月</view>
+    <view class="mli_c2">
+      <view class="mli_c2_p1">¥</view>
+      <view class="mli_c2_p2">{{item.now_price}}</view>
+    </view>
+    <view class="mli_c3" wx:if="{{item.discount!==0}}">{{item.original_price}}</view>
+  </view>
+</view>
+<view class="tips">
+  <view class="t_1">注意：</view>
+  <view class="t_2">商品展示的划横线价格为参考价；</view>
+  <view class="t_3">开通后在到期之前不可取消，且支付后一律不予退款。</view>
+  <view class="t_3">
+    <text>有效期至：{{termofvalidity.y}}-{{termofvalidity.m}}-{{termofvalidity.d}}</text>
+    <text wx:if="{{termofvalidity.d<3.1}}">，剩余{{termofvalidity.d}}天。</text>
+  </view>
+</view>
+<view class="footer">
+  <view class="confirm">
+    <image src="../img/x_n.png" wx:if="{{selection==0}}" bindtap="selection" data-type="1"/><image src="../img/x_c.png" wx:elif="{{selection==1}}" bindtap="selection" data-type="0" />
+    <view>阅读并同意<text style="color:#F44336;" bindtap="goxy">《开通直播服务协议》</text></view>
+  </view>
+  <view class="btns">
+    <view class="btn {{selection!==0&&month!==0?'':'ons'}}" bindtap="openpay">
+      <text wx:if="{{m.expiry_time==0}}">立即开通</text>
+      <text wx:elif="{{m.expiry_time!==0}}">立即续费</text>
+    </view>
+  </view>
+</view>
+<!-- 支付 -->
+<view class="paym" wx:if='{{sty}}' bindtap='close'>
+  <view class="payments" catchtap='open'>
+    <view style="position:absolute;bottom:0;left:0;width:100%;">
+      <view class="ispay">
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;" size="mini" catchtap='ispay'>立即支付 </button>
+      </view>
+    </view>
+    <view class='payh'>
+      <view class='quotabox' catchtap='goquota'><text>限额说明</text><image src='../../pages/img/quan_shiyi.png' id='it'/></view>
+      <image src='../../pages/img/addprice/chujia-btn-close.png' catchtap='close'></image>
+    </view>
+    <view class="payheader">
+      <view>
+          <text class="paytitle">付款金额：</text>
+          <text class="payprices">¥{{price}}</text>
+      </view>
+      <view>
+      </view>
+    </view>
+    <view class="page_bd">
+        <view class="section section_gap">
+            <radio-group class="radio-group" bindchange="radioChange">
+              <view class="balance" id="balancebox" wx:for="{{paymode}}" wx:key="index">
+                <view class='rechargebutton' catchtap='gorecharge' wx:if="{{isrecharge==1&&item.pay_mark=='balance'}}">
+                  <text>立即充值</text><image src='../../pages/img/my/right.png'/>
+                </view>
+                <view class="balcontent">
+                <block wx:if="{{true}}">
+                   <image src="../../pages/img/yezf-icon.png" wx:if="{{item.pay_mark=='balance'}}"></image>
+                   <image src="../../pages/img/wxzf-icon.png" wx:else="{{item.pay_mark=='wechat_mini'}}"></image>
+                </block>
+                  <text class="baltext1">{{item.pay_name}}</text><text class="baltext2">{{item.ext}}</text>
+                </view>
+                <radio class="radio" value="{{item.pay_mark}}" checked="{{item.pay_mark==paytype?true:false}}"></radio>
+              </view>
+            </radio-group>
+        </view>
+    </view>
+  </view>
+</view>

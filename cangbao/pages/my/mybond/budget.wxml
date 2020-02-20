@@ -1,0 +1,46 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="head" bindtap='go' data-type='{{details.goods.type}}' data-id='{{details.goods.goods_id}}'>
+  <image class="headimg" src="{{details.goods.cover}}" mode='aspectFill'></image>
+  <view class="headtext">{{details.goods.title}}</view>
+</view>
+
+<view class="cont">
+  <view class="conthead">
+    <view class="contheadtext1" wx:if="{{details.class==2}}">收入金额</view>
+    <view class="contheadtext1" wx:if="{{details.class==1}}">支出金额</view>
+    <view class="contheadtext2" wx:if="{{details.class==2}}" style='color:rgba(60,149,102,1);'>+{{details.amount}}</view>
+    <view class="contheadtext2" wx:if="{{details.class==1}}">-{{details.amount}}</view>
+  </view>
+  <view class="line">
+    <view></view>
+  </view>
+
+  <view class="contpage">
+    <view class="contpage1">
+      <view class="contpage1t1">时间</view>
+      <view class="contpage1t2">{{time}}</view>
+    </view>
+
+    <view class="contpage1">
+      <view class="contpage1t1">类型</view>
+      <view class="contpage1t2">{{details.mode}}</view>
+    </view>
+
+    <view class="contpage1">
+      <view class="contpage1t1">交易号</view>
+      <view class="contpage1t2">{{details.out_trade_no}}</view>
+    </view>
+
+    <view class="contpage1">
+      <view class="contpage1t1">支付方式</view>
+      <view class="contpage1t2">{{details.pay_type}}</view>
+    </view>
+
+    <view class="contpage1">
+      <view class="contpage1t1">状态</view>
+      <view class="contpage1t2" wx:if="{{details.status==1}}" style='color:rgba(60,149,102,1);'>成功</view>
+      <view class="contpage1t2" wx:if="{{details.status==0}}">失败</view>
+    </view>
+  </view>
+</view>

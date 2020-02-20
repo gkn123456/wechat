@@ -1,0 +1,598 @@
+<form bindsubmit="formSubmit" report-submit='true'>
+<import src="../template/template.wxml"/>
+<template is="{{template_name}}" data="{{navH,headtitle}}"></template>
+<!-- <template is="template_loading" data="{{navH}}"></template> -->
+<template is="template_loading" wx:if="{{template_loading==1}}" data="{{navH}}"></template>
+<!-- 分享 -->
+<template is="share" wx:if="{{whethershare==1}}"></template>
+<!-- 举报 -->
+<template is="report" wx:if="{{whethereport==1}}" data="{{report}}"></template>
+<!-- 海报 -->
+<template is="poster" wx:if="{{whetherposter==1}}" data="{{sharePicUrl,coverimg}}"></template>
+<view class='headers' animation="{{animation}}" style='height:{{navH}}px;background:{{head_color}};'></view>
+<view class='swiper' style="{{swiper_style1}}">
+  <swiper bindchange="swiper" circular="true" style="{{swiper_style1}}" class="swiper_w_h">
+    <block wx:for="{{details.images}}" wx:key="index">
+      <swiper-item bindtap='previewImg' data-id="{{index}}">
+        <view class="swiper_box">
+          <view class="swiper_box1">
+            <image src="{{item}}" mode="aspectFill"/>
+          </view>
+          <view class="swiper_box2"></view>
+          <view class="swiper_box3" style="{{swiper_style2}}"><image src="{{item}}" mode="aspectFill"/></view>
+        </view>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class='page'>{{currentpage}}/{{images.length}}</view>
+</view>
+<view class='main_time'>
+  <view class="globaltimedown" wx:if="{{details.status==1||details.status==2}}">
+    <text wx:if="{{details.status==1}}">委托出价截止时间：</text>
+    <text wx:if="{{details.status==2}}">委托出价延时时间：</text>
+    <view class="globaltimedown_box">
+      <view class="globaltimedown_timebox">{{clock.days}}</view><view class="globaltimedown_fontbox">天</view>
+    </view>
+    <view class="globaltimedown_box">
+      <view class="globaltimedown_timebox">{{clock.hours}}</view><view class="globaltimedown_fontbox">时</view>
+    </view>
+    <view class="globaltimedown_box">
+      <view class="globaltimedown_timebox">{{clock.minutes}}</view><view class="globaltimedown_fontbox">分</view>
+    </view>
+    <view class="globaltimedown_box">
+      <view class="globaltimedown_timebox">{{clock.seconds}}</view><view class="globaltimedown_fontbox">秒</view>
+    </view>
+  </view>
+  <text wx:if="{{(details.status==4&&details.completion_time!==0)||details.status==5}}">竞拍出价已结束</text>
+  <text wx:if="{{details.status==4&&details.completion_time==0}}">委托出价已结束，竞拍结果确认中</text>
+</view>
+<view class='lot_price'>
+  <view class='lot_price_l'>
+    <view class='lot_p_lt1'>{{details.title}}</view>
+    <view class='lot_p_lt4'><image src="../img/pu_fy.png"></image><text>{{details.goods_note.title}}</text></view>
+    <view class='lot_p_lt2' wx:if="{{details.now_price!==0}}">
+      <view class='lot_p_lt2_t1'>平台最高价：</view>
+      <view class='lot_p_lt2_t2'>{{details.currency_symbol}}{{details.now_price}}</view>
+      <view class='lot_p_lt2_t3'>（≈￥{{now_rmb}}）</view>
+    </view>
+    <view class='lot_p_lt3_t1' style="margin-top:10px;display:flex;align-items:center;" wx:if="{{details.now_price!==0}}">
+      <view>起拍价：</view><view style="color:#888;">{{details.currency_symbol}}{{details.start_price}}（≈¥{{start_rmb}}）</view>
+    </view>
+    <view class='lot_p_lt2' wx:if="{{details.now_price==0}}">
+      <view class='lot_p_lt2_t1' style="font-size:28rpx;color:#666;font-weight:400;">起拍价：</view>
+      <view class='lot_p_lt2_t2'>{{details.currency_symbol}}{{details.start_price}}</view>
+      <view class='lot_p_lt2_t3'>（≈￥{{start_rmb}}）</view>
+    </view>
+    <view class='lot_p_lt3'>
+      <view class='lot_p_lt3_t2'>
+      <text>预估价：</text>
+        <text wx:if="{{details.guide_price!==0}}" style="color:#888;">{{details.currency_symbol}}{{details.guide_price}}~{{details.currency_symbol}}{{details.guide_price_max}}</text><text wx:if="{{details.guide_price==0}}">暂无</text>
+      </view>
+    </view>
+    <view class="Label_box">
+      <view class="Label_box_1">不支持退换货</view>
+      <view class="Label_box_2" bindtap="statement" data-type="1">用户须知<image src="../img/video/finger.png"></image></view>
+      <view class="Label_box_2" bindtap="Purchasingprocess" data-type="1">竞买流程<image src="../img/video/finger.png"></image></view>
+      <view class="Label_box_2" bindtap="logistics" data-type="1">物流运输<image src="../img/video/finger.png"></image></view>
+    </view>
+  </view>
+</view>
+<view class='lot_words' wx:if="{{details_hide==2}}">
+  <view class="lot_w_titles">拍品详情</view>
+  <view class='lot_w_brief'>
+    <view>{{details.desc}}</view>
+  </view>
+  <view class='lot_w_nates'>注：该详情根据原文自动翻译，仅供参考，点击此处
+    <view class='lot_w_nates_btn' bindtap='look1' wx:if="{{look=='1'}}">查看原文<image src='../img/btn_xiala_red.png'></image></view>
+    <view class='lot_w_nates_btn' bindtap='look2' wx:if="{{look=='2'}}">查看原文<image src='../img/nextred.png'></image></view>
+  </view>
+  <view class='lot_w_nates_s'>如有疑问请联系客服。</view>
+  <view class='lot_w_brief' wx:if="{{look=='2'}}">{{details.goods_note.desc}}</view>
+  
+</view>
+<view class='lot_details'>
+  <view class='lot_d_li_o' bindtap='goauction'>
+    <view class='lot_d_li_text'>拍卖会</view>
+    <view class='lot_d_li_or'>
+      <view class='lot_d_li_orname'>{{details.auction.name}}</view><image src='../img/btn_red.png' class='lot_d_li_orimg'></image>
+    </view>
+  </view>
+  <view class='lot_d_li_o' bindtap='goauction_house'>
+    <view class='lot_d_li_text'>拍卖行</view>
+    <view class='lot_d_li_or'>
+      <view class='lot_d_li_orname'>{{details.user.nick_name}}</view><image src='../img/btn_red.png' class='lot_d_li_orimg'></image>
+    </view>
+  </view>
+  <view class='lot_d_li_o'>
+    <view class='lot_d_li_text'>竞拍地点</view><view class='lot_d_li_or' style="max-width:70%;"><view class='lot_text2' style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">{{details.auction.translate_address}}</view></view>
+  </view>
+  <view class='lot_d_li_o'>
+    <view class='lot_d_li_text'>竞拍时间<image class='lot_tips' src='../img/video/wrzc.png' bindtap='tpis2'></image></view>
+    <view class='lot_d_li_or'><view class='lot_text2'>北京时间 {{start_time}}</view></view>
+  </view>
+</view>
+<view class="commission_box">
+  <view class="commission_boxlist" bindtap="yBondshow" data-type="1">
+    <view class="commission_boxlist_top">
+      <text>拍卖行佣金</text><image class='lot_tips' src='../img/video/wrzc.png'></image>
+    </view>
+    <view class="commission_boxlist_bom">{{details.goods_note.commission}}%</view>
+  </view>
+  <view class="commission_boxlist" bindtap="Bondshow" data-type="1">
+    <view class="commission_boxlist_top">
+      <text>保证金</text><image class='lot_tips' src='../img/video/wrzc.png'></image>
+    </view>
+    <view class="commission_boxlist_bom">1:{{details.auction.deposit_rate}}</view>
+  </view>
+  <view class="commission_boxlist" bindtap="ladder" data-type="1">
+    <view class="commission_boxlist_top">
+      <text>竞价阶梯</text><image class='lot_tips' src='../img/video/wrzc.png'></image>
+    </view>
+    <view class="commission_boxlist_bom" style="font-size:15px;">查看</view>
+  </view>
+</view>
+<view class='lot_offer'>
+  <view class='l_offer_head'>
+    <view class='l_o_hl'>
+      <view class='l_o_hltext'>出价记录</view><view class='l_o_hltext1'>({{bid_count}})</view>
+    </view>
+    <view class='l_o_hl' bindtap='open_evalss' wx:if="{{mini_bidder!==null}}">
+      <view class='l_o_hltext2'>查看全部</view><image src='../img/video/xiangqing-main1-btn-next-right.png' class='l_o_hlimg'></image>
+    </view>
+  </view>
+  <view class='l_offer_cont' wx:if="{{mini_bidder!==null}}">
+    <view class="{{mini_bidder[0].is_self==1?'l_o_li l_o_li_on':'l_o_li'}}">
+      <view class="l_o_li_leftbox" wx:if="{{mini_bidder[0].is_self==1}}"><image class="fingerimg" src="../img/video/leftfinger.png"></image></view>
+      <view class="l_o_li_rightbox" wx:if="{{mini_bidder[0].is_self==1}}"><image class="fingerimg" src="../img/video/rightfinger.png"></image></view>
+      <view class='loli_t'>
+        <view class="{{mini_bidder[0].is_self==1?'loli_t1_on':'loli_t1'}}">
+          <text wx:if="{{mini_bidder[0].is_self==0}}">{{mini_bidder[0].user.nick_name}}</text>
+          <text wx:if="{{mini_bidder[0].is_self==1}}">您的出价</text>
+        </view>
+      </view>
+      <view class="{{mini_bidder[0].is_self==1?'loli_t2_on':'loli_t2'}}" style='width:25%;margin-left:76rpx;'>{{details.currency_symbol}}{{mini_bidder[0].price}}</view>
+      <view class="{{mini_bidder[0].is_self==1?'loli_t2_on':'loli_t2'}}" style='width:20%;text-align:center;'>领先</view>
+      <view class="{{mini_bidder[0].is_self==1?'loli_t3_on':'loli_t3'}}" style='width:19%;text-align:right;'>{{bidder_time[0].t}}</view>
+    </view>
+    <view class="{{mini_bidder[index+1].is_self==1?'l_o_li l_o_li_on':'l_o_li'}}" wx:for="{{mini_bidder.length-1}}" wx:key="index">
+      <view class="l_o_li_leftbox" wx:if="{{mini_bidder[index+1].is_self==1}}"><image class="fingerimg" src="../img/video/leftfinger.png"></image></view>
+      <view class="l_o_li_rightbox" wx:if="{{mini_bidder[index+1].is_self==1}}"><image class="fingerimg" src="../img/video/rightfinger.png"></image></view>
+      <view class='loli_t'>
+        <view class="{{mini_bidder[index+1].is_self==1?'loli_t1_on':'loli_t1'}}">
+          <text wx:if="{{mini_bidder[index+1].is_self==0}}">{{mini_bidder[index+1].user.nick_name}}</text>
+          <text wx:if="{{mini_bidder[index+1].is_self==1}}">您的出价</text>
+        </view>
+      </view>
+      <view class="{{mini_bidder[index+1].is_self==1?'loli_t3_on':'loli_t3'}}" style='width:25%;margin-left:76rpx;'>{{details.currency_symbol}}{{mini_bidder[index+1].price}}</view>
+      <view class="{{mini_bidder[index+1].is_self==1?'loli_t3_on':'loli_t3'}}" style='width:20%;text-align:center;'>出局</view>
+      <view class="{{mini_bidder[index+1].is_self==1?'loli_t3_on':'loli_t3'}}" style='width:19%;text-align:right;'>{{bidder_time[index+1].t}}</view>
+    </view>
+  </view>
+</view>
+<view class='lot_offer_on'>
+  <view class='l_offer_head' style="padding:20px 22rpx 20px 32rpx;box-sizing:border-box;">
+    <view class='l_o_hl'><view class='l_o_hltext' style="font-weight:400;">同场推荐</view></view>
+    <view class='l_o_hl' bindtap="goauction" style="height: 100%;width: 70px;justify-content: flex-end;">
+      <image src='../img/video/xiangqing-main1-btn-next-right.png' class='l_o_hlimg'></image>
+    </view>
+  </view>
+  <view class='l_offer_room'>
+    <view class='groom_li' wx:for="{{recommend_list}}" wx:key="index" bindtap='go_global' data-id='{{item.goods_id}}'>
+        <view style='width:28px;height:28px;position:absolute;top:12px;right:12px;'>
+          <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:28px;height:28px;display:flex;" size="mini" catchtap='collects' wx:if="{{select_s[index].state==0}}" data-id="{{item.goods_id}}" data-ids="{{index}}" open-type="getUserInfo">
+            <image src='../img/homepage/icon_shoucang_xian.png' class='iscolor'></image>
+          </button>
+          <image src='../img/homepage/icon_shoucang_mian.png' class='iscolor' wx:if="{{select_s[index].state==1}}" catchtap='offcollects' data-id="{{item.goods_id}}" data-ids="{{index}}"></image>
+        </view>
+        <view class='groomimg'><image src='{{item.cover}}' mode="aspectFill" lazy-load="true"></image></view>
+        <view class='groomcont'>
+          <view class='groom_text1'>{{item.title}}</view>
+          <view class='groom_text2'><image src='../img/quan_icon_time_black.png'></image>{{starttime[index]}}</view>
+          <view class='groom_text3'><image src='../img/pmai.png'></image><text>{{details.user.nick_name}}</text></view>
+          <view class='groom_text4' wx:if="{{item.now_price==0}}">
+            <text class='g_t_1'>起拍价：</text><text class='g_t_2'>{{item.currency_symbol}}{{item.start_price}}</text>
+          </view>
+          <view class='groom_text4' wx:if="{{item.now_price!==0}}">
+            <text class='g_t_1'>当前价：</text><text class='g_t_2'>{{item.currency_symbol}}{{item.now_price}}</text>
+          </view>
+        </view>
+    </view>
+    <view style="width:45%"></view>
+  </view>
+</view>
+<view style="width:100%;height:98rpx;"></view>
+<view class='lot_btn'>
+  <view class='d5_1' style='{{style6}}'>
+    <view class='d5_11' bindtap='openshare'>
+      <image src="../img/ic_zf.png"></image><view style='line-height:20rpx;margin-top:16rpx;'>分享</view>
+    </view>
+    <view class='line'></view>
+    <button type='view' class='d5_11' open-type="{{contact}}" style='border:0;margin:0;padding:0;display:flex;' plain="true" hover-class="none" size="mini" bindtap='kefu' formType="submit">
+      <image src="../img/btn_kefu.png"></image><view style='line-height:20rpx;margin-top:16rpx;'>客服</view>
+    </button>
+    <view class='line'></view>
+    <view class='d5_12'>
+      <button plain="true" formType="submit" hover-class="none" size="mini" id='button' wx:if="{{collection==0}}" bindtap='collect' open-type="getUserInfo">
+        <image src="../img/xiangqing_icon_shoucang_nor@2x.png"></image>
+      </button>
+      <image src="../img/xiangqing_icon_shoucang_pre@2x.png" bindtap='offcollect' wx:if="{{collection==1}}"></image>
+      <view wx:if="{{collection==0}}">收藏</view><view wx:if="{{collection==1}}">已收藏</view>
+    </view>
+  </view>
+  <view class='d5_2'>
+    <button id='bt1' plain="true" bindgetuserinfo='addoffer' open-type="getUserInfo" hover-class="none" formType="submit" wx:if="{{detailsstatus==1||detailsstatus==2}}">委托出价</button>
+    <button id='bt1_s' plain="true" hover-class="none" formType="submit" wx:if="{{detailsstatus!==1}}">委托已结束</button>
+  </view>
+</view>
+<!-- 出价弹框 -->
+<view class='columnbox' wx:if="{{iscolumn==1}}" bindtap='closecolumn' catchtouchmove="preventTouchMove">
+  <view class='ballbox' catchtap='opencolumn'>
+    <image src="../img/close.png" catchtap='' catchtap='closecolumn' style="width:40rpx;height:40rpx;position:absolute;top:26rpx;right:26rpx;"></image>
+    <view class='ballcont'>
+      <view class="offer_d_tiele">
+        <image src="{{details.cover}}" mode="aspectFill" class="offer_d_tieleimg"></image>
+        <view class="offer_d_tiele_cont"> 
+          <view class="offer_d_tiele_cont1">
+            <text class="offer_d_tiele_cont1_o" wx:if="{{details.now_price==0}}">起拍价：</text>
+            <text class="offer_d_tiele_cont1_o" wx:if="{{details.now_price!==0}}">当前价：</text>
+            <text class="offer_d_tiele_cont1_t" wx:if="{{details.now_price==0}}">{{details.currency_symbol}}{{details.start_price}}</text>
+            <text class="offer_d_tiele_cont1_t" wx:if="{{details.now_price!==0}}">{{details.currency_symbol}}{{details.now_price}}</text>
+          </view>
+          <view class="offer_d_tiele_cont2 oc">
+            <text class="offer_d_tiele_cont2_o">当前汇率：</text>
+            <text class="offer_d_tiele_cont2_t">{{details.currency_symbol}}1≈￥{{currency_rate}}</text>
+          </view>
+          <view class="offer_d_tiele_cont2">
+            <text class="offer_d_tiele_cont2_o">预估价：</text>
+            <text class="offer_d_tiele_cont2_t" wx:if="{{details.guide_price!==0}}">{{details.currency_symbol}}{{details.guide_price}}~{{details.currency_symbol}}{{details.guide_price_max}}</text>
+            <text class="offer_d_tiele_cont2_t" wx:if="{{details.guide_price==0}}">暂无</text>
+          </view>
+        </view>
+      </view>
+      <view class='bc_total'>
+        <text>总金额</text>
+        <view class="bc_total_rig">
+          <text class='text1'>{{details.currency_symbol}}{{total_sum}}</text>
+          <text class="text2">（≈￥{{total_sum_rmb}}）</text>
+        </view>
+      </view>
+      <view class="bc_total_tips">已包含拍卖行佣金{{details.goods_note.commission}}%，平台服务费{{details.goods_note.service}}%</view>
+      <view class="bond_t_box">
+        <view class="bond_t_left">保证金<image class='lot_tips' src='../img/video/wrzc.png' catchtap="Bondshow" data-type="1"></image></view>
+        <text class="bond_t_right">{{paybondfonts}}</text>
+      </view>
+      <view class="isbond_class">
+        <view class="isbond_class_li" catchtap="isbondimg" data-type="0">
+          <image src="{{isbond_img==0?isbond_img1:isbond_img2}}"></image>
+          <view>实时保证金</view>
+        </view>
+        <view class="isbond_class_li" catchtap="isbondimg" data-type="1">
+          <image src="{{isbond_img==0?isbond_img2:isbond_img1}}"></image>
+          <view>保证金账户</view>
+        </view>
+      </view>
+      <view class="isbond_class_tips">
+        <text wx:if="{{isbond_img==0}}">单次单充 原路返回 新手推荐</text>
+        <text wx:if="{{isbond_img==1}}">账户扣款 快捷出价 省时省力</text>
+      </view>
+      <view class="plint">
+        <view class="plinttext">出价金额</view>
+        <view class="jhbox_b">
+          <view class="jhbox">
+            <image class="reduce" src="{{redprice}}" catchtap='redp'></image>
+          </view>
+          <view class="plintpayprice"><input value='{{addprices}}' bindblur='addprices_input' maxlength="8" confirm-type="done"></input></view>
+          <view class="jhbox">
+            <image class="plus" src="{{redprice1}}" catchtap='addp'></image>
+          </view>
+        </view>
+      </view>
+      <view class="paybuttons">
+        <view class='paybutton'>
+          <button plain="true" formType="submit" hover-class="none" size="mini" id='paybutton' bindtap='offer'>
+            委托出价
+          </button>
+        </view>
+        <view style="width:100%;position:absolute;left:0;top:0;display: flex;justify-content: center;" wx:if="{{ispaybond==1}}">
+          <view class='paybutton'>
+          <button plain="true" formType="submit" hover-class="none" size="mini" id='paybutton1' bindtap='goglobal_ball'>
+          委托出价
+        </button>
+        </view>
+        </view>
+      </view>
+      <view class="probabilitybox">
+        <view class="probabilityboxs">
+          <view class="probabilityboxs1">竞得概率参考</view>
+          <view class="probabilityboxs2">(本平台对竞拍结果不作任何承诺且不承担任何保证责任)</view>
+          <view style="width:100%;" wx:if="{{details.guide_price!==0}}">
+            <view class="{{result==1?'probabilityboxs4':'probabilityboxs3'}}">{{details.currency_symbol}}{{era}}及以下，竞得概率≈1%</view>
+            <view class="{{result==2?'probabilityboxs4':'probabilityboxs3'}}">{{details.currency_symbol}}{{era}}至{{details.currency_symbol}}{{details.guide_price}}，竞得概率≈20%</view>
+            <view class="{{result==3?'probabilityboxs4':'probabilityboxs3'}}">{{details.currency_symbol}}{{details.guide_price}}至{{details.currency_symbol}}{{details.guide_price_max}}，竞得概率≈50%</view>
+            <view class="{{result==4?'probabilityboxs4':'probabilityboxs3'}}">{{details.currency_symbol}}{{details.guide_price_max}}至{{details.currency_symbol}}{{2*details.guide_price_max}}，竞得概率≈80%</view>
+            <view class="{{result==5?'probabilityboxs4':'probabilityboxs3'}}">{{details.currency_symbol}}{{2*details.guide_price_max}}及以上，竞得概率≈90%</view>
+          </view>
+          <view wx:if="{{details.guide_price==0}}" class="zw_bd">
+            —  暂无数据参考  —
+          </view>
+        </view>
+      </view>
+      <view class='bc_note'>
+        <view class='note2' catchtap='goxieyi'>注：出价即表示同意<text>《藏宝全球拍协议》</text></view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 出价记录弹框 -->
+<view class="puildins" bindtap='close_evalss' wx:if="{{is_evalss==1}}" catchtouchmove="preventTouchMove">
+  <view class="puildin">
+    <view class="evaluatesnum">
+      <view style="font-size:32rpx;font-weight:bold;color:rgba(59,59,59,1);">出价记录<text style="font-size:28rpx;color:#888;">（{{bid_count}}）</text></view>
+      <view id="statementbox_close" catchtap="close_evalss">
+        <image src="../img/close.png" catchtap=''></image>
+      </view>
+    </view>
+    <scroll-view class="pricecommit1" catchtap="open_evalss" scroll-y="true" bindscrolltolower="onReachBottom1" catchtouchmove="preventTouchMove">
+      <view style="display: flex;flex-direction: column;align-items: center;padding:0 32rpx;box-sizing:border-box;">
+        <view class="{{all_mini_bidder[0].is_self==1?'jilu11 jilu11on':'jilu11'}}" style="display:flex;align-items:center;justify-content:space-between;border:0;">
+          <view class="l_o_li_leftbox" wx:if="{{all_mini_bidder[0].is_self==1}}"><image class="fingerimg" src="../img/video/leftfinger.png"></image></view>
+          <view class="l_o_li_rightbox" wx:if="{{all_mini_bidder[0].is_self==1}}"><image class="fingerimg" src="../img/video/rightfinger.png"></image></view>
+          <view class='loli_t'>
+            <view class="{{all_mini_bidder[0].is_self==1?'loli_t1_on':'loli_t1'}}">
+              <text wx:if="{{all_mini_bidder[0].is_self==0}}">{{all_mini_bidder[0].user.nick_name}}</text>
+              <text wx:if="{{all_mini_bidder[0].is_self==1}}">您的出价</text>
+            </view>
+          </view>
+          <view class="{{all_mini_bidder[0].is_self==1?'loli_t2_on':'loli_t2'}}" style='width:25%;margin-left:76rpx;'>{{details.currency_symbol}}{{all_mini_bidder[0].price}}</view>
+          <view class="{{all_mini_bidder[0].is_self==1?'loli_t2_on':'loli_t2'}}" style='width:20%;text-align:center;'>领先</view>
+          <view class="{{all_mini_bidder[0].is_self==1?'loli_t3_on':'loli_t3'}}" style='width:19%;text-align:right;'>{{all_bidder_time[0].t}}</view>
+        </view>
+        <view class="{{all_mini_bidder[index+1].is_self==1?'jilu11 jilu11on':'jilu11'}}" style="display:flex;align-items:center;justify-content:space-between;" wx:for="{{all_mini_bidder.length-1}}" wx:key="index">
+          <view class="l_o_li_leftbox" wx:if="{{all_mini_bidder[index+1].is_self==1}}"><image class="fingerimg" src="../img/video/leftfinger.png"></image></view>
+          <view class="l_o_li_rightbox" wx:if="{{all_mini_bidder[index+1].is_self==1}}"><image class="fingerimg" src="../img/video/rightfinger.png"></image></view>
+          <view class='loli_t'>
+            <view class="{{all_mini_bidder[index+1].is_self==1?'loli_t1_on':'loli_t1'}}">
+              <text wx:if="{{all_mini_bidder[index+1].is_self==0}}">{{all_mini_bidder[index+1].user.nick_name}}</text>
+              <text wx:if="{{all_mini_bidder[index+1].is_self==1}}">您的出价</text>
+            </view>
+          </view>
+          <view class="{{all_mini_bidder[index+1].is_self==1?'loli_t3_on':'loli_t3'}}" style='width:25%;margin-left:76rpx;'>{{details.currency_symbol}}{{all_mini_bidder[index+1].price}}</view>
+          <view class="{{all_mini_bidder[index+1].is_self==1?'loli_t3_on':'loli_t3'}}" style='width:20%;text-align:center;'>出局</view>
+          <view class="{{all_mini_bidder[index+1].is_self==1?'loli_t3_on':'loli_t3'}}" style="width:19%;text-align:right;">{{all_bidder_time[index+1].t}}</view>
+          
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+<button open-type="launchApp" app-parameter="{{openAPPurl}}" binderror="launchAppError" style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' type="primary" wx:if="{{scene==1036}}"><image src='../img/openApp.png' id='openApps'></image></button>
+<template is="template_downloadapp" wx:if="{{scene!==1036}}"></template>
+<view class="puildins" wx:if="{{statement==1}}" catchtouchmove="preventTouchMove">
+  <view id="statementbox">
+    <view id="statementbox_title">
+      <text>用户须知</text>
+      <view id="statementbox_close" catchtap="statement" data-type="0">
+        <image src="../img/close.png" catchtap=''></image>
+      </view>
+    </view>
+    <view class="statement_ct">
+      <view id="statementbox_titles"><text>用户须知</text></view>
+      <view class="statementbox_cont">
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">1. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">退换货：</text>拍品均以拍卖预展时实物为准，竞拍成功后不可退换货。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">2. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">关于真伪：</text>拍品属特殊商品，需买家仔细甄别，因未能准确判断拍品而产生的后果与藏宝平台无关。请买家在开拍前尽量联系藏宝客服索要高清图。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">3. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">关于是否保证成交：</text>藏宝平台不保证买家在本平台的最高出价为代拍最终成交价，最终成交价和竞拍结果以拍卖行为准。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">4. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">保证金：</text>买家可以在线缴纳保证金以获得竞拍额度，如买家违约保证金不予退还。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">5. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">拍卖行佣金：</text>以拍卖行为准。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">6. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">税费VAT(如有)：</text>特殊商品可能会产生额外税费，如产生则由买家承担。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">7. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">禁止事项：</text>中国买家须严格遵守中国相关法律法规，不可参与竞拍中国法律禁止的物品，如枪支弹药、管制刀具、象牙、犀角、珊瑚、砗磲等，藏宝平台有权对可能涉及违反相关规定的竞拍停止服务，任何情形下，买家均需对自己的竞拍行为独立承担责任。
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="puildins" wx:if="{{Purchasingprocess==1}}" catchtouchmove="preventTouchMove">
+  <view id="statementboxs">
+    <view id="statementbox_titlel">
+      <text>竞买流程</text>
+      <view id="statementbox_close" catchtap="Purchasingprocess" data-type="0">
+        <image src="../img/close.png" catchtap=''></image>
+      </view>
+    </view>
+    <view class="Purchasingprocess_cont">
+      <view class="Purchasingprocess_li_t"><view><image src="../img/video/pur_t.png"></image></view></view>
+      <view class="Purchasingprocess_li"><image src="../img/video/pur1.png"></image><text>缴纳保证金</text></view>
+      <view class="Purchasingprocess_li_c"><view><image src="../img/video/pur_c.png"></image></view></view>
+      <view class="Purchasingprocess_li"><image src="../img/video/pur2.png"></image><text>委托平台出价</text></view>
+      <view class="Purchasingprocess_li_c"><view><image src="../img/video/pur_c.png"></image></view></view>
+      <view class="Purchasingprocess_li"><image src="../img/video/pur3.png"></image><text>竞拍成功支付货款</text></view>
+      <view class="Purchasingprocess_li_c"><view><image src="../img/video/pur_c.png"></image></view></view>
+      <view class="Purchasingprocess_li"><image src="../img/video/pur4.png"></image><text>委托支付运费及保险</text></view>
+      <view class="Purchasingprocess_li_c"><view><image src="../img/video/pur_c.png"></image></view></view>
+      <view class="Purchasingprocess_li"><image src="../img/video/pur5.png"></image><text>收到拍品</text></view>
+      <view class="Purchasingprocess_li_t"><view><image src="../img/video/pur_f.png"></image></view></view>
+    </view>
+  </view>
+</view>
+
+<view class="puildins" wx:if="{{logistics==1}}" catchtouchmove="preventTouchMove">
+  <view id="statementboxs1">
+    <view id="statementbox_title">
+      <text>物流运输</text>
+      <view id="statementbox_close" catchtap="logistics" data-type="0">
+        <image src="../img/close.png" catchtap=''></image>
+      </view>
+    </view>
+    <view class="statement_ct">
+      <view id="statementbox_titles"><text>物流运输</text></view>
+      <view class="statementbox_cont">
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">1. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">运输方式：</text>藏宝平台是中间服务商，不提供任何拍品运输服务。竞拍成功后买家可选择自提，或委托藏宝平台协助寻找物流公司。如买家需要藏宝平台协助办理物流运输，需认真阅读并接受《委托物流运输协议》，藏宝平台不承诺运输安全问题，途中发生任何损坏与丢失均与藏宝平台无关。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">2. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">收货：</text>买家收货时务必先验货再收货，拍摄开箱视频，如因不验货出现的问题，由买家自行与物流公司解决。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">3. </view>
+          <view class="statementbox_li_right">
+            <text style="font-size:28rpx;color:#000;">关税：</text>拍品国际运送过程中可能产生关税费用，如产生费用将由买家自行承担，藏宝平台可协助买家处理。具体征收标准和费用以中国海关通知和解释为准。
+          </view>
+        </view>
+        <view class="statementbox_li">
+          <view class="statementbox_li_left">4. </view>
+          <view class="statementbox_li_right">
+           <text style="font-size:28rpx;color:#000;">禁运物品：</text>中国买家须严格遵守中国相关法律法规，不可参与竞拍中国法律禁止的物品，如枪支弹药、管制刀具、象牙、犀角等，藏宝平台有权对可能涉及违反相关规定的竞拍停止服务，任何情形下，买家均需对自己的竞拍行为独立承担责任。
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="puildins" wx:if="{{yBondshow==1}}" style="display: flex;justify-content: center;align-items: center;" catchtouchmove="preventTouchMove">
+  <view class="Bond_box">
+    <view class="Bond_boxtop">
+      <view class="Bond_boxtop_titl1">拍卖行佣金</view>
+      <view class="Bond_boxtop_cont1">
+        <view>根据海外拍卖行规定{{details.user.nick_name}}佣金为<text style="color:#000;">{{details.goods_note.commission}}%</text></view>
+      </view>
+      <view class="Bond_boxtop_cont2" style="color:#555;">提示：部分特殊拍品可能含有VAT(即附加税)，如有产生需买家承担，详情请联系客服。</view>
+    </view>
+    <view class="Bond_boxbom" catchtap="yBondshow" data-type="0">知道了</view>
+  </view>
+</view>
+<!-- Bond -->
+<view class="puildins" wx:if="{{Bondshow==1}}" style="display: flex;justify-content: center;align-items: center;" catchtouchmove="preventTouchMove">
+  <view class="Bond_box">
+    <view class="Bond_boxtop">
+      <view class="Bond_boxtop_titl1">保证金金额</view>
+      <view class="Bond_boxtop_cont1">
+        <view>本场保证金与竞拍额度比例为<text>1:{{details.auction.deposit_rate}}</text></view>
+        <view style="margin-top:1px;">保证金以1000元人民币为基数，每缴纳1000元可获得{{details.auction.deposit_rate*1000}}元竞拍额度</view>
+      </view>
+      <view class="Bond_boxtop_titl1" style="margin-top:40rpx;">保证金支付方式</view>
+      <view class="Bond_boxtop_cont3">
+        <view style="text-align:center;">实时保证金：单次单充、竞拍失败立即原路退回、推荐新用户使用</view>
+        <view style="text-align:center;">保证金账户：账户一次储值、出价自动扣除、便捷出价省时省力</view>
+      </view>
+    </view>
+    <view class="Bond_boxbom" catchtap="Bondshow" data-type="0">知道了</view>
+  </view>
+</view>
+<!-- ladder -->
+<view class="puildins" wx:if="{{ladder==1}}">
+  <view id="statementboxs" style="height:80%;">
+    <view id="statementbox_titlel" style="position:absolute;top:0;left:0;">
+      <text>竞价阶梯</text>
+      <view id="statementbox_close" catchtap="ladder" data-type="0">
+        <image src="../img/close.png" catchtap=''></image>
+      </view>
+    </view>
+    <view class="ladder_cont" style="height:100%;overflow:scroll;padding-bottom:60px;">
+      <view id="statementbox_titlel">
+        <text>竞价阶梯</text><view id="statementbox_close" catchtap="ladder" data-type="0">
+        </view>
+      </view>
+      <view>
+        <view class="laddertitle">
+          <view class="laddertitle_l">价格区间</view><view class="laddertitle_line"></view><view class="laddertitle_l">加价阶梯</view>
+        </view>
+        <view wx:for="{{ladderul}}" wx:key="index" class="ladder_contli">
+          <view class="ladder_contli_l">{{item.threshold}}<text wx:if="{{ladderul.length>index+1}}">～</text><text wx:if="{{index+1>=ladderul.length}}">以上</text>{{ladderul[index+1].threshold}}</view>
+          <view class="ladder_contli_l">下一口加{{item.inc}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="ladder_footer" style="height:60px;position:absolute;bottom:0;left:0;background:#fff;">*此阶梯只作为参考，拍卖师会根据现场情况进行调整</view>
+  </view>
+</view>
+<!-- 委托成功 -->
+<view class="puildins" wx:if="{{entrust==1}}" style="display: flex;justify-content: center;align-items: center;" catchtouchmove="preventTouchMove">
+  <view class="Bond_box">
+    <view class="Bond_boxtop" style="padding:32rpx 32rpx 68rpx 32rpx">
+      <view class="Bond_boxtops">
+        <image src="../img/video/v_tips.png"></image><text>委托成功</text>
+      </view>
+      <view class="Bond_boxtopsf">委托出价提交成功！</view>
+    </view>
+    <view class="Bond_boxbom" catchtap="entrust" data-type="0">知道了</view>
+  </view>
+</view>
+<!-- 余额不足creditlow -->
+<view class="puildins" wx:if="{{creditlow==1}}" style="display: flex;justify-content: center;align-items: center;" bindtap="closecreditlow_o" data-type="0">
+  <view class="Bond_box" catchtap="closecreditlow_o" data-type="1">
+    <view class="Bond_boxtop" style="padding:32rpx 32rpx 20rpx 32rpx">
+      <view class="Bond_boxtops">
+        <image src="../img/video/creditlow.png"></image><text style="color:#333;font-size:36rpx;">余额不足</text>
+      </view>
+      <view style="display:flex;width:100%;justify-content: center;align-items: center;margin-top:20px;display: flex;flex-wrap: wrap;">
+        <text style="color:#333333;font-size:30rpx;font-weight:600;">出价金额：</text>
+        <text style="color:#F44336;font-size:30rpx;font-weight:600;">{{offer_rmb}}</text>
+        <text style="color:#444444;font-size:30rpx;"> 元 （{{details.currency_symbol}}{{addprices}}）</text>
+      </view>
+      <view class="Bond_boxtopsf" style="margin-top:20rpx;">{{banlcenbond}}</view>
+      <view style="font-size:24rpx;color:#777;">保证金账户余额{{details.deposit_account}}元</view>
+    </view>
+    <view class="Bond_boxbom" style="display:flex;">
+    <view class="Bond_boxbom_left" catchtap="creditlow_o" data-type="1">缴纳实时保证金</view>
+      <view class="Bond_boxbom_right" catchtap="creditlow_o" data-type="0"> 去充值</view>
+    </view>
+  </view>
+</view>
+<view class="puildins" wx:if="{{insufficient==1}}" style="display: flex;justify-content: center;align-items: center;" bindtap="insufficient" data-type="0">
+  <view class="Bond_box">
+    <view class="Bond_boxtop" style="padding:32rpx 32rpx 20rpx 32rpx">
+      <view class="Bond_boxtops"><text style="color:#333;font-size:36rpx;">确认出价</text></view>
+      <view style="display:flex;width:100%;justify-content: center;align-items: center;margin-top:20px;display: flex;flex-wrap: wrap;">
+        <text style="color:#333333;font-size:30rpx;font-weight:600;">出价金额：</text>
+        <text style="color:#F44336;font-size:30rpx;font-weight:600;">{{offer_rmb}}</text>
+        <text style="color:#444444;font-size:30rpx;"> 元 （{{details.currency_symbol}}{{addprices}}）</text>
+      </view>
+      <view class="Bond_boxtopsf" style="margin-top:20rpx;">{{banlcenbond}}</view>
+      <view style="font-size:24rpx;color:#777;">保证金账户余额{{details.deposit_account}}元</view>
+    </view>
+    <view class="Bond_boxbom" style="display:flex;">
+    <view class="Bond_boxbom_left" catchtap="insufficient" data-type="0">取消</view>
+      <view class="Bond_boxbom_right" catchtap="insufficient" data-type="1"> 确定</view>
+    </view>
+  </view>
+</view>
+</form>

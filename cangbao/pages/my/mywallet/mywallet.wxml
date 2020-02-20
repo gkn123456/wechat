@@ -1,0 +1,49 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+
+<view class="head">
+  <text class="text1">￥</text>
+  <text class="text2">{{user.amount}}</text>
+</view>
+
+<view class="pay">
+  <view class="paylist">
+    <view class="paylistcont1">
+      <image class="paylistimg1" src="../../img/my/wallet_icon_chongzhitixian.png"></image>
+    </view>
+    <view class="paylistcont" bindtap='trecharge'>
+      <text class="paylisttext">充值/提现</text>
+      <image class="paylistimg2" src="../../img/my/icon-next.png"></image>
+    </view>
+  </view>
+
+  <view class="paylist">
+    <view class="paylistcont1">
+      <image class="paylistimg1" src="../../img/my/wallet_icon_card.png"></image>
+    </view>
+    <view class="paylistcont" bindtap='mybond'>
+      <text class="paylisttext">我的银行卡</text>
+      <image class="paylistimg2" src="../../img/my/icon-next.png"></image>
+    </view>
+  </view>
+
+  <view class="paylist">
+    <view class="paylistcont1">
+      <image class="paylistimg1" src="../../img/my/wallet_icon_security.png"></image>
+    </view>
+    <view class="paylistcont" bindtap='gopaypassword'>
+      <text class="paylisttext">支付安全</text>
+      <image class="paylistimg2" src="../../img/my/icon-next.png"></image>
+    </view>
+  </view>
+
+  <view class="paylist">
+    <view class="paylistcont1">
+      <image class="paylistimg1" src="../../img/my/wallet_icon_balance.png"></image>
+    </view>
+    <view class="paylistcont" bindtap='balancedetails'>
+      <text class="paylisttext">余额明细</text>
+      <image class="paylistimg2" src="../../img/my/icon-next.png"></image>
+    </view>
+  </view>
+</view>

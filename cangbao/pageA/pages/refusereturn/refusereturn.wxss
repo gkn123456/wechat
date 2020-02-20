@@ -1,0 +1,267 @@
+/* pageA/pages/refusereturn/refusereturn.wxss */
+@import "../template/template.wxss";
+.header{
+  background: #fff;
+  padding:20rpx 32rpx 32rpx 32rpx;
+  box-sizing: border-box;
+}
+.h_t{
+  display:flex;
+  align-items: center;
+}
+.h_timg{
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+}
+.h_tfot{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+  margin-left: 24rpx;
+}
+.h_b{
+  display: flex;
+  margin-top:20rpx;
+}
+.h_bl{
+
+}
+.h_bimg{
+  width: 168rpx;
+  height: 168rpx;
+  vertical-align:bottom;
+
+}
+.h_br{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-left: 32rpx;
+}
+.h_brt{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+}
+.h_brm{
+
+}
+.h_brmfont1{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(176,176,176,1);
+}
+.h_brmfont1 text{
+  color:rgba(68,68,68,1);
+  font-size:24rpx;
+  font-weight:400;
+}
+.h_brmfont2{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(176,176,176,1);
+}
+.main{
+  background: #fff;
+  padding-left:32rpx;
+  box-sizing: border-box;
+  margin-top:20rpx;
+  width: 100%;
+}
+.m_1{
+  padding:20rpx 20rpx 20rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.m_1l{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+}
+.m_1rtext{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(176,176,176,1);
+}
+.m_1rtext1{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+}
+.m_1r{
+  display: flex;
+  align-items: center;
+}
+.m_1r image{
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 6rpx;
+}
+.m_2{
+  padding:15rpx 32rpx 15rpx 0;
+  box-sizing: border-box;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+  display: flex;
+  align-items: center;
+  border-top:1rpx solid #ECECEC;
+}
+.m_2c{
+  color:rgba(244,67,54,1);
+  font-size:28rpx;
+  font-weight:400;
+  display: flex;
+  align-items: center;
+}
+.m_2c input{
+  color:rgba(244,67,54,1);
+  font-size:28rpx;
+  font-weight:400;
+}
+.tijiao{
+  width: 100%;
+  height: 96rpx;
+  text-align: center;
+  line-height: 96rpx;
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  background:rgba(244,67,54,1);
+  box-shadow:0rpx 0rpx 2rpx 0rpx rgba(183,28,28,1);
+  position: fixed;
+  bottom:0;
+  left:0;
+}
+.ktui{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(176,176,176,1);
+  padding-left: 32rpx;
+  box-sizing: border-box;
+  margin-top:20rpx;
+}
+
+.tkuang{
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,0.4);
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 999;
+}
+.box{
+  background: #fff;
+  position: absolute;
+  bottom:0;
+  left: 0;
+  width: 100%;
+  padding-left: 32rpx;
+  box-sizing: border-box;
+  border-radius:20rpx 20rpx 0rpx 0rpx;
+}
+.box_list{
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:32rpx 32rpx 32rpx 0;
+  box-sizing: border-box;
+  border-bottom:1rpx solid #ECECEC;
+}
+.box_list:last-child{
+  border-bottom:0;
+}
+.is{
+  width:32rpx;
+  height:32rpx;
+  border:2rpx solid rgba(151,151,151,1);
+  border-radius: 50%;
+}
+.on{
+  background:rgba(244,67,54,1);
+  border:2rpx solid rgba(244,67,54,1);
+}
+.close{
+  width:100%;
+  height:86rpx;
+  line-height: 96rpx;
+  text-align: center;
+  background:rgba(244,67,54,1);
+  box-shadow:0px 0px 1px 0px rgba(183,28,28,1);
+  position: absolute;
+  bottom:0;
+  left: 0;
+  z-index: 9999;
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}
+.list{
+  width:100%;
+  height:48px;
+}
+.sqly{
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+  text-align: center;
+  padding-top:32rpx;
+  box-sizing: border-box;
+}
+.weui-cells_after-title{
+  width: 100%;
+  margin:0 auto;
+  padding:0 32rpx 16rpx 0;
+  box-sizing: border-box;
+}
+
+.btnSf{
+  width: 92%;
+  margin:30rpx auto;
+  
+}
+.btnSf button{
+    background: #57B6BA;
+    color: #fff;
+}
+
+.btnSf button:active{
+  background: #5BC2C6;
+  color: #fff;
+}
+.weui-textarea-counter{
+  text-align:right;
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(208,208,208,1);
+  position: absolute;
+  bottom:20rpx;
+  right:32rpx;
+}
+
+.weui-textarea{
+  width:100%;
+  background:rgba(246,246,246,1);
+  border-radius:12rpx;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(95,95,95,1);
+  padding:16rpx 32rpx 52rpx 32rpx;
+}
+.weui-cell__bd{
+   width:100%;
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+.weui-cell{
+  display: flex;
+  justify-content: center;
+}

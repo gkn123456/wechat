@@ -1,0 +1,176 @@
+<import src="../template/template.wxml"/>
+<!-- 分享 -->
+<template is="share" wx:if="{{whethershare==1}}"></template>
+<!-- 举报 -->
+<template is="report" wx:if="{{whethereport==1}}" data="{{report}}"></template>
+<!-- 海报 -->
+<template is="poster" wx:if="{{whetherposter==1}}" data="{{sharePicUrl,coverimg}}"></template>
+<view class='nav bg-white' style='height:{{navHs}}px'>
+    <view class='nav-title'>
+      <view class='nav-title_icon'>
+        <view class='fh_box'>
+          <image src='../img/f_h.png' class='f_hback'></image>
+          <view style='width:100%;height:100%;position:absolute;top:0;left:0;display:flex;justify-content:space-between;'>
+            <view style='width:50%;height:100%;' bindtap='back'><image src='../img/f_h1.png' mode='aspectFit' class='back'></image></view>
+            <view style='width:50%;height:100%;' bindtap='backhome'><image src='../img/f_h2.png' mode='aspectFit' class='backhome'></image></view>
+          </view>
+        </view>
+      </view>
+    </view>
+</view>
+<view class="swiper-tab" style='{{style1}}' style='top:{{navHs}}px;'>
+  <view class='ss' style='{{style3}};background:rgba(255,255,255,{{s_color}});'>
+    <view class="swiper-tab-list1 {{currentTab==0 ? 'on' : ''}}" data-current="0" bindtap="swichNav">视频
+      <view class="swi1 {{currentTab==0 ? 'ons' : ''}}"></view>
+    </view>
+    <view class="swiper-tab-list2 {{currentTab==1 ? 'on1' : ''}}" data-current="1" bindtap="swichNav">详情
+      <view class="swi2 {{currentTab==1 ? 'ons' : ''}}"></view>
+    </view>
+    <image wx:if="{{currentTab==1}}" src='../img/icon_share_black@2x.png' id="vshare" bindtap='openshare'/>
+    <view class='zan' wx:if="{{currentTab==0}}">
+      <image class='zimg' src='../img/video/btn-zan-nor.png' wx:if="{{is_up==0}}" bindtap='is_up'></image>
+      <image class='zimg' src='../img/video/btn-zan-pre.png' wx:if="{{is_up==1}}"></image>
+      <view class='zfot' wx:if="{{is_up==0}}">{{up_count}}</view>
+      <view class='zfot1' wx:if="{{is_up==1}}">{{up_count}}</view>
+    </view>
+  </view>
+  <view class='ss1' style='{{style4}}'>
+    详情
+      <image src='../img/icon_share_black@2x.png' id="vshare" bindtap='openshare'/>
+  </view>
+</view> 
+ 
+ <view current="{{currentTab}}" class="swiper-box" circular="true" bindchange="bindChange"> 
+  <view class="items1" wx:if="{{currentTab==0}}">
+    <view style='width:100%;height:100%;position:relative;'>
+      <video class="shopvideo" src="{{det.video}}" direction="0" objectFit="{{videofit}}" controls="{{false}}" autoplay="{{true}}" enable-progress-gesture="{{false}}" loop="{{true}}" show-play-btn="{{false}}" muted="{{iss}}" poster="{{det.cover}}" bindtap="doubleClick" data-time="{{lastTapTime}}">
+    </video>
+    <view class='a' wx:if="{{currentTab==0}}" style='{{st1}}'>
+      <view class='a1img'>
+        <image class="aimg1" src="{{user_icon}}" bindtap='jump'></image>
+        <image class="aimg2" wx:if="{{det.user.authenticate!==0}}" src="../img/video/renzheng.png"></image>
+      </view>
+      <view class='a1' style='margin-top:12rpx;'>
+        <button class='guanzhu' style='padding:0;' wx:if="{{follow==0&&det.is_self!==1}}" bindtap='follow' open-type="getUserInfo">关注</button>
+        <view class='yguanzhu' wx:if="{{follow==1&&det.is_self!==1}}" bindtap='tofollow'>已关注</view>
+      </view>
+      <view class='a1' style='margin-top:20rpx;'>
+        <button bindtap='collection' wx:if="{{collection==0}}" plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" open-type="getUserInfo"><image class='scimg' src='../img/btn-shoucang-unpre.png'></image></button>
+        <image class='scimg' src='../img/btn-shoucang-pre.png' bindtap='tocollection' wx:if="{{collection==1}}"></image>
+        <view class='scfot' wx:if="{{collection==0}}">收藏</view> 
+        <view class='scfot' wx:if="{{collection==1}}">已收藏</view>
+      </view>
+      <view class='a1' style='margin-top:20rpx;' bindtap='openshare'>
+          <image class='scimg' src='../img/fenxian.png'></image>
+          <view class='scfot'>分享</view>
+      </view>
+    </view>
+    <view class='ljpay' wx:if="{{det.shop_class==1&&currentTab==0}}">
+      <button id='bt3' plain="true" bindgetuserinfo='addoffer' open-type="getUserInfo" hover-class="none" wx:if="{{det.is_self==0&&det.status==1}}">立即购买</button>
+      <button id='bt4' plain="true" bindgetuserinfo='addoffer' open-type="getUserInfo" hover-class="none" wx:if="{{det.is_self==1&&(det.status==4||det.status==5)}}">已售出</button>
+      <button id='bt4' plain="true" bindgetuserinfo='addoffer' open-type="getUserInfo" hover-class="none" wx:if="{{det.is_self==0&&(det.status==4||det.status==5)}}">已售出</button>
+      <button id='bt4' plain="true" bindgetuserinfo='addoffer' open-type="getUserInfo" hover-class="none" wx:if="{{det.is_self==1&&det.status==1}}">立即购买</button>
+    </view>
+    <view class='ljpay' wx:if="{{det.shop_class==2&&currentTab==0}}">
+      <button id='bt3' plain="true" hover-class="none" wx:if="{{det.is_self==0&&det.status==1}}" bindtap='todown'>立即议价</button>
+      <button id='bt4' plain="true" hover-class="none" wx:if="{{det.is_self==1&&det.status==1}}">立即议价</button>
+      <button id='bt4' plain="true" hover-class="none" wx:if="{{det.is_self==1&&(det.status==4||det.status==5)}}">立即议价</button>
+      <button id='bt4' plain="true" hover-class="none" wx:if="{{det.is_self==0&&(det.status==4||det.status==5)}}">立即议价</button>
+    </view>
+    </view>
+    
+  </view>
+ 
+  <view class="items2" wx:if="{{currentTab==1}}">
+    <view class='kb' style='height:{{navHs1}}px'></view>
+    <view class='d1'>
+      <view class='d1_1'>
+        <image src='{{user_icon}}' bindtap='jump'></image>
+        <view >{{det.user.nick_name}}</view>
+      </view>
+      <button open-type="getUserInfo" class='d1_2' wx:if="{{follow==0&&det.is_self!==1}}" bindtap='follow' style="padding:0;margin:0;">关注</button>
+      <view class='d1_21' wx:if="{{follow==1&&det.is_self!==1}}" bindtap='tofollow'>已关注</view>
+    </view>
+
+    <view class='d2'>
+      <view class='d2_title'>{{det.title}}</view>
+      <view class='d2_cont' wx:if="{{det.desc!==null}}">
+        <text style='{{descstyle}}'>{{det.desc}}</text>
+        <text class='d2_cont_1' bindtap='openss' wx:if="{{op==1}}">展开</text>
+        <text class='d2_cont_1' bindtap='closess' wx:if="{{op==2}}">收起</text>
+      </view>
+    </view>
+<!-- 属性 -->
+    <view class="shopcs" wx:if="{{det.attr!==null}}">
+      <view class="shopcsh">
+        <view class="shopcs1">
+          <view wx:for="{{arrt}}" wx:key="index" class="shopcs1h">{{arrt[index].key}}</view>
+        </view>
+        <view class="shopcs2">
+          <view class="shopcs2h" wx:for="{{arrt}}" wx:key="index">{{arrt[index].name}}</view>
+        </view>
+      </view>
+    </view>
+<!-- 图片 -->
+    <view class="userimg">
+      <view class="userimg1" wx:for="{{det.preview_images}}" wx:key="index" style="width:{{sizeheight}};height:{{sizeheight}};" bindtap='previewImg' data-index='{{index}}'>
+        <image src="{{item}}" mode="aspectFill"></image>
+      </view>
+      <view class="userimg1" style="width:{{sizeheight}};">
+      </view>
+    </view>
+
+    <view class='d3'>
+      <view class='d3_1'>
+        <view wx:if="{{det.return!==1}}">此商品不支持7天退货</view>
+      </view>
+      <view class='d3_2'>
+        <image src='../img/video/main1-icon-dianzan.png' wx:if="{{is_up==0}}" bindtap='is_up'></image>
+        <image src='../img/video/btn-zan-pre.png' wx:if="{{is_up==1}}"></image>
+        <view>{{up_count}}</view>
+        
+      </view>
+    </view>
+
+    <view class='d4'>
+      <view class='d4_1' wx:if="{{det.shop_class==1}}">¥{{det.sell_price}}</view>
+      <view class='d4_1' wx:if="{{det.shop_class==2}}">议价</view>
+      <view wx:if="{{det.shop_class==2}}"></view>
+      <view class='d4_2'>{{t}}</view>
+    </view>
+    <view style='height:98rpx;width:100%;'></view>
+    <view class='d5'>
+      <view class='d5_1' style='{{style6}}'>
+        <view class='d5_11' wx:if="{{det.shop_class==1}}">
+          <button open-type="contact" class="service" formType="submit" session-from="app" show-message-card="true" send-message-img="../img/logo.png" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini">
+            <image src="../img/video/xiangqing-tab-btn-sixin.png"></image><view>私信</view>
+        </button>
+        </view>
+        <view class='line' wx:if="{{det.shop_class==1}}"></view>
+        <view class='d5_12'>
+          <button bindtap='collection' wx:if="{{collection==0}}" plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini" open-type="getUserInfo">
+            <image src="../img/xiangqing_icon_shoucang_nor@2x.png"></image>
+          </button>
+          <image src="../img/xiangqing_icon_shoucang_pre@2x.png" bindtap='tocollection' wx:if="{{collection==1}}"></image>
+          <view wx:if="{{collection==0}}">收藏</view><view wx:if="{{collection==1}}">已收藏</view>
+        </view>
+      </view>
+      <view class='d5_2' style='{{style5}}' wx:if="{{det.shop_class==1}}">
+        <button id='bt1' plain="true" bindgetuserinfo='addoffer' open-type="getUserInfo" hover-class="none" wx:if="{{det.is_self==0&&det.status==1}}">立即购买</button>
+        <button id='bt2' plain="true" hover-class="none" wx:if="{{det.is_self==1&&(det.status==4||det.status==5)}}">已售出</button>
+        <button id='bt2' plain="true" hover-class="none" wx:if="{{det.is_self==0&&(det.status==4||det.status==5)}}">已售出</button>
+        <button id='bt2' plain="true" hover-class="none" wx:if="{{det.is_self==1&&det.status==1}}">立即购买</button>
+      </view>
+      <view class='d5_2' style='{{style5}}' wx:if="{{det.shop_class==2}}">
+        <button id='bt1' plain="true" hover-class="none" wx:if="{{det.is_self==0&&det.status==1}}" bindtap='todown'>立即议价</button>
+        <button id='bt2' plain="true" hover-class="none" wx:if="{{det.is_self==1&&det.status==1}}" bindtap='todown'>立即议价</button>
+        <button id='bt2' plain="true" hover-class="none" wx:if="{{det.is_self==1&&(det.status==4||det.status==5)}}">立即议价</button>
+        <button id='bt2' plain="true" hover-class="none" wx:if="{{det.is_self==0&&(det.status==4||det.status==5)}}">立即议价</button>
+      </view>
+    </view>
+  </view>
+</view>
+<button open-type="launchApp" app-parameter="{{openAPPurl}}" binderror="launchAppError" style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' type="primary" wx:if="{{scene==1036}}">
+  <image src='../img/openApp.png' id='openApps'></image>
+</button>
+<template is="template_downloadapp" wx:if="{{scene!==1036}}"></template>

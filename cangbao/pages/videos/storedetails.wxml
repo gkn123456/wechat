@@ -1,0 +1,126 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="head">
+  <view class="header">
+    <image class="uicon" src="{{details.user_icon}}" bindtap='openimg'></image>
+    <view class="heads">
+      <view>
+        <text class="uname">{{details.nick_name}}</text>
+        <view class="rz">
+          <image src="../img/video/yrz.png" wx:if="{{details.authenticate_class==1||details.authenticate_class==2}}"></image>
+          <image src="../img/video/wrz.png" wx:if="{{details.authenticate_class==0}}"></image>
+          <text wx:if="{{details.authenticate_class==1}}">个人认证</text>
+          <text wx:if="{{details.authenticate_class==2}}">企业认证</text>
+          <text wx:if="{{details.authenticate_class==0}}">未认证</text>
+        </view>
+        
+      </view>
+      <view class="its" wx:if="{{details.authenticate_class==0}}">此商家还未认证</view>
+      <view class="its" wx:if="{{details.authenticate_class==1}}">已通过个人认证</view>
+      <view class="its" wx:if="{{details.authenticate_class==2}}">该商家已通过个人认证，身份信息已在藏宝备案。</view>
+    </view>
+  </view>
+
+  <view class="line"></view>
+
+  <view class="branch">
+    <view class="branch1">
+      <text class="text1">{{details.score}}</text>
+      <text class="text2">店铺评分</text>
+    </view>
+    <view class="branch2"></view>
+    <view class="branch3">
+      <view class="tag" wx:if="{{details.detail.seller_tag.length!==0}}" wx:for="{{details.detail.seller_tag}}" wx:key="index">{{details.detail.seller_tag[index].seller_tag}}({{details.detail.seller_tag[index].number}})</view>
+      <view class="tag1" wx:if="{{details.detail.seller_tag.length==0}}">暂无标签</view>
+    </view>
+  </view>
+</view>
+
+<view class="cont">
+  <view class="conhead">
+    <image src="../img/video/icondinaou.png"></image>
+    <text>店铺信息</text>
+  </view>
+  <view class="conts"> 
+    <view class="contsh">
+      <text class="cotext1">注册时间</text>
+      <text class="cotext2">{{registrationtime}}</text>
+    </view>
+    <view class="contsh" wx:if="{{details.authenticate_class!==0}}">
+      <text class="cotext1">入驻时间</text>
+      <text class="cotext2">{{settledtime}}</text>
+    </view>
+    <view class="contsh" wx:if="{{details.authenticate_class!==0}}">
+      <text class="cotext1">商家地址</text>
+      <text class="cotext2">{{details.detail.address}}</text>
+    </view>
+    <view class="contsh" wx:if="{{details.detail.seller_desc!==''}}">
+      <text class="cotext1">店铺介绍</text>
+      <text class="cotext2">{{details.detail.seller_desc}}</text>
+    </view>
+    <view class="contsh">
+      <text class="cotext1">总成交量</text>
+      <text class="cotext2">{{details.detail.history_order_count}}</text>
+    </view>
+    <!-- <view class="contsh">
+      <text class="cotext1">违约比例</text>
+      <text class="cotext2">{{details.detail.}}</text>
+    </view> -->
+  </view>
+</view>
+
+<view class="cont1">
+  <view class="conhead1">
+    <image src="../img/video/iconpianjia.png"></image>
+    <text>店铺评价</text>
+  </view>
+  <view class="conts1"> 
+    <view class="conli" wx:for="{{detailss}}" wx:key="index">
+      <image class="stimg" src="{{detailss[index].user.user_icon}}"></image>
+      <view class="sright">
+        <view class="scontont">
+          <text>{{detailss[index].user.nick_name}}</text>
+          <view class="start" wx:if="{{detailss[index].star==1}}">
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+          </view>
+          <view class="start" wx:if="{{detailss[index].star==2}}">
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+          </view>
+          <view class="start" wx:if="{{detailss[index].star==3}}">
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+          </view>
+          <view class="start" wx:if="{{detailss[index].star==4}}">
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==2? 'on': ''}}"></view>
+          </view>
+          <view class="start" wx:if="{{detailss[index].star==5}}">
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+            <view class="start1 {{flag==1? 'on': ''}}"></view>
+          </view>
+        </view>
+        <view class="ctext">{{detailss[index].desc}}</view>
+        <view class="ctime">{{cdd[index].text}}</view>
+        <view class="lines"></view>
+      </view>
+    </view>
+  </view>
+</view>
+

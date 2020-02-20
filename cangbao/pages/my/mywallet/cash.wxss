@@ -1,0 +1,90 @@
+/* pages/my/mywallet/cash.wxss */
+@import "../../template/template.wxss";
+.head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding:36rpx 44rpx;
+  box-sizing: border-box;
+  margin-top:20rpx;
+
+}
+.cadimg1{
+  width:56rpx ;
+  height:56rpx ;
+}
+.cadimg2{
+  width:50rpx ;
+  height:50rpx ;
+}
+.cadcenter1{
+  font-size:32rpx;
+  font-weight:500;
+  color:rgba(28,28,28,1);
+}
+.cadcenter2{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+  margin-top:6rpx;
+}
+.cadcenter{
+  margin-left: 32rpx;
+}
+.heads{
+  background: #fff;
+  margin-top:20rpx;
+  padding:0 40rpx;
+  box-sizing: border-box;
+}
+.text1{
+  padding:38rpx 0;
+  box-sizing: border-box;
+}
+.text2{
+  display: flex;
+  align-items: flex-end;
+  border-bottom:1rpx solid #ECECEC;
+}
+.text2 input{
+  font-size:136rpx;
+  height:136rpx;
+  /* padding:20rpx 0;
+  box-sizing: border-box; */
+}
+.text2 text{
+  margin-bottom:20rpx;
+}
+.text3{
+  display: flex;
+  justify-content: space-between;
+  padding:28rpx 0;
+  box-sizing: border-box;
+}
+.text4{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(170,170,170,1);
+}
+.text5{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(184,153,137,1);
+}
+.btn{
+  display: flex;
+  justify-content: center;
+  margin-top:120rpx;
+}
+.btns{
+  width:670rpx;
+  height:88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  background:rgba(255,55,64,1);
+  border-radius:8rpx;
+  font-size:32rpx;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+}

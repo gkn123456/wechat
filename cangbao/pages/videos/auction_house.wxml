@@ -1,0 +1,51 @@
+<import src="../template/template.wxml"/>
+<template is="{{template_name}}" data="{{navH,headtitle}}"></template>
+<view class='headers' animation="{{animation}}" style='height:{{navH}}px;'></view>
+<view class='head' style='height:{{goodheight}}px;'>
+  <image mode="aspectFit" src='{{details.user.user_icon}}' class='head_bgimg'></image>
+  <view style="background:linear-gradient( {{details.bg_color}}FF,{{details.bg_color}}00);width:100%;height:100%;z-index:1;"></view>
+  <view style='background:rgba(0,0,0,0.6);width:100%;height:100%;position:absolute;top:0;left:0;z-index:3;'></view>
+  <view class='head_cont'>
+    <view class='head_title'>{{details.user.nick_name}}</view>
+    <view class='head_tag'>
+      <view class='spbox_cont1'>
+        <view class='spbox_cont1_l'>
+          <view class='spbox_c1_l_1'>近期</view><view class='spbox_c1_l_2'>{{details.auctions_num}}</view><view class='spbox_c1_l_1'>场拍卖会</view>
+        </view>
+        <view class='spbox_cont1_c'></view>
+        <view class='spbox_cont1_l'>
+          <view class='spbox_c1_l_1'>共</view><view class='spbox_c1_l_2'>{{details.goods_num}}</view><view class='spbox_c1_l_1'>件拍品</view>
+        </view>
+      </view>
+      <view class='spbox_cont2'><image src='../img/wh.png'></image>{{details.address}}</view>
+    </view>
+    <view class='head_foot'>拍卖会</view>
+  </view> 
+</view>
+<view class='main' wx:if="{{list_details!==null}}">
+  <view class='main_li' wx:for="{{list_details}}" wx:key="index" bindtap='goauction' data-id='{{item.id}}'>
+    <view class='main_li_imgbox'><image src='{{item.cover}}' class='main_li_img' mode="aspectFill"></image></view>
+    <view class='main_li_summary'>
+      <view>
+        <view class='summary_title'>{{item.name}}</view>
+        <view class='summary_translate'>
+          <image src='../img/pu_fy.png' class='summary_translate_img'></image><view class='summary_translate_text'>{{item.translate_name}}</view>
+        </view>
+      </view>
+      <view class='summary_translate_air'>
+        <view class='summary_t_air_1'>
+          <image src='../img/quan_icon_time_black.png' class='summary_t_air_1img'></image><view class='summary_t_air_1text'>开拍时间：{{starttime1[index].t}}</view>
+        </view>
+        <view class='summary_t_air_2'>
+          <image src='../img/loct.png' class='summary_t_air_2img'></image><view class='summary_t_air_2text'>竞拍地点：{{item.address}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class='no_all' wx:if="{{list_details==null}}">暂无拍卖信息</view>
+<button style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' open-type="share" type="primary">
+  <image src='../img/quan_icon_u.png' class='share'></image>
+</button>
+<button open-type="launchApp" app-parameter="{{openAPPurl}}" binderror="launchAppError" style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' type="primary" wx:if="{{scene==1036}}"><image src='../img/openApp.png' id='openApp_s'></image></button>
+<template is="auction_template_downloadapp" wx:if="{{scene!==1036}}"></template>

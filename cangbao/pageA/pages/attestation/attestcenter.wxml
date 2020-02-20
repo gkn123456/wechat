@@ -1,0 +1,7 @@
+<!--pageA/pages/attestation/attestcenter.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='page'>
+  <image src='../img/rz/ic_center.png' class='pg'></image>
+  <image src='../img/rz/icon-close.png' class='close' bindtap='back'></image>
+</view>

@@ -1,0 +1,74 @@
+<page>
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="calendar" style="top:{{navH}}px" catchtouchmove="preventTouchMove">
+  <view id="sidebutton" style="{{pagescroll}}" catchtap="openmask" wx:if="{{is_calmaskbox==1}}">
+    <view id="sidebuttons" style="{{pagescroll1}}"><view wx:for="123" wx:key="index" style="{{pagescroll2}}"></view></view>
+  </view>
+  <view id="switch_view"><view bindtap="switch_view"></view></view>
+  <calendar calendarConfig="{{calendarConfig}}" takeoverTap="true" bind:afterTapDay="afterTapDay"
+  id="calendar"
+  bind:whenChangeMonth="whenChangeMonth"
+  bind:onTapDay="onTapDay"
+  bind:afterCalendarRender="afterCalendarRender"></calendar>
+</view>
+<view style="height:{{height}}px;background:#fff;"></view>
+<view id="auction_box">
+  <view class="auc_title_box">
+      <view class="auc_title_boxl">{{date_o}}</view>
+      <view class="auc_title_boxr">{{date_w}}（共<text wx:if="{{auction_list==null}}" id="auc_title_boxrnumber">0</text><text wx:if="{{auction_list!==null}}" id="auc_title_boxrnumber">{{auction_list.length}}</text>场）</view>
+    </view>
+    <view class='auctionhotboxcont' bindtouchstart="pagetouchStart" bindtouchend="pagetouchEnd">
+      <view wx:if="{{auction_list==null}}" id="emptypagebox">
+        <view id="emptypage">
+          <view class="emptypage_line"></view>
+          <view class="emptypage_font">今天没有拍卖会</view>
+          <view class="emptypage_line"></view>
+        </view>
+      </view>
+      <view class='sale' wx:for="{{auction_list}}" wx:key="index" wx:for-item="item" bindtap='goauction' data-id='{{item.id}}'>
+        <view class="al_sale">
+          <view id="clo_v">
+            <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:30px;height:30px;display:flex;" size="mini" wx:if="{{auction_lists[index].state== 0}}" catchtap='global_collect' open-type="getUserInfo" data-id="{{item.id}}" data-ids="{{index}}">
+              <image src='../img/collectof.png' class='isclo'></image>
+            </button>
+            <image src='../img/collecton.png' wx:if="{{auction_lists[index].state== 1}}" catchtap='global_collect_d' class='isclo' data-id="{{item.id}}" data-ids="{{index}}"></image>
+          </view>
+          <view class='sale_head'>
+            <view class='sale_h_t1'><text id="special_font" wx:if="{{item.is_select==1}}">官方推荐</text> <view class="sale_h_t1s">{{item.name}}</view></view>
+            <view class='sale_h_t2'>
+              <image src='../img/pu_fy.png'></image><text>{{item.translate_name}}</text>
+            </view>
+            <view class='sale_h_t3'><image src='../img/pmai.png'></image><text>{{item.user.nick_name}}</text></view>
+            <view class='sale_h_t3'>
+              <image src='../img/quan_icon_time_black.png'></image>
+              <text wx:if="{{endclock[index]!==''}}">距开拍:</text><text wx:elif="{{endclock[index]==''}}">已开拍</text>
+              <text>{{endclock[index]}}</text>
+            </view>
+          </view>
+          <view style="width:100%;">
+            <text class="auc_class" wx:for="{{item.cate}}" wx:key="index" wx:for-item="i">{{i.category.cate_name}}</text>
+          </view>
+          <view class='sale_img'>
+            <view class='a_imgbox'><image wx:for="{{item.preview_imgs}}" wx:for-item="items" wx:key="index" src='{{items}}' mode="aspectFill"></image></view>
+            <image src='../img/btn_more.png' class='goimg'></image>
+          </view>
+        </view>
+      </view>
+    </view>
+</view>
+<!-- 日历遮罩 -->
+<view id="cal_dmaskbox" catchtouchmove="preventTouchMove" wx:if="{{is_calmaskbox==2}}">
+  <view id="cal_dmask">
+    <view id="cal_masks">
+      <view id="image"><image src="../../../pages/img/calendar/cal1.png" /></view><text>筛选</text>
+    </view>
+    <view id="cal_masks">
+      <view id="image"><image src="../../../pages/img/calendar/cal2.png" /></view><text>拍卖企业</text>
+    </view>
+    <view id="cal_masks" bindtap="closemask">
+      <view id="images"><image src="../../../pages/img/calendar/calclose.png" style="width:24px;height:24px;" /></view><text style="color:rgba(255,255,255,0);">000</text>
+    </view>
+  </view>
+</view>
+</page>

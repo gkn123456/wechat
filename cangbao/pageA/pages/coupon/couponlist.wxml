@@ -1,0 +1,131 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='couhead' style='top:{{navH}}px;'>
+  <view wx:for="{{nav}}" wx:key='index' class="{{item.id==sign?'cou_nav on':'cou_nav'}}" data-id='{{item.id}}' bindtap='down1'>
+    {{item.name}}
+    <view class="{{item.id==sign?'cou_navline on':'cou_navline'}}"></view>
+  </view>
+</view>
+<view class='inputbox' style='top:{{navHs}}px;' wx:if="{{sign==0}}">
+  <view class='cotinptbox'>
+    <input placeholder='请输入兑换码' maxlength='50' value='{{value}}' bindinput="bindinput" placeholder-style="font-size:12px;color:rgba(198,198,198,1);"></input>
+    <view class='delbox' wx:if="{{sign1==1}}" bindtap='delval'>
+      <image src='../img/search/v_del.png' />
+    </view>
+  </view>
+  <view class='inputbutton'>
+    <view class='but1' wx:if="{{sign1==0}}">兑换</view><view class='but2' wx:if="{{sign1==1}}" bindtap='exchangebut'>兑换</view>
+  </view>
+</view>
+<!-- 未使用 -->
+<view class='coupage1' wx:if="{{sign==0}}">
+  <view class='nopagebox' wx:if="{{list==null&&sign==0}}"><image src='../img/coupon/nopage.png'/><text>暂无优惠券</text></view>
+  <view class='coulistbox' wx:for="{{list}}" wx:key="index">
+    <scroll-view class='coulistboxs' scroll-x="true" scroll-left='{{scroll_left}}'>
+      <view class='couli' style='width:{{widths}}px'>
+        <view class='couli_l' style='width:{{width}}px' bindtap='backhome'>
+          <view class='couli_limgbox'>
+            <image src='../img/coupon/global.png' wx:if="{{item.use_type==3}}" />
+            <image src='../img/coupon/domestic.png' wx:if="{{item.use_type==1}}" />
+            <view class='couli_limgboxcont'>
+              <view class='couli_limgboxcont_o'>
+                <text id='cou_l_t1'>¥</text>
+                <text id='cou_l_t2'>{{item.coupon.money}}</text>
+              </view>
+              <text class='couli_limgboxcont_t'>{{item.coupon.condition_desc}}</text>
+            </view>
+          </view>
+          <view class='couli_licont' style='width:{{widths1}}px;'>
+            <view class='cl_cont1'>
+              <view class='cl_cont1box1' wx:if="{{item.use_type==3}}">全球拍</view>
+              <view class='cl_cont1box2' wx:if="{{item.use_type==1}}">国内拍</view>
+              <view class='cl_cont1_r'>仅限<text wx:if="{{item.use_type==3}}">全球拍</text><text wx:if="{{item.use_type==1}}">国内拍</text>拍品使用</view>
+            </view>
+            <view class='cl_cont2'>
+              <view class='cl_cont2box1'>{{time[index].start_time}}-{{time[index].end_time}}</view>
+              <view class='cl_cont2button1' wx:if="{{item.use_type==3}}">立即使用</view>
+              <view class='cl_cont2button2' wx:if="{{item.use_type==1}}">立即使用</view>
+            </view>
+            <view class='cl_cont3'></view>
+            <view class='cl_cont4'>仅限支付货款使用</view>
+          </view>
+        </view>
+        <view class='couli_r' bindtap='delcoupon' data-id='{{item.id}}'>删除</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+<!-- 已使用 -->
+<view class='coupage2' wx:if="{{sign==1}}">
+  <view class='nopagebox' wx:if="{{list==null&&sign==1}}"><image src='../img/coupon/nopage.png'/><text>暂无优惠券</text></view>
+  <view class='coulistboxh' wx:for="{{list}}" wx:key="index">
+    <scroll-view class='coulistboxs' scroll-x="true" scroll-left='{{scroll_left}}'>
+      <view class='couli' style='width:{{widths}}px'>
+        <view class='couli_l' style='width:{{width}}px'>
+          <view class='couli_limgbox'>
+            <image src='../img/coupon/noglobal.png' wx:if="{{item.use_type==3}}" />
+            <image src='../img/coupon/nodomestic.png' wx:if="{{item.use_type==1}}" />
+            <view class='couli_limgboxcont'>
+              <view class='couli_limgboxcont_o'>
+                <text id='cou_l_t1'>¥</text>
+                <text id='cou_l_t2'>{{item.coupon.money}}</text>
+              </view>
+              <text class='couli_limgboxcont_t'>{{item.coupon.condition_desc}}</text>
+            </view>
+          </view>
+          <view class='couli_licont' style='width:{{widths1}}px;'>
+            <view class='cl_cont1'>
+              <view class='cl_cont1box1h' wx:if="{{item.use_type==3}}">全球拍</view>
+              <view class='cl_cont1box2h' wx:if="{{item.use_type==1}}">国内拍</view>
+              <view class='cl_cont1_rh'>仅限<text wx:if="{{item.use_type==3}}">全球拍</text><text wx:if="{{item.use_type==1}}">国内拍</text>拍品使用</view>
+            </view>
+            <view class='cl_cont2h'>
+              <view class='cl_cont2box1h'>{{time[index].start_time}}-{{time[index].end_time}}</view>
+              <view class='cl_cont2button1h'>已使用</view>
+            </view>
+            <view class='cl_cont3'></view>
+            <view class='cl_cont4'>仅限支付货款使用</view>
+          </view>
+        </view>
+        <view class='couli_r' bindtap='delcoupon' data-id='{{item.id}}'>删除</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>
+<!-- 已过期 -->
+<view class='coupage2' wx:if="{{sign==2}}">
+  <view class='nopagebox' wx:if="{{list==null&&sign==2}}"><image src='../img/coupon/nopage.png'/><text>暂无优惠券</text></view>
+  <view class='coulistboxh' wx:for="{{list}}" wx:key="index">
+    <scroll-view class='coulistboxs' scroll-x="true" scroll-left='{{scroll_left}}'>
+      <view class='couli' style='width:{{widths}}px'>
+        <view class='couli_l' style='width:{{width}}px'>
+          <view class='couli_limgbox'>
+            <image src='../img/coupon/noglobal.png' wx:if="{{item.use_type==3}}" />
+            <image src='../img/coupon/nodomestic.png' wx:if="{{item.use_type==1}}" />
+            <view class='couli_limgboxcont'>
+              <view class='couli_limgboxcont_o'>
+                <text id='cou_l_t1'>¥</text>
+                <text id='cou_l_t2'>{{item.coupon.money}}</text>
+              </view>
+              <text class='couli_limgboxcont_t'>{{item.coupon.condition_desc}}</text>
+            </view>
+          </view>
+          <view class='couli_licont' style='width:{{widths1}}px;'>
+            <view class='cl_cont1'>
+              <view class='cl_cont1box1h' wx:if="{{item.use_type==3}}">全球拍</view>
+              <view class='cl_cont1box2h' wx:if="{{item.use_type==1}}">国内拍</view>
+              <view class='cl_cont1_rh'>仅限<text wx:if="{{item.use_type==3}}">全球拍</text><text wx:if="{{item.use_type==1}}">国内拍</text>拍品使用</view>
+            </view>
+            <view class='cl_cont2h'>
+              <view class='cl_cont2box1h'>{{time[index].start_time}}-{{time[index].end_time}}</view>
+              <view class='cl_cont2button1h'>已过期</view>
+            </view>
+            <view class='cl_cont3'></view>
+            <view class='cl_cont4'>仅限支付货款使用</view>
+          </view>
+        </view>
+        <view class='couli_r' bindtap='delcoupon' data-id='{{item.id}}'>删除</view>
+      </view>
+    </scroll-view>
+  </view>
+</view>

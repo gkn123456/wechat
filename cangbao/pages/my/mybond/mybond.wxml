@@ -1,0 +1,97 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="kb" style='top:{{navHs}}px;' wx:if="{{pageScroll==0}}">
+  <view class="kbs">
+    <view class="kb_libox" wx:for="{{kb_nav}}" wx:key="index" bindtap="switch_nav" data-type="{{item.id}}">
+      <view class="{{item.id==kbcd?'kb_li':'kb_li kb_lion'}}">{{item.n}}</view>
+      <view class="{{item.id==kbcd?'kb_lis':'kb_lis kb_lions'}}"></view>
+    </view>
+  </view>
+</view>
+<view class="kb" style='top:{{navH}}px;;border-bottom:1px solid #ECECEC;' wx:if="{{pageScroll==1}}">
+  <view class="kbs" style="box-shadow:none;">
+    <view class="kb_libox" wx:for="{{kb_nav}}" wx:key="index" bindtap="switch_nav" data-type="{{item.id}}">
+      <view class="{{item.id==kbcd?'kb_li':'kb_li kb_lion'}}">{{item.n}}</view>
+      <view class="{{item.id==kbcd?'kb_lis':'kb_lis kb_lions'}}"></view>
+    </view>
+  </view>
+</view>
+<view wx:if="{{kbcd==0}}">
+  <view class="head">
+    <view class="headtitle">冻结中</view>
+    <view class="headprice">
+      <text class="htext1">¥</text>
+      <text class="htext2">{{price}}</text>
+    </view>
+  </view>
+  <view class="cont">
+      <view class="licont" wx:for="{{bonddetails}}" wx:key="index">
+        <navigator hover-class='none' url='../mybond/budget?id={{bonddetails[index].id}}'>
+          <view class="litop">
+            <view class="toptext1">{{bonddetails[index].mode}}</view>
+            <view class="toptext2">{{cdd[index].text}}</view>
+          </view>
+          <view class="libottom">
+            <view class="bottomtext1" wx:if="{{bonddetails[index].status==1}}">成功</view>
+            <view class="bottomtext1" wx:if="{{bonddetails[index].status==0}}">失败</view>
+            <view class="bottomtext2" wx:if="{{bonddetails[index].class==2}}">+{{bonddetails[index].amount}}</view>
+            <view class="bottomtext3" wx:if="{{bonddetails[index].class==1}}">-{{bonddetails[index].amount}}</view>
+          </view>
+        </navigator>
+      </view>
+  </view>
+</view>
+<view wx:if="{{kbcd==1}}">
+  <view class="heads">
+    <view class="headprice">
+      <text class="htext3">余额</text>
+      <text class="htext1">¥</text>
+      <text class="htext2">{{cbond_num.deposit_account}}</text>
+    </view>
+    <view class="headtitle" style="color:#888;margin-top:10px;">冻结中<text>¥{{cbond_num.freezing_amount}}</text></view>
+    <view class="but_box">
+      <view class="but_box1" bindtap="opencashframe">提现</view>
+      <view class="but_box2" bindtap="go_bondc">充值</view>
+    </view>
+  </view>
+  <view class="cont">
+      <view class="licont" wx:for="{{bonddetails}}" wx:key="index" bindtap="gomybond" data-type="{{item.is_skip}}" data-id="{{item.mixed}}">
+          <view class="litop">
+            <view class="toptext1">{{bonddetails[index].mode}}</view>
+            <view class="toptext2">{{cdd[index].text}}</view>
+          </view>
+          <view class="libottom">
+            <view class="bottomtext1" wx:if="{{bonddetails[index].status==1}}">成功</view>
+            <view class="bottomtext1" wx:if="{{bonddetails[index].status==4}}">失败</view>
+            <view class="bottomtext1" wx:if="{{bonddetails[index].status==3}}">冻结中</view>
+            <view class="bottomtext1" wx:if="{{bonddetails[index].status==2}}">处理中</view>
+            <view class="bottomtext1" wx:if="{{bonddetails[index].status==5}}">已返回</view>
+            <view class="bottomtext2" wx:if="{{bonddetails[index].class==1}}">+{{bonddetails[index].amount}}</view>
+            <view class="bottomtext3" wx:if="{{bonddetails[index].class==2}}">-{{bonddetails[index].amount}}</view>
+          </view>
+      </view>
+  </view>
+</view>
+<!-- 体现弹框 -->
+<view class="cashframebox" wx:if="{{cashframe==1}}" bindtap="close_bondcash" data-type="0">
+  <view class="cashframe">
+    <view class="cashframes" catchtap="close_bondcash" data-type="1">
+      <view class="cashframestop">
+        <view class="cashframestitle">提现到</view>
+        <radio-group class="radio-group" bindchange="radioChange">
+              <view class="balance" wx:for="{{cashmode}}" wx:key="index">
+                <view class="balances">
+                  <radio class="radio" value="{{cashmode[index].type}}" checked="{{item.checked}}" color="#FF3740"></radio>
+                  <text class="baltext1">{{cashmode[index].name}}</text>
+                </view>
+                <view class="{{cashmode[index].text!==''?'balcontent':'balcontenton'}}">
+                  {{cashmode[index].text}}
+                </view>
+              </view>
+          </radio-group>
+      </view>
+      <view class="cashframesfooter" catchtap="gobondcash">确认</view>
+    </view>
+  </view>
+</view>
+

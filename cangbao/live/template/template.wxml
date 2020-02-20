@@ -1,0 +1,66 @@
+<!-- 黑色 -->
+<template name="template_o">
+  <view class='nav bg-white' style='height:{{navH}}px'>
+    <view class='nav-title'>
+      <text>{{headtitle}}</text>
+      <view class='nav-title_icon'>
+        <view class='fh_box'>
+          <image src='../img/template/f_h.png' class='f_hback'></image>
+          <view style='width:100%;height:100%;position:absolute;top:0;left:0;display:flex;justify-content:space-between;'>
+            <view style='width:50%;height:100%;' bindtap='back'><image src='../img/template/f_h1.png' mode='aspectFit' class='back'></image></view>
+            <view style='width:50%;height:100%;' bindtap='backhome'><image src='../img/template/f_h2.png' mode='aspectFit' class='backhome'></image></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view style="height:{{navH}}px" class='nav_line_k'></view>
+</template>
+<!-- 黑色(无填充) -->
+<template name="template_s">
+  <view class='nav' style='height:{{navH}}px'>
+    <view class='nav-title'>
+      {{headtitle}}
+      <view class='nav-title_icon'>
+        <view class='fh_box'>
+          <image src='../img/template/f_h.png' class='f_hback'></image>
+          <view style='width:100%;height:100%;position:absolute;top:0;left:0;display:flex;justify-content:space-between;'>
+            <view style='width:50%;height:100%;' bindtap='back'><image src='../img/template/f_h1.png' mode='aspectFit' class='back'></image></view>
+            <view style='width:50%;height:100%;' bindtap='backhome'><image src='../img/template/f_h2.png' mode='aspectFit' class='backhome'></image></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<!-- 白色 -->
+<template name="template_t">
+  <view class='nav bg-white' style='height:{{navH}}px'>
+    <view class='nav-title'>
+      {{headtitle}}
+      <view class='nav-title_icon'>
+        <view class='fh_box'>
+          <image src='../img/template/f_hs.png' class='f_hback'></image>
+          <view style='width:100%;height:100%;position:absolute;top:0;left:0;display:flex;justify-content:space-between;'>
+            <view style='width:50%;height:100%;' bindtap='back'><image src='../img/template/f_hs1.png' mode='aspectFit' class='back'></image></view>
+            <view style='width:50%;height:100%;' bindtap='backhome'><image src='../img/template/f_hs2.png' mode='aspectFit' class='backhome'></image></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view style="height:{{navH}}px" class='nav_line_k'></view>
+</template>
+<template name="payquota">
+  <view id="xe" catchtouchmove='true' bindtap='closequota' data-id='3'>
+    <view id="xe_box" catchtap='closequota' data-id='2'>
+      <view class='xbox_top'><view class='xbox_topt1'>温馨提示</view><view class='xbox_topt2'>您本次支付金额较大，可能超出支付渠道单笔最高限额，如支付未能成功，请选其他支付方式</view>
+      </view>
+      <view class='xbox_bom'>
+        <view class='xbox_bomb1' catchtap='closequota' data-id='1'>查看其他支付方式</view>
+        <view class='xbox_bomb2' catchtap='closequota' data-id='0'>继续支付</view>
+      </view>
+      <view class='xbox_boms' catchtap='closequota' data-id='3'>取消</view>
+    </view>
+  </view>
+</template>

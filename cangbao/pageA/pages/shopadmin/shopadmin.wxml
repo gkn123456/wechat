@@ -1,0 +1,131 @@
+<!--pageA/pages/shopadmin/shopadmin.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<!-- 一级分类 -->
+<view class="swiper-tab" style="position:fixed;top:{{navH}}px;left:0;width:100%;z-index:8;">
+    <view style="display:flex;margin:0 auto;align-items:center;">
+      <view wx:for="{{nav}}" data-index="{{index}}" wx:key="{{index}}" data-mark='{{item.mark}}' class="tab-item {{currentTab==index ? 'on' : ''}}" data-current="{{index}}" bindtap="swichNav">{{item.nav_name}}
+        <view class="selection {{currentTab==index ? 'on1' : ''}}"></view>
+      </view>
+    </view>
+</view>
+<!-- 二级分类(拍品) -->
+<view class='qh' wx:if="{{currentTab==0}}" style='top:{{navHs}}px;'>
+  <view class='qh_h'>
+    <view class="ah_h1 {{ty1==item.mark? 'ah_hs' : ''}}" wx:for="{{navs}}" wx:key='index' wx:for-item="item" bindtap='swidth_o1' data-id='{{item.mark}}'>{{item.name}}</view>
+  </view>
+</view>
+<!-- 二级分类(拍品) -->
+<view class='qh' wx:if="{{currentTab==1}}" style='top:{{navHs}}px;'>
+  <view class='qh_h'>
+    <view class="ah_h1 {{ty2==item.mark? 'ah_hs' : ''}}" wx:for="{{navs_o}}" wx:key='index' wx:for-item="item" bindtap='swidth_o2' data-id='{{item.mark}}'>{{item.name}}</view>
+  </view>
+</view>
+
+<!-- 拍品页面 -->
+<view class='main' wx:if="{{currentTab=='0'&&ty1!=='1'}}">
+  <view style="height:120px;"></view>
+  <image src="../img/nopages.png" class="nopageimg" wx:if="{{u.length==0}}"></image>
+  <scroll-view class='doing' wx:if="{{u.length!==0}}">
+    <view class='d_box' wx:for="{{u}}" wx:key="index">
+      <view class='d_b_t' bindtap='godetail' data-id='{{item.goods_id}}'>
+        <image class='typ' wx:if="{{item.status==5}}" src="../img/paipin_liupai.png"></image>
+        <image class='typ' wx:if="{{item.status==1}}" src="../img/paipin_jingpai.png"></image>
+        <image class='d_b_img' src="{{item.cover}}" mode="aspectFill"></image>
+        <view class='d_b_r'>
+          <view class='d_b_title'>{{item.title}}</view>
+          <view class='d_b_clas'>
+            <view class='nowprice' wx:if="{{ty1==0}}">当前价格：¥{{item.now_price}}</view>
+            <view class='panum' wx:if="{{ty1==0}}">出价次数：{{item.bid_count}}次</view>
+            <view class='shipyuany' wx:if="{{ty1==2}}">失败原因：{{item.fail_reason}}</view>
+            <view class='panum' wx:if="{{ty1==2}}">失败时间：{{clock[index].text}}</view>
+            <view class='panum' wx:if="{{ty1==3}}">创建时间：{{clock[index].text}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='d_b_b'>
+        <view class='jtime'><view class='d_b_b_time' wx:if="{{ty1==0}}">距结束{{clock1[index].text}}</view></view>
+        <view class='btn'>
+          <view class='bt' wx:if="{{ty1==0}}" bindtap='down' data-id='{{item.goods_id}}'>下架</view>
+          <view class='bt bton' wx:if="{{ty1==2}}" bindtap='goods_godetail' data-id='{{item.goods_id}}'>重新上架</view>
+          <view class='bt' wx:if="{{ty1==3}}" bindtap='detel' data-id='{{item.goods_id}}'>删除</view>
+          <view class='bt bton' wx:if="{{ty1==3}}" bindtap='godetail' data-id='{{item.goods_id}}' style="margin-left:20rpx;">编辑</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<view class='main' wx:if="{{currentTab=='0'&&ty1=='1'}}">
+  <view style="height:120px;"></view>
+  <image src="../img/nopages.png" class="nopageimg" wx:if="{{u.length==0}}"></image>
+  <scroll-view class='doing' wx:if="{{u.length!==0}}">
+    <view class='d_boxs' wx:for="{{u}}" wx:key="index">
+      <view class='d_b_t' bindtap='godetail' data-id='{{item.goods_id}}'>
+        <image class='typ' src="../img/paipin_jiepai.png"></image>
+        <image class='d_b_img' src="{{item.cover}}" mode="aspectFill"></image>
+        <view class='d_b_r'>
+          <view class='d_b_title'>{{item.title}}</view>
+          <view class='d_b_clas'>
+            <view class='chenpay'>成交金额：¥{{item.deal_price}}</view>
+            <view class='panum'>成交时间：{{clock[index].text}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<!-- 商品页面 -->
+<view class='main' wx:if="{{currentTab=='1'&&ty2!=='1'}}">
+  <view style="height:120px;"></view>
+  <image src="../img/nopages.png" class="nopageimg" wx:if="{{u1.length==0}}"></image>
+  <scroll-view class='doing' wx:if="{{u1.length!==0}}">
+    <view class='d_box' wx:for="{{u1}}" wx:key="index">
+      <view class='d_b_t' bindtap='goshopdetails' data-id='{{item.goods_id}}'>
+        <image class='typ' wx:if="{{item.status==5}}" src="../img/paipin_icon_shibai.png"></image>
+        <image class='typ' wx:if="{{item.status==1&&item.shop_class=='1'}}" src="../img/baoku_icon_chushou.png"></image>
+        <image class='typ' wx:if="{{item.status==1&&item.shop_class=='2'}}" src="../img/baoku_yijia.png"></image>
+        <image class='d_b_img' src="{{item.cover}}" mode="aspectFill"></image>
+        <view class='d_b_r'>
+          <view class='d_b_title'>{{item.title}}</view>
+          <view class='d_b_clas'>
+            <view class='nowprice' wx:if="{{ty2==0&&item.shop_class=='1'}}">商品金额：¥{{item.sell_price}}</view>
+            <view class='panum' wx:if="{{ty2==0}}">发布时间：{{create_time[index].text}}</view>
+            <view class='shipyuany' wx:if="{{ty2==2}}">失败原因：{{item.fail_reason}}</view>
+            <view class='panum' wx:if="{{ty2==2}}">失败时间：{{completion_time[index].text}}</view>
+            <view class='panum' wx:if="{{ty2==3}}">创建时间：{{create_time[index].text}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='d_b_b'>
+        <view class='jtime' style='width:2rpx;'></view>
+        <view class='btn'>
+          <view class='bt' wx:if="{{ty2==0}}" bindtap='godetails' data-id='{{item.goods_id}}' style="margin-right:20rpx;">上拍</view>
+          <view class='bt' wx:if="{{ty2==0}}" bindtap='shopgoods_edit' data-id='{{item.goods_id}}' style="margin-right:20rpx;">编辑</view>
+          <view class='bt' wx:if="{{ty2==0}}" bindtap='shop_down' data-id='{{item.goods_id}}'>下架</view>
+          <view class='bt' wx:if="{{ty2==3||ty2==2}}" bindtap='godetails' data-id='{{item.goods_id}}' style="margin-right:20rpx;">上拍</view>
+          <view class='bt' wx:if="{{ty2==3||ty2==2}}" bindtap='shopgoods_edit' data-id='{{item.goods_id}}' style="margin-right:20rpx;">编辑</view>
+          <view class='bt' wx:if="{{ty2==3}}" bindtap='detel_shop' data-id='{{item.goods_id}}'>删除</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<view class='main' wx:if="{{currentTab=='1'&&ty2=='1'}}">
+  <view style="height:120px;"></view>
+  <image src="../img/nopages.png" class="nopageimg" wx:if="{{u1.length==0}}"></image>
+  <scroll-view class='doing' wx:if="{{u1.length!==0}}">
+    <view class='d_boxs' wx:for="{{u1}}" wx:key="index">
+      <view class='d_b_t' bindtap='goshopdetails' data-id='{{item.goods_id}}'>
+        <image class='typ' src="../img/baoku_icon_yishouchu.png"></image>
+        <image class='d_b_img' src="{{item.cover}}" mode="aspectFill"></image>
+        <view class='d_b_r'>
+          <view class='d_b_title'>{{item.title}}</view>
+          <view class='d_b_clas'>
+            <view class='chenpay'>商品金额：¥{{item.sell_price}}</view>
+            <view class='panum'>卖出时间：{{completion_time[index].text}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,169 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="content1">
+<view class="contbox">
+  <movable-area>
+  <view class="video" bindtap='bindMenu1'>
+    <video src="{{video}}" class="videoimg" wx:if="{{video!==''}}" controls="false" show-play-btn="false" show-center-play-btn="false" show-fullscreen-btn="false" object-fit="fill" bindprogress="bindprogress"></video>
+    <view class="videos" wx:if="{{video==''}}">
+      <view class="cent">
+        <image src="../img/shot/phot.png"></image>
+        <view>30s视频</view>
+      </view>
+    </view>
+  </view>
+  <!-- <view class="addimg" wx:for="{{srcs}}" wx:key="index" style="position:relative;">
+    <image src="{{srcs[index]}}" mode="aspectFill" class="imglist" bindtap='previewImg'  data-id='{{index}}' bindload="bindload"></image>
+    <image src="../img/shot/bianji_btn_delete.png" class="imglistclose" bindtap='remove' data-id='{{index}}'></image>
+    <view class='fm' wx:if="{{index==cuts}}">封面</view>
+  </view> -->
+  <block>
+    <view class="addimg" wx:for="{{srcs}}" wx:key="index" style="position:relative;" bindlongpress='_longtap' bindtouchstart='touchs' bindtouchend='touchend' bindtouchmove='touchm' data-index='{{index}}' data-img="{{item}}" id="{{index}}">
+      <view class="addimgbox2" wx:if="{{index===beginIndex&&cd===0}}"></view>
+      <image src="{{srcs[index]}}" mode="aspectFill" class="imglist" bindtap='previewImg'  data-id='{{index}}' bindload="bindload"></image>
+      <image src="../img/shot/bianji_btn_delete.png" class="imglistclose" bindtap='remove' data-id='{{index}}'></image>
+      <view class='fm' wx:if="{{index==cuts}}">封面</view>
+    </view>
+  </block>
+  <!-- 移动块 -->
+  <movable-view x="{{x}}" y="{{y}}" direction="all" damping="{{5000}}" friction="{{1}}" disabled="{{disabled}}" out-of-bounds="true">
+    <view class='item-move' hidden='{{hidden}}' style="transform:scale(1.1);transition:.8s;">
+      <image src="{{beginImg}}" mode="aspectFill"/>
+    </view>
+  </movable-view>
+  <view class="addimg" bindtap='bindMenu2' style="margin-right:0;">
+    <view class="addimgs">
+      <image src="../img/shot/camer.png"></image>
+      <view class="text1">添加照片</view>
+      <view class="text2">({{lisimg.length}}/9)</view>
+    </view>
+  </view>
+  </movable-area>
+  </view>
+</view>
+<view class="content2">
+  <view class='cont2left'>
+    <view class="conlleft"></view>
+    <view class="conltext">商品信息</view>
+  </view>
+  <view class='cont2righ'>
+  </view>
+</view>
+<view class="content3">
+  <view class="t3list">
+    <view class="t3head">
+      <text>名称</text>
+      <input class="input" maxlength="20" placeholder='20个字以内' bindinput='name' value="{{title}}" placeholder-style="color:#AAAAAA;"/>
+    </view>
+  </view>
+  <view class="t3list" bindtap="openclass">
+    <view class="t3head">
+      <text>分类</text>
+      <view class="input">
+        <text style="color:#AAAAAA;" wx:if="{{catename=='选择分类'}}">{{catename}}</text>
+        <text style="color:#1C1C1C;" wx:if="{{catename!=='选择分类'}}">{{catename}}</text>
+      </view>
+    </view>
+    <image src="../img/shot/bianji_btn_next.png" class="t3img"></image>
+  </view>
+  <view class="t3list" bindtap='adddescribe' style='border:0;'>
+    <view class="t3head">
+      <text>描述</text>
+      <view class="input">
+        <input value="{{textvalue1}}" placeholder='添加描述' disabled="true" placeholder-style="color:#AAAAAA;"/>
+      </view>
+    </view>
+    <image src="../img/shot/bianji_btn_next.png" class="t3img"></image>
+  </view>
+</view>
+<view class='baoku_o'>
+  <view class='bk_img'>
+    <image src='../img/shot/chushou.png' class='cs' bindtap='shopy' wx:if="{{shop_class==1}}"></image>
+    <image src='../img/shot/yijia.png' class='cs' bindtap='shopn' wx:if="{{shop_class==2}}"></image>
+  </view>
+  <view style='width:70%;'>
+    <view wx:if="{{shop_class==2}}" class='yjzt'>注：买卖双方自行沟通价格</view>
+    <view wx:if="{{shop_class==1}}" class='sczt'>
+      <view class='sczt_text'>价格：¥</view>
+      <view><input bindinput='shopprice' placeholder="0" placeholder-style="color:#AAA;" value='{{sell_price}}' style='height:24px;line-height:24px;'></input></view>
+    </view>
+  </view>
+</view>
+<view class='foot_l'>
+  <view class='line'></view>
+  <view class='fo_l'>
+    <image src='../img/shot/yxz.png' class='yxz' wx:if="{{returns=='1'}}" bindtap='yxz1'></image>
+    <image src='../img/shot/wxz.png' class='wxz' wx:if="{{returns=='0'}}" bindtap='wxz1'></image>
+    <view class='foot_ltext' style='margin-left:28rpx;'>7天包退</view>
+  </view>
+</view>
+<view class='zhushi'>注：全场包邮请自行考虑成本</view>
+<view class="goback1">
+  <view class="gotext">发布即表示同意
+    <text bindtap='goread'>《藏宝宝库协议》</text>
+   </view>
+</view>
+<view style="width:100%;height:98rpx;"></view>
+<view class="goback">
+  <view class="draft" bindtap='keep'>存草稿</view>
+  <view class="step" bindtap='step'>发布</view>
+</view>
+<!-- 添加描述页面 -->
+<view class="describe" style='display:{{v}};top:{{navH}}px;'>
+  <view class="deshead">
+    <view class="cancel" bindtap='cancel'>取消</view>
+    <view class="destext">添加描述</view>
+    <view class="sure" bindtap='sure'>完成</view>
+  </view>
+  <view class="bt"></view>
+  <textarea placeholder="写描述…" maxlength="-1" value="{{textvalue}}" bindinput="textarea" maxlength="200" />
+</view>
+<!-- 添加分类页面 -->
+<view class="class" style="display:{{v1}};" bindtap='close'>
+  <view class="classbox" catchtap=''>
+
+      <view class="content-container" style="display:flex;width:100%;">
+        <scroll-view class="classify-container" scroll-y="true">
+        <view class="classify" wx:for="{{class}}" wx:for-item="{{class[index].cate_name}}" wx:key="index" data-id="{{index}}" catchtap="tapClassify">
+          <view class="on {{classid==index?'ons':''}}"></view>
+          <view class="name {{classid==index?'active':''}}">{{class[index].cate_name}}</view>
+        </view>
+        </scroll-view>
+        <scroll-view class="goods-container" scroll-y="true" scroll-into-view="{{'inToView' + typeIndex}}" bindscroll="onGoodsScroll" scroll-top="{{scrollTop}}">
+        <view style='padding-top:26rpx;'>
+          
+          <view class="goods" wx:for="{{class[classid].children}}" wx:key="index" data-id='{{class[classid].children[index].cate_id}}' bindtap='gain' data-name='{{class[classid].children[index].cate_name}}'>
+            {{class[classid].children[index].cate_name}}
+          </view>
+        </view>
+        </scroll-view>
+      </view>
+      <view class="btn">
+        <view class='btns' catchtap='close'>确定</view>
+      </view>
+  </view>
+</view>
+
+<view class='preview' style="display:{{v2}}">
+    <view class='imgnum'>
+      {{id+1}}/{{srcs.length}}
+    </view>
+
+    <image class='prclose' src="../img/paysuccess/close.png" bindtap='closeimg'>
+    </image>
+    <swiper
+  autoplay="{{autoplay}}"
+  interval="{{interval}}"
+  duration="{{duration}}"
+  class='previews'
+  bindchange="swiper"
+  current="{{id}}"
+>
+  <block wx:for="{{srcs}}" wx:key="index">
+    <swiper-item>
+      <image mode="aspectFit" src="{{srcs[index]}}" class="slide-image" bindtap='closeimg'/>
+    </swiper-item>
+  </block>
+</swiper>
+ <view class="fmbtn" bindtap='fit'>设为封面</view>
+</view>

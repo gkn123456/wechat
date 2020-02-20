@@ -1,0 +1,60 @@
+<!--pages/my/install/editpaper.wxml-->
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="header">
+  <view class="headertop">
+    <view class="detail1">
+      <text>姓名</text>
+      <input value="{{name}}" bindinput='formName' placeholder='请与身份证姓名保持一致，以保证商品通过海关' placeholder-style="color:#CCC;"></input>
+    </view>
+    <view class="detail1">
+      <text>身份证号</text>
+      <input value="{{phone}}" bindinput='formphone' placeholder='请填写身份证号' placeholder-style="color:#CCC;"></input>
+    </view>
+    <view class='upload_box'>
+      <view class='upload_head'><text class='u_h_t1'>上传身份证照片</text> <text class='u_h_t2'>（通过转运方式购买时需要，请保证照片清晰）</text></view>
+      <view class='upload_img'>
+        <view class='upload_images'>
+          <view class='upload_images_top'>
+            <image class='up_i_timg' src='{{frontview}}' mode="aspectFill" bindtap='open_photo' data-id='1'></image>
+          </view>
+          <view class='upload_images_foot'>正面</view>
+        </view>
+        
+        <view class='upload_images'>
+          <view class='upload_images_top'>
+            <image class='up_i_timg' src='{{rearview}}' mode="aspectFill" bindtap='open_photo' data-id='2'></image>
+            <image class='up_i_addimg' src='../../img/my/ic_qg_add.png'></image>
+          </view>
+          <view class='upload_images_foot'>反面</view>
+        </view>
+      </view>
+      <view class='upload_foot'>隐私保护：收件人身份证照片藏宝科技及合作转运中心仅用于清关，上传的身份证图片会添加“清关水印”，我们不会向任何无关第三方分享、纰漏、交易您的个人信息</view>
+    </view>
+  </view>
+  
+</view>
+
+<view class="is">
+  <text>设为默认</text>
+  <view class="body-view">
+    <switch checked="{{trues}}" bindchange="switch1Change" />
+  </view>
+</view>
+
+<view class='dets' bindtap='cutaddress'>
+  删除证件
+</view>
+
+<view class="hold" bindtap='hold'>
+  <view>保存</view>
+</view>
+
+  <!-- 相册视频照片 -->
+  <view class="photo" wx:if="{{is_photo==1}}" bindtap='close_photo'>
+    <view class="photoh">
+      <view catchtap='bindMenu2'>拍照</view>
+      <view catchtap='bindMenu1'>从相册选择</view>
+      <view catchtap='close_photo' style="color:#AAA;">取消</view>
+    </view>
+  </view>

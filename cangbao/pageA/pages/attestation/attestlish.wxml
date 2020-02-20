@@ -1,0 +1,84 @@
+<!--pageA/pages/attestation/attestlish.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='headtips'>选填项（信息全面有利于提高通过率）</view>
+<view class='alpage'>
+  <view class='pageli' wx:if="{{type=='1'}}">
+    <view class='pagelileft'>从业年限</view>
+    <view class='pageliright'>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{arry1}}"> 
+          <view class="picker">
+            {{pick1}}
+          </view>
+        </picker>
+      <image class='next' src='../img/icon-next.png'></image>
+    </view>
+  </view>
+  <view class='pageli' wx:if="{{type=='1'}}">
+    <view class='pagelileft'>相关经历</view>
+    <view class='pageliright' style='width: 70%;'>
+      <input class='input' placeholder='200字以内的相关经历' bindinput='input1'></input>
+    </view>
+  </view>
+  <view class='pageli' wx:if="{{type=='1'}}">
+    <view class='pagelileft'>企业规模</view>
+    <view class='pageliright'>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{arry2}}"> 
+          <view class="picker">
+            {{pick2}}
+          </view>
+      </picker>
+      <image class='next' src='../img/icon-next.png'></image>
+    </view>
+  </view>
+  <view class='pageli' wx:if="{{type=='2'}}">
+    <view class='pagelileft'>商家介绍</view>
+    <view class='pageliright' style='width: 70%;'>
+      <input class='input' placeholder='200字以内的相关经历' bindinput='input1'></input>
+    </view>
+  </view>
+  <view class='pageli' wx:if="{{type=='2'}}">
+    <view class='pagelileft'>店铺规模</view>
+    <view class='pageliright'>
+      <picker bindchange="bindPickerChange1" value="{{index}}" range="{{arry2}}"> 
+          <view class="picker">
+            {{pick2}}
+          </view>
+      </picker>
+      <image class='next' src='../img/icon-next.png'></image>
+    </view>
+  </view>
+  <view class='pageli'>
+    <view class='pagelileft'>主要销售渠道</view>
+    <view class='pageliright' style='width: 70%;'>
+      <input class='input' placeholder='请填写主要销售渠道' bindinput='input1'></input>
+    </view>
+  </view>
+  <view class='pagesli'>
+    <view class='pageslihead'>
+      <text class='pageslihead_text1'>店铺照片</text><text class='pageslihead_text2'>（大小2M以内，最多3张）</text>
+    </view>
+    <view class='pickbox'>
+      <image class='pickimg' src='{{img1}}' bindtap='chooseImageUpload1' data-id='1'></image>
+      <image class='pickimg' src='{{img2}}' bindtap='chooseImageUpload1' data-id='2'></image>
+      <image class='pickimg' src='{{img3}}' bindtap='chooseImageUpload1' data-id='3'></image>
+      <image class='pickimg'></image>
+    </view>
+  </view>
+  <view class='pagesli'>
+    <view class='pageslihead'>
+      <text class='pageslihead_text1'>相关证书</text><text class='pageslihead_text2'>（大小2M以内，最多3张）</text>
+    </view>
+    <view class='pickbox'>
+      <image class='pickimg' src='{{imgs1}}' bindtap='chooseImageUpload2' data-id='1'></image>
+      <image class='pickimg' src='{{imgs2}}' bindtap='chooseImageUpload2' data-id='2'></image>
+      <image class='pickimg' src='{{imgs3}}' bindtap='chooseImageUpload2' data-id='3'></image>
+      <image class='pickimg'></image>
+    </view>
+  </view>
+</view>
+<view class='li'></view>
+<view class="btn">
+  <view class="btnss" bindtap='previousstep'>上一步</view>
+  <view class="btns" bindtap='submission'>提交</view>
+</view>

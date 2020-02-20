@@ -1,0 +1,28 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="Tips">
+  <image src="../img/ts.png"></image>
+  <text>授权成功，首次登录请绑定手机号码</text>
+</view>
+<form bindsubmit='formsubmit'>
+      <view class="from">
+        <view class='people_info_box'>
+            <view class='people_info_item'>
+                <view class='people_info_box_cont'>
+                    <input type='number' placeholder='请输入手机号' maxlength='11' bindinput='input_val'></input>
+                </view>
+            </view>
+            <view class='people_info_item'>
+                <view class='people_info_box_contsinge'>
+                    <input type='number' value='' placeholder='请输入验证码' class='single' bindinput='input_val1'></input>
+                    <view class="Obtain" bindtap='get_code'>{{show_get_code}}</view>
+                </view>
+            </view>
+        </view>
+        <button class='wc_btn' name="wc_btn" form-type='submit' open-type="getUserInfo" class="confirm">确认</button>
+        <view class="read">
+          <text class="reads" bindtap='goread'>确认代表您已阅读同意《藏宝交易服务用户协议》</text>
+        </view>
+      </view>
+    </form>
+

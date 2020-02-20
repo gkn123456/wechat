@@ -1,0 +1,108 @@
+/* pages/my/mywallet/realname.wxss */
+@import "../../template/template.wxss";
+.head{
+  background: #fff;
+  margin-top:20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding:24rpx 32rpx;
+  box-sizing: border-box;
+}
+.carp{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.radio{
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+  display: flex;
+  align-items: center;
+}
+.radio:last-child{
+  margin-left: 98rpx;
+}
+radio{
+  transform:scale(0.7);
+  margin-right:8rpx ;
+}
+.radio-group{
+  display: flex;
+  align-items: center;
+}
+.cont{
+  background: #fff;
+  margin-top:20rpx;
+  padding-left:32rpx;
+  box-sizing: border-box;
+}
+.cont1{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom:1rpx solid #ECECEC;
+  padding:28rpx 40rpx 28rpx 0;
+  box-sizing: border-box;
+}
+.cont1 view{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.cont1 input{
+  font-size:24rpx;
+  font-weight:400;
+  text-align: right;
+  width: 70%;
+}
+input{
+  color:rgba(28,28,28,1);
+}
+.ph{
+  background: #fff;
+  margin-top:20rpx;
+}
+.phtop{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+  padding:24rpx 32rpx;
+  box-sizing: border-box;
+}
+.phcen{
+  display: flex;
+  justify-content: space-between;
+  padding:20rpx 60rpx;
+  box-sizing: border-box;
+}
+.phcen view{
+  width: 280rpx;
+  height:210rpx;
+}
+.phcen view image{
+  width: 280rpx;
+  height:210rpx;
+}
+.btn{
+  background: #fff;
+  width: 100%;
+  padding: 14rpx 0;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom:0;
+  left: 0;
+}
+.btns{
+  width:184rpx;
+  height:68rpx;
+  text-align: center;
+  line-height: 68rpx;
+  background:rgba(255,55,64,1);
+  border-radius:8rpx;
+  font-size:32rpx;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+}

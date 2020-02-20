@@ -1,0 +1,85 @@
+<!--pages/my/returnreturns.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='h'>
+  <view class='h_t' wx:if="{{types==1}}">
+    <image src='{{order.seller.user_icon}}'></image>
+    <text>{{order.seller.nick_name}}</text>
+  </view>
+  <view class='h_m'>
+    <image class='h_mimg' src='{{order.goods.cover}}'></image>
+    <view class='h_mcont'>
+      <view class='title'>{{order.goods.title}}</view>
+      <view class='cont'>
+        <view class='con_1s' wx:if="{{order.type==1}}">中拍金额：¥{{order.payable_amount}}</view>
+        <view class='con_1s' wx:if="{{order.type==2}}">成交金额：¥{{order.payable_amount}}</view>
+        <view class='con_1' wx:if="{{types==1}}">退款金额：¥{{order.return_info.return_amount}}</view>
+        <view class='con_1' wx:if="{{types==1}}">截止时间：{{t}}</view>
+        <view class='con_1s' wx:if="{{types==2}}">发货截止:{{time}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 卖家退货地址 -->
+<view class='sel' wx:if="{{types==1}}">
+  <view class='sel_t'>
+    <view class='sel_t1'></view>
+    <view class='sel_t2'>卖家退货地址</view>
+  </view>
+  <view class='sel_m'>
+    <view class='sel_list'>收货人：{{order.return_address.accept_name}}</view>
+    <view class='sel_list'>电话：{{order.return_address.mobile}}</view>
+    <view class='sel_list'>地址：{{order.return_address.pca_text}}{{order.return_address.address}}</view>
+  </view>
+</view>
+
+<view class='sell_te' wx:if="{{types==2}}">
+  <view class='sell_head'>
+    <view class='sell_h_fs'>买家</view>
+    <image src='{{order.user.user_icon}}' class='sell_h_img'></image>
+    <view class='sell_h_f'>{{order.user.nick_name}}</view>
+  </view>
+  <view class='sell_main'>
+    <view class='fuzhi' bindtap='copy'>复制</view>
+    <view class='sell_m_h'>
+      <view class='sell_mh_f1'>收货人</view>
+      <view class='sell_mh_f2'>{{order.accept_name}}</view>
+      <view class='sell_mh_f3'>{{order.mobile}}</view>
+    </view>
+    <view class='sell_m_h' style='margin-top:20rpx;'>
+      <view class='sell_mh_f5'>收货人</view>
+      <view class='sell_mh_f4'>{{order.pca_text}}{{order.address}}</view>
+    </view>
+  </view>
+</view>
+<!-- 填写物流单号 -->
+<view class='wl'>
+  <view class='wl_1'>
+    <view class='wl_1l'>物流公司</view>
+    <!-- <view class='wl_1r'>请选择</view> -->
+    <view class="wl_1r">
+      <picker bindchange="bindPickerChange" value="{{index}}" range="{{wl}}" range-key="{{'freight_name'}}" mode="selector" wx:if="{{xz==1}}">
+        <view class="picker">
+          {{wl[index].freight_name}}
+        </view>
+      </picker>
+      <view class='qxs' wx:if="{{xz==0}}" bindtap='xz'>请选择</view>
+
+      <image src='../img/my/right.png'></image>
+    </view>
+  </view>
+  <view class='wl_2'>
+    <view style='display:flex;align-items:center;'>
+      <view class='wl_1l'>物流单号：</view>
+      <input placeholder='填写快递单号' bindinput='input1' value='{{value}}'></input>
+    </view>
+    <view>
+      <image src='../img/my/dhs.png' class='sys' bindtap='sys'></image>
+    </view>
+    
+  </view>
+</view>
+<!-- 提交 -->
+<view class='btn' bindtap='send'>
+  提交
+</view>

@@ -1,0 +1,87 @@
+/* pages/my/mywallet/Modify information.wxss */
+@import "../../template/template.wxss";
+.head{
+  background: #fff;
+  padding-left:32rpx;
+  box-sizing: border-box;
+  border-top:1rpx solid #ECECEC;
+}
+.heads{
+  background: #fff;
+  padding-left:32rpx;
+  box-sizing: border-box;
+  margin-top:20rpx;
+}
+.head1{
+  padding:28rpx 0;
+  border-bottom:1rpx solid #ECECEC;
+  display: flex;
+  justify-content: space-between;
+  padding-right:46rpx;
+  align-items: center;
+}
+.head2{
+  padding:28rpx 0;
+  padding-right:46rpx;
+  border-bottom:1rpx solid #ECECEC;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.head3{
+  padding:28rpx 0;
+  padding-right:46rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+
+}
+.headtext{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.input{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+  text-align: right;
+  width: 70%;
+}
+.headimg{
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+.picker{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.btn{
+  width:335px;
+  height:44px;
+  background:rgba(255,55,64,1);
+  border-radius:4px;
+  font-size:16px;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  line-height: 88rpx;
+  margin:100rpx auto;
+}
+.fximg{
+  width:28rpx;
+  height:34rpx;
+  margin-left: 36rpx;
+}
+.head1img{
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+}
+.section{
+  display: flex;
+  align-items: center;
+  
+}

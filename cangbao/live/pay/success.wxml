@@ -1,0 +1,14 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="header">
+  <view class="header1">
+    <image src="../../pages/img/my/success.png"></image>
+    <text>支付成功</text>
+  </view>
+  <view class="header2">
+    <button class="header2left" open-type="contact" formType="submit" session-from="app" show-message-card="true" send-message-img="../../pages/img/logo.png">
+    开始直播
+    </button>
+    <view class="header2right" bindtap='goback'>返回首页</view>
+  </view>
+</view>

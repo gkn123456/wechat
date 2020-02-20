@@ -1,0 +1,39 @@
+@import "../template/template.wxss";
+@import "../auction.wxss";
+page{
+  background: #fff;
+}
+.head{
+  width:100%;
+  height: 36px;
+  background: #fff;
+  padding:0 16px;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  z-index: 9;
+}
+input{
+  width:100%;
+  height:36px;
+  background:rgba(238,238,238,.5);
+  border-radius:18px;
+  padding:0 19px;
+  box-sizing: border-box;
+  line-height: 36px;
+  font-size:14px;
+  color:rgba(68,68,68,1);
+}
+.vdelbox{
+  width:26px;
+  height:100% ;
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top:0;
+  right:16px;
+}
+.vdel{
+  width:16px;
+  height: 16px;
+}

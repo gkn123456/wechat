@@ -1,0 +1,159 @@
+<!--pageA/pages/search/search.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='head' style="top:{{navH}}px">
+  <input placeholder='' placeholder-style="color:rgba(198,198,198,1);" focus="true" confirm-type="搜索" bindconfirm="search" bindblur="bindblur" bindinput="bindinput" value="{{value}}" maxlength="50"/>
+  <view class='vdelbox' wx:if="{{value!==''}}" bindtap='del_val'>
+    <image class='vdel' src='../img/search/v_del.png'></image>
+  </view>
+</view>
+<view style='padding-top:36px;'>
+  <!-- 历史搜索标签 -->
+  <view class='labelbox' wx:if="{{label==1}}">
+    <view class='labelhead'>
+      <view class='labelheadtext'>历史搜索</view><image class='labelheadimg' src='../img/search/search_del.png' bindtap='delsearch'></image></view>
+      <view class='labelpage1' wx:if="{{search.length==0}}"><text>暂无搜索记录</text></view>
+      <view class='labelpage2' wx:elif="{{search.length!==0}}">
+      <view wx:for="{{searchs}}" wx:key="index" class='labelpage2box' bindtap='searcho' data-id='{{search[index]}}'>{{item}}</view>
+    </view>
+  </view>
+<!-- 搜索结果 -->
+  <view class='searchpage' wx:if="{{label==0}}">
+    <!-- 全球拍列表 -->
+    <view class='pages' wx:if="{{list1.count!==0}}">
+      <view class='pageshead'>
+        <view class='headleft'>
+          <view class='hl1'>全球拍</view><view class='hl2'>约{{list1.count}}件</view>
+        </view>
+        <view class='headright' bindtap='gonewpage' data-type='1' wx:if="{{list1.count>2}}">
+          <view class='hr1'>查看更多</view>
+          <image class='hr2' src='../img/search/right.png' />
+        </view>
+      </view>
+      <view class='pagescont'>
+        <view class='gllibox' id='globalgoods' wx:for="{{list1.data}}" wx:key="index" wx:for-item="item" bindtap='goglobalgoods' data-id='{{item.goods_id}}'>
+          <view class='lileft'><image src='{{item.cover}}' mode='aspectFill'/></view>
+          <view class='liright'>
+            <view style='width:100%;'>
+              <view class='titlte'>{{item.title}}</view>
+              <view class='chtitle'><image class='pufy' src='../img/pu_fy.png'/><view class='chtitle_font'>{{item.translate_title}}</view></view>
+            </view>
+            <view class='pricebox'>
+              <view class='pric1'><text class='pric1_o'>{{item.currency_symbol}}</text><text class='pric1_t' wx:if="{{item.now_price==0}}">{{item.start_price}}</text><text class='pric1_t' wx:if="{{item.now_price!==0}}">{{item.now_price}}</text></view>
+              <view class='pric2'><text wx:if="{{item.now_price==0}}">起拍价</text><text wx:if="{{item.now_price!==0}}">当前价</text></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 国内拍 -->
+    <view class='pages' wx:if="{{list2.count!==0}}">
+      <view class='pageshead'>
+        <view class='headleft'>
+          <view class='hl1'>国内拍</view><view class='hl2'>约{{list2.count}}件</view>
+        </view>
+        <view class='headright' bindtap='gonewpage' data-type='2' wx:if="{{list2.count>2}}">
+          <view class='hr1'>查看更多</view>
+          <image class='hr2' src='../img/search/right.png' />
+        </view>
+      </view>
+      <view class='pagescont'>
+        <view class='gllibox' id='globalgoods' wx:for="{{list2.data}}" wx:key="index" wx:for-item="item" bindtap='gogoods' data-id='{{item.goods_id}}'>
+          <view class='lileft'><image src='{{item.cover}}' mode='aspectFill'/></view>
+          <view class='liright'>
+            <view class='titlte'>{{item.title}}</view>
+            <view class='pricebox' style='margin-top:22px;'>
+              <view class='pric1'><text class='pric1_o'>¥</text><text class='pric1_t' wx:if="{{item.now_price==0}}">{{item.start_price}}</text><text class='pric1_t' wx:if="{{item.now_price!==0}}">{{item.now_price}}</text></view>
+              <view class='pric2'><text wx:if="{{item.now_price==0}}">起拍价</text><text wx:if="{{item.now_price!==0}}">当前价</text></view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 拍卖会 -->
+    <view class='pages' wx:if="{{list3.count!==0}}">
+      <view class='pageshead'>
+        <view class='headleft'>
+          <view class='hl1'>拍卖会</view><view class='hl2'>约{{list3.count}}场</view>
+        </view>
+        <view class='headright' bindtap='gonewpage' data-type='3' wx:if="{{list3.count>2}}">
+          <view class='hr1'>查看更多</view>
+          <image class='hr2' src='../img/search/right.png' />
+        </view>
+      </view>
+      <view class='pagescont'>
+        <view class='gllibox' id='globalgoods' wx:for="{{list3.data}}" wx:key="index" wx:for-item="item" bindtap='goauction' data-id='{{item.id}}'>
+          <view class='lileft'><image src='{{item.cover}}' mode='aspectFill'/></view>
+          <view class='liright'>
+            <view style='width:100%;'>
+              <view id='titlte'>{{item.name}}</view>
+              <view class='chtitle'><image class='pufy' src='../img/pu_fy.png'/><view class='chtitle_font'>{{item.translate_name}}</view></view>
+            </view>
+            <view class='aucbox'>
+              <view id='aucfont'>拍卖行：{{item.auction_name}}</view>
+              <view id="aucfont" wx:if="{{endclock[index]!==''}}">距开拍：{{endclock[index]}}</view>
+              <view id="aucfont" wx:if="{{endclock[index]==''}}">已开拍</view>
+            </view>
+          </view>
+        </view> 
+      </view>
+    </view>
+    <!-- 拍卖行 -->
+    <view class='pages' wx:if="{{list4.count!==0}}">
+      <view class='pageshead'>
+        <view class='headleft'>
+          <view class='hl1'>拍卖行</view>
+          <view class='hl2'>约{{list4.count}}家</view>
+        </view>
+        <view class='headright' bindtap='gonewpage' data-type='4' wx:if="{{list4.count>2}}">
+          <view class='hr1'>查看更多</view>
+          <image class='hr2' src='../img/search/right.png' />
+        </view>
+      </view>
+      <view class='pagescont'>
+        <view class='gllibox' id='globalgoods' wx:for="{{list4.data}}" wx:key="index" wx:for-item="item" bindtap='goauchouse' data-id='{{item.user_id}}'>
+          <view class='lileft'>
+            <view wx:if="{{item.logo_type=='2'}}" class='lileft_logo'><view>{{item.nick_name}}</view></view>
+            <image src='{{item.user_icon}}' mode='aspectFill' wx:if="{{item.logo_type=='1'}}"/>
+          </view>
+          <view class='liright'>
+            <view id='titlte'>{{item.nick_name}}</view>
+            <view class='aucbox'>
+              <view id='aucfont'>近期{{item.auctions_num}}场 共{{item.goods_num}}个拍品</view>
+              <view id="aucfont">地址：{{item.address}}</view>
+            </view>
+          </view>
+        </view> 
+      </view>
+    </view>
+    <!-- 商家店铺 -->
+    <view class='pages' wx:if="{{list5.count!==0}}">
+      <view class='pageshead'>
+        <view class='headleft'>
+          <view class='hl1'>商家店铺</view>
+          <view class='hl2'>约{{list5.count}}家</view>
+        </view>
+        <view class='headright' bindtap='gonewpage' data-type='5' wx:if="{{list5.count>2}}">
+          <view class='hr1'>查看更多</view>
+          <image class='hr2' src='../img/search/right.png' />
+        </view>
+      </view>
+      <view class='pagescont'>
+        <view class='gllibox' id='globalgoods' style='align-items: center;'  wx:for="{{list5.data}}" wx:key="index" wx:for-item="item" bindtap='gopersonal' data-id='{{item.user_id}}'>
+          <view id='lileft'><image src='{{item.user_icon}}'/></view>
+          <view class='liright' style='margin-left:16px;'>
+            <view id='titlte' style='display: flex;align-items: center;'>
+            {{item.nick_name}}
+              <image src='../img/q-r.png' class='rz' wx:if="{{item.authenticate==2}}"/>
+              <image src='../img/p-r.png' class='rz' wx:if="{{item.authenticate==1}}"/>
+            </view>
+            <view class='aucbox' style="margin-top:6px;">
+              <view id='aucfont'>店铺评分：{{item.score}}</view>
+            </view>
+          </view>
+        </view> 
+      </view>
+    </view>
+  </view>
+</view>
+

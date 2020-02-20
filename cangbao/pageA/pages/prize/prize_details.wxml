@@ -1,0 +1,115 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<form bindsubmit="formSubmit" report-submit='true'>
+<view id="imgpbox" wx:if="{{isimg==1}}" bindtap="isimg">
+  <image src="{{imgsrc}}" mode="aspectFit"></image>
+</view>
+<view class="p_head">
+  <view class="p_title" style="font-size:16px;">{{det.title}}</view>
+</view>
+<!-- 单选 -->
+<view id="l1">
+  <view class="contlbox" wx:for="{{det.question}}" wx:key="index" wx:for-index="indexs" data-ids="{{indexs}}" wx:if="{{det.status==1&&(det.is_vote==0||(det.is_vote==1&&det.vote_again==1))}}">
+    <view id="vote_box">
+      <view class="p_desc" style="font-size:14px;">{{item.title}}</view>
+      <view id="imgprizebox">
+        <view wx:for="{{item.images}}" wx:key="index" wx:for-index="ind" catchtap="isimgs" data-img="{{item}}" style="height:{{height}}px;padding:5px;box-sizing:border-box;width:33.3%;">
+          <image src="{{item}}" mode="aspectFill"/>
+        </view>
+      </view>
+    </view>
+    <view data-ids="{{indexs}}" bindtap="single_election" id="idsbox">
+      <view class="contli_quest" wx:for="{{item.option}}" wx:key="index" bindtap="single_election" data-id="{{index}}">
+        <view class="contli_l">
+          <view>{{item.content}}</view>
+          <icon type="success_no_circle" size="20" color="#1b6ef8" wx:if="{{det_s[indexs].v[index].state==1}}"/>
+        </view>
+        <view class="contli_r">
+          <text></text><text class="contli_r2"></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 投票结果 -->
+<view id="l1">
+<view class="contlbox" wx:for="{{det.question}}" wx:key="index" wx:for-index="indexs" data-ids="{{indexs}}" wx:if="{{det.status==2||(det.status==1&&det.vote_again==0)}}">
+  <view id="vote_box">
+    <view class="p_desc" style="font-size:14px;">{{item.title}}</view>
+  <view id="imgprizebox">
+    <view wx:for="{{item.images}}" wx:key="index" wx:for-index="ind" catchtap="isimgs" data-img="{{item}}" style="height:{{height}}px;padding:5px;box-sizing:border-box;width:33.3%;">
+      <image src="{{item}}" mode="aspectFill"/>
+    </view>
+  </view>
+  </view>
+  <view data-ids="{{indexs}}" id="idsbox">
+    <view class="contli" wx:for="{{item.option}}" wx:key="index">
+      <view class="contli_s1" wx:if="{{item.is_choose==1}}">
+        <view class="contli_l">
+          <view>{{item.content}}</view>
+          <icon type="success_no_circle" size="20" color="#1b6ef8" wx:if="{{det_s[indexs].v[index].state==1}}"/>
+        </view>
+        <view class="contli_r">
+          <text></text><text class="contli_r2" wx:if="{{det.status==2}}">{{item.vote_rate}}%</text>
+        </view>
+      </view>
+      <view class="contli_s2" wx:if="{{item.is_choose==0}}">
+        <view class="contli_l">
+          <view>{{item.content}}</view>
+          <icon type="success_no_circle" size="20" color="#1b6ef8" wx:if="{{det_s[indexs].v[index].state==1}}"/>
+        </view>
+        <view class="contli_r">
+          <text></text><text class="contli_r2" wx:if="{{det.status==2}}">{{item.vote_rate}}%</text>
+        </view>
+      </view>
+    </view>
+    <view style="width:100%;" wx:if="{{det.status==2}}">
+      <view class="p_title" wx:if="{{det.is_vote==1}}" style="width:100%;padding:0 16px;box-sizing:border-box;">我的答案：
+        <text wx:for="{{item.option}}" wx:key="index" style="margin-right:5px;" wx:if="{{item.is_choose==1}}">{{item.content}}</text>
+      </view>
+      <view class="p_desc" style="font-size:14px;font-weight:bold;" wx:if="{{det.status==2}}">正确答案：
+        <text wx:for="{{item.option}}" wx:key="index" wx:if="{{item.is_answer==1}}" style="margin-right:5px;">{{item.content}}</text>
+      </view>
+      <view class="p_desc" style="font-size:14px;color:#7f7f7f;" wx:if="{{det.explain!==''}}">{{item.explain}}</view>
+    </view>
+  </view>
+</view>
+</view>
+<view class="endtime">投票截至：{{endtime}}<text style="margin-left:14px;margin-top:10px;">开奖时间：{{ktime}}</text></view>
+<view class="endtime">活动规则：<text>{{det.rule}}</text></view>
+<view class="success" wx:if="{{det.status==1&&det.is_vote==1&&det.is_correct >= det.vote_again}}" style="padding:0 16px;box-sizing:border-box;">
+  <text wx:if="{{det.is_correct==1}}">恭喜您选中正确答案，请等待开奖结果</text>
+  <text wx:if="{{det.is_correct==0}}">很遗憾回答错误，分享至微信群邀请好友点击后，可重新答题</text>
+</view>
+<view class="btnbox" wx:if="{{det.status==1&&(det.is_vote==0||(det.is_vote==1&&det.vote_again==1))}}"><button class="btn" bindtap="vote" formType="submit">确认投票</button></view>
+<view class="btnbox" style="margin-top:10px;">
+  <button open-type="share" formType="submit" hover-class="none" id="share">
+    <text wx:if="{{det.is_vote==0||det.is_correct==1}}">分享到群一起答题</text><text wx:if="{{det.is_correct==0}}">点击立即分享可重新投票</text>
+  </button>
+</view>
+<view class="p_head" wx:if="{{det.status==2}}">
+  <view class="p_title" wx:if="{{det.user!==null}}">中奖人：
+    <text wx:for="{{det.user}}" wx:key="index" style="margin-right:5px;">{{item.nick_name}}</text>
+  </view>
+</view>
+<view class="tips" wx:if="{{det.status==2&&det.is_vote==1}}">
+  <text wx:if="{{det.answer_status==1}}">恭喜您中奖啦!</text>
+  <text wx:if="{{det.answer_status==2||det.answer_status==3}}">很遗憾，本次未中奖</text>
+</view>
+<view class="prizebox">
+  <view class="prize_title">本期奖品</view>
+  <view class="prizeb">
+     <image src="{{det.prize_images}}" mode="aspectFit" bindtap="isimgs" data-img="{{det.prize_images}}"  style="height:{{imgh}}px"/>
+     <view wx:if="{{det.prize_name!==''}}">{{det.prize_name}}</view>
+     <view><text style="color:#7f7f7f;">{{det.prize_desc}}</text></view>
+  </view>
+</view>
+<view style="width:100%;height:30px;background:#fff;"></view>
+<view style="width:100%;font-size:12px;color: #7f7f7f;text-align:center;background:#fff;">
+  更多精彩请关注公众号：藏宝艺术
+</view>
+<view style="width:100%;font-size:10px;color: #ccc;text-align:center;background:#fff;padding-top:10px;box-sizing:border-box;">
+  本活动最终解释权归北京藏宝科技有限公司所有
+</view>
+<view style="width:100%;height:30px;background:#fff;"></view>
+</form>

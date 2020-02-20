@@ -1,0 +1,47 @@
+<!--pageA/pages/applycard/applycard.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='header'>
+  <view class='head'>
+    <image src='../img/applycard/card_yb.png' class='card_yb'></image>
+    <view class='head_right'>
+      <view><image src='../img/applycard/icon_card.png' class='img1'></image></view>
+      <view><image src='../img/applycard/word1.png' class='img2'></image></view>
+      <view><image src='../img/applycard/icon_fast.png' class='img1'></image></view>
+      <view><image src='../img/applycard/word2.png' class='img2'></image></view>
+    </view>
+  </view>
+  <view class='head_bottom'>您将收到官方寄送的店铺名片（可贴）</view>
+</view>
+<view class='title1'>邮寄地址：</view>
+<view class="oaddress">
+  <view class="oaddress2" bindtap='addresst'>
+    <view class="addressdetails">
+      <image class="addressimg1" src="../img/weitpayicon.png"></image>
+      <view class="adre" wx:if="{{user!==null}}">
+        <view class="addressdetails_top">{{user.accept_name}}<text>{{user.mobile}}</text>  </view>
+        <view class="addressdetails_bottom">{{user.pca_text}}{{user.address}}</view>
+      </view>
+      <view class="adre" wx:if="{{user==null}}" bindtap='addnewaddress' data-id='{{details.order_id}}' style='font-size:28rpx;color:rgba(68,68,68,1);'>
+        添加收货地址
+      </view>
+    </view>
+    <image class="addressimg2" src="../img/icon-next.png"></image>
+  </view>
+</view>
+<view class='minput'>
+  <input placeholder='+ 添加手机号（将会展示在名片上）' bindinput='mobile'></input>
+</view>
+<view style='font-size:14px;color:rgba(204,204,204,1);width:100%;text-align:center;margin-top:24px;margin-bottom:55px;'>注：三个月内只能申请一次</view>
+<view class='btnbox'>
+  <view class='btn_left'>
+    <text class='text1'>优惠价：</text>
+    <text class='text2'>¥{{apply.price}}</text>
+    <text class='text3'>{{apply.origin_price}}</text>
+  </view>
+  <view class='btnl_box'>
+    <view class='y' wx:if="{{apply.status==0}}" bindtap='applyl'>立即申请</view>
+    <view class='w' wx:if="{{apply.status==1}}">已申请</view>
+  </view>
+</view>
+

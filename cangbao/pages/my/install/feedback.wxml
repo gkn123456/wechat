@@ -1,0 +1,29 @@
+<!--pages/my/install/feedback.wxml-->
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class='header'>
+  <view class='header_one'>
+    <view class='h_o_o'></view>
+    <view class='h_o_t'>内容描述</view>
+  </view>
+
+  <view class='header_two'>
+    <textarea class='textarea' maxlength="{{noteMaxLen}}" placeholder='告诉我们您遇到的问题' placeholder-style="font-size:28rpx;color:#CCCCCC;" bindinput="bindTextAreaChange" value="{{info}}"></textarea>
+    <view class="t_cont">{{noteNowLen}}/{{noteMaxLen}}</view>
+  </view>
+
+  <view class='line'></view>
+  <view class='header_one'>
+    <view class='h_o_o'></view>
+    <view class='h_o_t'>联系方式（QQ/微信/邮箱/手机号）</view>
+  </view>
+  <view class="header_th">
+    <textarea class='textarea1' maxlength="" bindinput='phone' placeholder='留下联系方式才能更好的让我们帮您解决问题' placeholder-style="font-size:28rpx;color:#CCCCCC;"></textarea>
+  </view>
+
+</view>
+
+<view class='footer'>
+  <view class='f_1'>您也可以直接联系我们微信公众号：{{public}}</view>
+  <view class='f_btn' style='{{sty}}' bindtap='sendfeed'>提交反馈</view>
+</view>

@@ -1,0 +1,3 @@
+/* pageA/pages/auctionhouse/auctionhouse.wxss */
+@import "../template/template.wxss";
+@import "../auchouse.wxss";

@@ -1,0 +1,117 @@
+@import "../template/template.wxss";
+@import "../auction.wxss";
+page{
+  overflow:visible;
+  background:#fff;
+}
+.calendar{
+  width:100%;
+  position: fixed;
+  z-index: 8;
+  left: 0;
+}
+#switch_view{
+position: absolute;
+bottom: 0;
+right: 0;
+display: flex;
+justify-content: center;
+width:100%;
+height:24px;
+}
+#switch_view view{
+  width:80px;
+  height:100%;
+}
+#sidebutton{
+  position:absolute;
+  bottom:-44px;
+  right: 0;
+  width:44px;
+  height:39px;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 0px 4px 0px rgba(79,79,79,0.21);
+  border-radius: 20px 0 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#sidebuttons{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#sidebuttons view{
+  width:8rpx;height:8rpx;border-radius: 50%;background: #6F6F6F;
+}
+#sidebuttons view:last-child{
+  margin-right:0;
+}
+.contbox{
+  width:100%;
+  height: 600px;
+  background: yellow;
+  position: sticky;
+  z-index: 9;
+  overflow: hidden;
+}
+.contboxs{
+  width:100%;
+  height:1000px;
+  background: red;
+}
+#auction_box{
+  width:100%;
+}
+.auc_title_box{width:100%;display: flex;padding:20rpx 22rpx;box-sizing: border-box;background:#fff;align-items: flex-end;}
+.auc_title_boxl{
+  font-size:40rpx;font-weight:bold;color:rgba(51,51,51,1);
+}
+.auc_title_boxr{
+  font-size:24rpx;
+  color:rgba(51,51,51,1);margin-left: 12rpx;
+}
+#auc_title_boxrnumber{
+  color: #F44336;
+}
+.auc_class{
+  margin-right: 18rpx;background:rgba(242,242,242,1);border-radius:3px;padding:4rpx 10rpx;box-sizing: border-box;font-size:10px;color:rgba(111,111,111,1);
+}
+#cal_dmaskbox{
+  width:100%;height:100%;background:rgba(0,0,0,.5);position: fixed;top:0;
+  left:0;z-index: 999;
+}
+#cal_dmask{
+  display: flex;align-items: center;position: absolute;top:364rpx;right:0;
+}
+#cal_masks{
+  display: flex;flex-direction: column;align-items: center;margin-right: 20px;
+}
+#image{
+  width:39px;
+  height:39px;
+  background:rgba(255,255,255,1);
+  box-shadow:0px 0px 4px 0px rgba(79,79,79,0.21);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#images{
+  width:39px;
+  height:39px;
+  background:rgba(255,255,255,0);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#image image{
+  width:22px;height:22px;
+}
+#images image{
+  width:22px;height:22px;
+}
+#cal_masks text{
+  font-size:10px;color:rgba(255,255,255,1);margin-top:8px;
+}

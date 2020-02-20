@@ -1,0 +1,73 @@
+/* pages/my/mybond/budget.wxss */
+@import "../../template/template.wxss";
+.head{
+  padding:32rpx 32rpx;
+  box-sizing: border-box;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  margin-top:20rpx;
+}
+.headimg{
+  width: 100rpx;
+  height: 100rpx;
+}
+.headtext{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+  margin-left: 32rpx;
+}
+.cont{
+  background: #fff;
+  margin-top:20rpx;
+}
+.conthead{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding:32rpx 32rpx;
+  box-sizing: border-box;
+}
+.contheadtext1{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.contheadtext2{
+  font-size:48rpx;
+  font-weight:500;
+  color:rgba(28,28,28,1);
+}
+.line{
+  padding-left:32rpx ;
+  box-sizing: border-box;
+  width: 100%;
+}
+.line view{
+  background:rgba(216,216,216,1) ;
+  height: 1rpx;
+}
+.contpage{
+  padding:32rpx 32rpx;
+  box-sizing: border-box;
+}
+.contpage1{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+.contpage1:last-child{
+  margin-bottom: 0;
+}
+.contpage1t1{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.contpage1t2{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}

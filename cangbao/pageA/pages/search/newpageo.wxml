@@ -1,0 +1,84 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='head' style="top:{{navH}}px" bindtap='back'>
+  <input disabled="true" placeholder-style="color:rgba(198,198,198,1);" value="{{value}}" maxlength="50"/>
+  <view class='vdelbox' wx:if="{{value!==''}}"></view>
+</view>
+<!-- 排序筛选 -->
+<view class='sortbox' style="top:{{top}}px">
+  <view class='sort_box'>
+    <view class='sortboxli1'>
+      <!-- 未选中 -->
+      <view class='sortboxli1box1' bindtap='sort1' wx:if="{{sort1==0&&sortname1=='价格'}}" data-id="1">
+        <text class='sortfont'>价格</text><image class='sorttopimg' src='../img/sort_bom.png'/>
+      </view>
+      <!-- 选中 -->
+      <view class='sortboxli1box1' bindtap='sort1' wx:if="{{sort1==1||sortname1!=='价格'}}" data-id="0">
+        <text class='sort_on'>{{sortname1}}</text>
+        <image class='sorttopimg' src='../img/sort_top.png' wx:if="{{sort1==1}}" catchtap='close'/>
+        <image class='sorttopimg' src='../img/sort_bom.png' wx:if="{{sort1==0}}"/>
+      </view>
+    </view>
+    <view class='sortboxli2'>
+      <view class='sortline1'></view>
+        <!-- 未选中 -->
+        <view class='sortboxli1box1' bindtap='sort2' wx:if="{{sort2==0&&sortname2=='时间'}}" data-id="1">
+          <text class='sortfont'>时间</text>
+          <image class='sorttopimg' src='../img/sort_bom.png'/>
+        </view>
+        <!-- 选中 -->
+        <view class='sortboxli1box1' bindtap='sort2' wx:if="{{sort2==1||sortname2!=='时间'}}" data-id="0">
+          <text class='sort_on'>{{sortname2}}</text>
+          <image class='sorttopimg' src='../img/sort_top.png' wx:if="{{sort2==1}}" catchtap='close'/>
+          <image class='sorttopimg' src='../img/sort_bom.png' wx:if="{{sort2==0}}"/>
+        </view>
+      <view class='sortline2'></view>
+    </view>
+    <view class='sortboxli3'>
+      <!-- 未选中 -->
+        <view class='sortboxli1box1' bindtap='sort3' wx:if="{{sort3==0}}" data-id="1">
+          <text class='sortfont'>筛选</text>
+          <image class='sorttopimg' src='../img/sort_bom.png'/>
+        </view>
+       <!-- 未选中 -->
+        <view class='sortboxli1box1' bindtap='sort3' wx:if="{{sort3==1}}" data-id="0">
+          <text class='sort_on'>筛选</text>
+          <image class='sorttopimg' src='../img/sort_top.png' wx:if="{{sort3==1}}"/>
+          <image class='sorttopimg' src='../img/sort_bom.png' wx:if="{{sort3==0}}"/>
+        </view>
+    </view>
+  </view>
+</view>
+<!-- 排序内容 -->
+<view class='pagesortbox' style='height:{{height}}px;top:{{top1}}px;' wx:if="{{sort3==1||sort1==1||sort2==1}}" bindtap='close'>
+  <view class='pagesortbox1' wx:if="{{sort1==1}}" catchtap='open' data-id='1'>
+    <view wx:for="{{sortpage1}}" wx:key="index" catchtap='sorts1' data-type="{{item.type}}" data-id="{{index}}" data-name="{{item.name}}" class="{{item.state==0?'psli1':'psli1on'}}">{{item.name}}</view>
+  </view>
+  <view class='pagesortbox1' wx:if="{{sort2==1}}" catchtap='open' data-id='2'>
+    <view wx:for="{{sortpage2}}" wx:key="index" catchtap='sorts2' data-type="{{item.type}}" data-id="{{index}}" data-name="{{item.name}}" class="{{item.state==0?'psli1':'psli1on'}}">{{item.name}}</view>
+  </view>
+  <view class='pagesortbox2' wx:if="{{sort3==1}}" catchtap='open' data-id='3'>
+    <view wx:for="{{sortpage3}}" wx:key="index" catchtap='sorts3' data-type="{{item.type}}" data-name="{{item.name}}" data-id="{{index}}" class="{{item.state==0?'psli2':'psli2on'}}">{{item.name}}</view>
+  </view>
+</view>
+<view class='page' style='padding-top:96px;'>
+  <image src='../img/classify/ic_nopage.png' class='nopage' wx:if="{{cate==null}}"></image>
+  <view class='video' wx:for="{{cate}}" wx:for-item="items" wx:key="index" bindtap='go_video' data-id='{{items.goods_id}}'>
+    <image src='../img/video_play.png' class='pictureimg' wx:if="{{items.class==2}}"></image>
+    <image src='{{items.cover}}' mode='aspectFill' class='video_img'></image>
+    <view class='video_tail'>
+      <view class='tail_price'>
+        <view class='tail_price_s'>¥
+          <text wx:if="{{items.now_price==0}}">{{items.start_price}}</text>
+          <text wx:if="{{items.now_price!==0}}">{{items.now_price}}</text>
+        </view>
+        <view class='t_u_num'>
+          <image src='../img/classify/ic_du.png'></image>
+          <text>{{items.play_count}}</text>
+        </view>
+      </view>
+      <view class='tail_title'>{{items.title}}</view>
+    </view>
+  </view>
+  <view class='videos' style='background:rgba(0,0,0,0)'></view>
+</view>

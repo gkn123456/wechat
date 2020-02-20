@@ -1,0 +1,206 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='head' catchtap='open'>
+  <view class='h_l'>
+    <view class='h_ll'>结束时间</view>
+    <view class='h_lr' wx:if="{{timetype==''}}">请选择时间</view>
+    <view class='h_lm' wx:if="{{timetype!==''}}">{{tomday_m}}月{{tomday_d}}日({{timetype}}){{timenum}}:00</view>
+  </view>
+  <image class='h_r' src='../img/shot/bianji_btn_next.png'></image>
+</view>
+
+<view class='info'>
+  <view class='infos'>
+    <view class='info1'></view>
+    <view class='info2'>拍品信息</view>
+  </view>
+  <image src='../img/shot/wt.png' class='info3' bindtap='r_open'></image>
+</view>
+
+<view class='center'>
+  <view class='cen_o'>
+    <view class='cen_ol'>
+      <view class='jfu'>起拍价</view>
+      <input placeholder='0' placeholder-style="color:#AAA;" bindinput='input1' value='{{input1}}'/>
+    </view>
+  </view>
+
+  <view class='cen_t'>
+    <view class='cen_tl'>
+      <view class='jfu'>加价幅度</view>
+      <input placeholder='1' placeholder-style="color:#AAA;" bindinput='input3' value='{{input3}}'/>
+    </view>
+  </view>
+
+  <view class='cen_o'>
+    <view class='cen_or'>
+      <view class='jfu'>一口价</view>
+      <input placeholder='(非必填)' placeholder-style="color:#AAA;" bindinput='input2' value='{{input2}}'/>
+    </view>
+  </view>
+
+  <view class='cen_h'>
+    <view class='cen_hl'>
+      <view>市场估价</view>
+      <input placeholder='(非必填)' placeholder-style="color:#AAA;" bindinput='input5' value='{{input5}}'/>
+    </view>
+    <view class='cen_hl' style='flex-direction:row-reverse;'>
+      <view style='margin-left:20rpx;'>保密</view>
+      <image src='../img/shot/yxz.png' class='yxz' wx:if="{{radio1=='1'}}" bindtap='yxz'></image>
+      <image src='../img/shot/wxz.png' class='wxz' wx:if="{{radio1=='0'}}" bindtap='wxz'></image>
+    </view>
+  </view>
+
+  <view class='cen_t' bindtap='bondChoices'>
+    <view class='cen_tl'>
+      <view class='jfu'>保证金</view>
+      <text class='btext1' wx:if="{{btext=='0'}}">(非必填)</text><text class='btext2' wx:if="{{btext=='1'}}">{{input4}}</text>
+    </view>
+    <image class='h_r' src='../img/shot/bianji_btn_next.png'></image>
+  </view>
+  
+</view>
+
+<view class='foot'>
+  <view class='foot_l'>
+      <image src='../img/shot/yxz.png' class='yxz' wx:if="{{radio=='1'}}" bindtap='yxz1'></image>
+      <image src='../img/shot/wxz.png' class='wxz' wx:if="{{radio=='0'}}" bindtap='wxz1'></image>
+      <view class='foot_ltext' style='margin-left:28rpx;'>7天包退</view>
+  </view>
+  <view class='foot_r'></view>
+</view>
+
+<view class='footsbox'>
+  <view class='foots'>
+    <view class='foot_l'>
+        <view class='foot_ltext'>拍品选项</view>
+    </view>
+    <view class='ctboxs'>
+      <view class="{{item.state=='0'?'ctbox':'ctbox ctboxon'}}" wx:for="{{nav}}" wx:key="index" wx:for-item="item" data-id="{{item.type}}" bindtap='choicegory' data-type="{{item.state}}">{{item.name}}</view>
+    </view>
+  </view>
+</view>
+
+
+<view class='baoku'>
+  <view class='bk_box'>
+      <view class='b_text'>拍卖失败后是否将拍品自动转入宝库</view>
+      <view>
+          <image src='../img/shot/yxz.png' class='yxz' wx:if="{{baoku=='1'}}" bindtap='yxz2'></image>
+          <image src='../img/shot/wxz.png' class='wxz' wx:if="{{baoku=='0'}}" bindtap='wxz2'></image>
+      </view>
+  </view>
+</view>
+
+<view class='baoku_o' wx:if="{{baoku=='1'}}">
+  <view class='bk_img'>
+    <image src='../img/shot/chushou.png' class='cs'  wx:if="{{shop_in==1}}"></image>
+    <image src='../img/shot/yijia.png' class='cs'  wx:if="{{shop_in==2}}"></image>
+    <view class='shopn' wx:if="{{shop_in==2}}" bindtap='shopn'></view>
+    <view class='shopy' wx:if="{{shop_in==1}}" bindtap='shopy'></view>
+  </view>
+  <view style='width:70%;'>
+    <view wx:if="{{shop_in==2}}" class='yjzt'>注：买卖双方自行沟通价格</view>
+    <view wx:if="{{shop_in==1}}" class='sczt'>
+      <view class='sczt_text'>价格：¥</view>
+      <input bindinput='shopprice'></input>
+    </view>
+  </view>
+</view>
+
+<view class='zqc_b'>注：全场包邮请自行考虑成本</view>
+
+<view class='btn'>
+  <view class='btns' bindtap='pub'>发布</view>
+</view>
+
+<!-- 时间选择弹框 -->
+<view class='timeframe' style="display:{{timedy}};" bindtap='close'>
+  <view class='framebox' catchtap='open'>
+    <view class='timebox'>
+      <view class='tboxhead'>{{nowday}}{{nowday1}}(今天)</view>
+      <view class='tboxfoot'>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='10' style="display:{{v1}};">10:00</view>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='12' style="display:{{v2}};">12:00</view>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='16' style="display:{{v3}};">16:00</view>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='17' style="display:{{v4}};">17:00</view>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='19' style="display:{{v5}};">19:00</view>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='20' style="display:{{v6}};">20:00</view>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='21' style="display:{{v7}};">21:00</view>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='22' style="display:{{v8}};">22:00</view>
+        <view class='tbox' catchtap='timer' data-type='now' data-time='23' style="display:{{v9}};">23:00</view>
+      </view>
+    </view>
+
+    <view class='timebox'>
+      <view class='tboxhead'>{{tomday}}{{tomday1}}(明天)</view>
+      <view class='tboxfoot'>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='10'>10:00</view>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='12'>12:00</view>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='16'>16:00</view>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='17'>17:00</view>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='19'>19:00</view>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='20'>20:00</view>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='21'>21:00</view>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='22'>22:00</view>
+        <view class='tbox' catchtap='timer' data-type='tom' data-time='23'>23:00</view>
+      </view>
+    </view>
+
+    <view class='timebox'>
+      <view class='tboxhead'>{{aftday}}{{aftday1}}(后天)</view>
+      <view class='tboxfoot'>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='10'>10:00</view>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='12'>12:00</view>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='16'>16:00</view>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='17'>17:00</view>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='19'>19:00</view>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='20'>20:00</view>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='21'>21:00</view>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='22'>22:00</view>
+        <view class='tbox' catchtap='timer' data-type='aft' data-time='23'>23:00</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='remind' wx:if="{{r_num==1}}" bindtap='r_close'>
+  <view class='remind_box'>
+    <view class='r_head' catchtap='r_open'>信息说明</view>
+    <view class='r_details' catchtap='r_open'>
+      <view class='r_d_list'>
+        <view class='r_d_ll'>拍</view>
+        <view class='r_d_lr'>拍品起拍的价格</view>
+      </view>
+      <view class='r_d_list'>
+        <view class='r_d_ll'>口</view>
+        <view class='r_d_lr'>首位支付一口价的买家竞拍成功</view>
+      </view>
+      <view class='r_d_list'>
+        <view class='r_d_ll'>加</view>
+        <view class='r_d_lr'>每次出价的加价幅度大于等于一</view>
+      </view>
+      <view class='r_d_list'>
+        <view class='r_d_ll'>保</view>
+        <view class='r_d_lr'>参与拍卖需冻结的保证金金额</view>
+      </view>
+      <view class='r_d_list'>
+        <view class='r_d_ll'>估</view>
+        <view class='r_d_lr'>拍品参考价格</view>
+      </view>
+    </view>
+    <view class='r_btn' catchtap='r_close'>我知道了</view>
+  </view>
+</view>
+<!-- 保证金选择器 -->
+<view class='timeframe' bindtap='bondChoice' wx:if="{{bondChoice=='1'}}"> 
+  <view class='bondbox' catchtap='bondChoices'>
+    <view class='bondboxhead'>
+      <text class='bondboxheadt1'>保证金买卖双方同时缴纳</text>
+      <text class='bondboxheadt2' catchtap='goread'>《拍卖保证金规范》</text>
+    </view>
+    <view class='bondboxcont'>
+      <view wx:for="{{bon}}" wx:key="index" wx:for-item="item" class="{{item.state==0?'bondboxcontlist':'bondboxcontlist contliston'}}" catchtap='bondChoicec' data-value="{{item.value}}" data-id="{{index}}">{{item.value}}</view>
+    </view>
+  </view>
+</view>

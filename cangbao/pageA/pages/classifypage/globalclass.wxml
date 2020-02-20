@@ -1,0 +1,26 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='groom'>
+  <image src='../img/classify/ic_nopage.png' class='nopage' wx:if="{{groom_list==null}}"></image>
+  <view class='groom_li' wx:for="{{groom_list}}" wx:for-item="item" wx:key="index" bindtap='goglobal' data-id='{{groom_list[index].goods_id}}'>
+    <view style='width:28px;height:28px;position:absolute;top:12px;right:12px;'>
+      <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:28px;height:28px;display:flex;" size="mini" catchtap='collect' wx:if="{{select_s[index].state==0}}" data-id="{{item.goods_id}}" data-ids="{{index}}" open-type="getUserInfo">
+        <image src='../img/homepage/icon_shoucang_xian.png' class='iscolor'></image>
+      </button>  
+      <image src='../img/homepage/icon_shoucang_mian.png' class='iscolor' wx:if="{{select_s[index].state==1}}" catchtap='offcollect' data-id="{{item.goods_id}}" data-ids="{{index}}"></image>
+    </view>
+    <view class='groomimg'><image src='{{item.cover}}' mode="aspectFill" lazy-load="true"></image></view>
+    <view class='groomcont'>
+      <view class='groom_text1'>{{item.title}}</view>
+      <view class='groom_text2'><image src='../img/classify/quan_icon_time_black.png'></image><text>{{starttime[index].t}}</text></view>
+      <view class='groom_text3'><image src='../img/classify/pmai.png'></image><text>{{item.auction_name}}</text></view>
+        <view class='groom_text4' wx:if="{{item.now_price==0}}">
+          <text class='g_t_1'>起拍价：</text><text class='g_t_2'>{{item.currency_symbol}}{{item.start_price}}</text>
+        </view>
+        <view class='groom_text4' wx:elif="{{item.now_price!==0}}">
+          <text class='g_t_1'>当前价：</text><text class='g_t_2'>{{item.currency_symbol}}{{item.now_price}}</text>
+        </view>
+    </view>
+  </view>
+  <view class='groom_lis'></view>
+</view>

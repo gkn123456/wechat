@@ -1,0 +1,16 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="head">
+  <view class="t1">充值金额</view>
+  <view style="display:flex;border-bottom:1px solid #ECECEC;padding-bottom:30px;height:58px;">
+    <view class="t2">￥</view>
+    <view style="height:58px;">
+      <input type='number' value='' placeholder='' class='single' focus="true" bindblur='input' bindinput="input"></input>
+    </view>
+  </view>
+</view>
+
+<view class="pay">
+  <view bindtap='rech' class="{{input_n==0?'pays1 pays1on':'pays1'}}">确认支付</view>
+</view>
+

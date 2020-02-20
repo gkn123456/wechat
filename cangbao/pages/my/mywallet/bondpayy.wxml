@@ -1,0 +1,38 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<!-- 选择支付部分 -->
+<view class="payments">
+    <view class="payheader">
+        <view>
+          <text class="paytitle">充值金额：</text>
+          <text class="payprices">¥{{num}}</text>
+        </view>
+        <text class="paynotes"></text>
+    </view>
+    <view class="page_bd">
+        <view class="section section_gap">
+            <radio-group class="radio-group" bindchange="radioChange">
+              <view class="balance" wx:for="{{paymode}}" wx:key="index">
+                <view class="balcontent">
+                <block wx:if="{{true}}">
+                   <image src="../../img/yezf-icon.png" wx:if="{{paymode[index].default==0}}"></image>
+                   <image src="../../img/wxzf-icon.png" wx:else="{{paymode[index].default==1}}"></image>
+                </block>
+                  <text class="baltext1">{{paymode[index].pay_name}}</text>
+                  <text class="baltext2">{{paymode[index].ext}}</text>
+                </view>
+                <radio class="radio" value="{{paymode[index].pay_mark}}" checked="{{true}}" color="#FF3740"></radio>
+              </view>
+            </radio-group>
+        </view>
+    </view>
+</view>
+<form bindsubmit="formSubmit" report-submit='true'>
+  <view style="width:100%;margin-top:180rpx">
+    <view class="ispay">
+      <button formType="submit" hover-class="none" bindtap='ispay' style='border:0;' plain='true'>
+        <view class='ispayst'>确认支付</view>
+      </button>
+    </view>
+  </view>
+</form>

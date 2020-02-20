@@ -1,0 +1,240 @@
+<!--pages/homepage/homepage.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_home" data="{{navH,headtitle}}"></template>
+<!-- 头部一级分类 -->
+<view class='first_header' style='top:{{navH}}px;'>
+  <view class='first_headerbox'>
+    <view class='first_headerleft'>
+      <view class='f_h_li' wx:for="{{nav}}" wx:key="index" wx:for-item="item" data-id="{{item.type}}" bindtap='headclick'><text class="{{sign1==index?'f_h_litext on1':'f_h_litext'}}">{{item.name}}</text><view class="{{sign1==index?'line1 on1s':'line1'}}"></view></view>
+    </view>
+    <view class='first_headeright'>
+      <image src="../img/homepage/icon_sousuo.png" class='f_hr_img1' bindtap='gosearch'></image><image src="../img/homepage/icon_saoyisao.png" class='f_hr_img2' bindtap='scancode'></image>
+    </view>
+  </view>
+</view>
+
+<view id='swiper1' style="overflow: scroll;-webkit-overflow-scrolling: touch;" wx:if="{{sign1==0}}">
+        <view id="class_swiper">
+          <view id="class_swiperbox">
+            <swiper class='classswiper' bindchange="class_bindchange">
+              <swiper-item class="item2" wx:for="{{rclass}}" wx:key="index"> 
+                <view class="item2_item" wx:for="{{item}}" wx:key="index" wx:for-item="a" bindtap='goclasspage' data-type="{{a.type}}" data-id="{{a.cate_id}}" data-name="{{a.cate_name}}">
+                  <view class="item2_itemimg">
+                    <image src="{{a.cate_icon}}" />
+                  </view>
+                  <text>{{a.cate_name}}</text>
+                </view>
+              </swiper-item>
+            </swiper>
+            <view class="class_swiper_vote">
+              <view class="class_swiper_votebox">
+                <view wx:for="{{rclass}}" wx:key="index" class="{{index==class_swiper_current?'class_swiper_votebox_items':'class_swiper_votebox_item'}}"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- 轮播 -->
+        <view id="firstswiper">
+          <swiper class='swiper3' circular="true" autoplay='true' bindchange="bindchange">
+            <swiper-item wx:for="{{banner}}" wx:key="index" wx:for-item="item" class="item3" catchtap="gourl" data-url="{{item.target_url}}"> 
+              <image src='{{item.image}}' mode='aspectFill'></image>
+            </swiper-item>
+          </swiper>
+          <view id="swiper_vote">
+            <view id="{{index==swiper_current?'swiper_vote_items':'swiper_vote_item'}}" wx:for="{{banner}}" wx:key="index"></view>
+          </view>
+        </view>
+        <!-- 四个模块 -->
+        <view class='fourbox'>
+          <view class='fboxli' wx:for="{{fourbox}}" wx:key="index" wx:gor-item="item" bindtap='gochans' data-type="{{item.type}}" data-name3="{{item.name3}}">
+            <image src='{{item.img}}'></image>
+            <view class='fboxli_fontbox'>
+              <text class='fboxli_fontbox_t1'>{{item.name1}}</text><text class='fboxli_fontbox_t2'>{{item.name2}}</text>
+            </view>
+          </view>
+        </view>
+        <!-- 热拍场次 -->
+        <view class='auchotbox' bindtap='forbidMove'>
+          <view class='auchothead' bindtap='goauctionlist'>
+            <view class='auchothead_left'><view class='auchothead_left1'>正在热拍</view></view>
+            <image src='../img/my/nextth.png'></image>
+          </view>
+          <view class='auchotcont' style='height:220px;' >
+            <scroll-view scroll-x="true" catchtap="forbidMove" bindscroll="forbidMove" bindscrolltolower="" bindscrolltoupper="" lower-threshold="10">
+              <view class='swiper2_item' style='width:{{auchotwidth}}px;position:relative;'>
+                <view class='auchotli' wx:for="{{auc_banner}}" wx:key="index" wx:for-item="item" catchtap='goauction' data-id="{{item.id}}">
+                  <view style="width:128px;height:175px;position:relative;border-radius:3px;overflow:hidden;border:1px solid #F3F3F5;box-sizing:border-box;">
+                    <view id="auc_vot" wx:if="{{item.is_select==1}}">
+                      <image class="auc_votimg" src="../img/homepage/auc_vo.png" />
+                    </view>
+                    <image src='{{item.cover}}' class='auchotliimg' mode='aspectFill'></image>
+                    
+                    <view style="background:linear-gradient(180deg,rgba(0,0,0,0.3) 0%,rgba(0,0,0,0) 100%);width:100%;height:100%;position:absolute;top:0;left:0;"></view>
+                    <view class='auchotlicont_bom'>
+                      <view style='display:flex;'>
+                        <view class='auchotli_bomt2'>{{starttime[index]}}</view>
+                      </view>
+                    </view>
+                  </view>
+                  <view class='auchotli_topt1'>{{item.translate_name}}</view>
+                </view>
+              </view>
+            </scroll-view>
+           
+          </view>
+        </view>
+        <!-- 热门精选 -->
+        <view class='Selectedbox'> 
+          <view class='Selectedhead' style="background:linear-gradient(180deg,rgba(255,255,255,1) 0%,rgba(248,248,248,1) 100%);">
+            <view id="xst">··</view>
+            <view class='h2'>为您推荐</view>
+            <view id="xst">··</view>
+          </view> 
+          <view class='Selectedcont' catchtap='onReachBottom' bindtouchmove=''>
+            <view class='selectli' wx:for="{{select}}" wx:key="index" wx:for-item="item" data-id="{{item.goods_id}}" catchtap='goglobalgoods'>
+              <view style='width:56rpx;height:56rpx;position:absolute;top:24rpx;right:24rpx;'>
+                <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:56rpx;height:56rpx;display:flex;" size="mini" catchtap='collect' wx:if="{{select_s[index].state==0}}" data-id="{{item.goods_id}}" data-ids="{{index}}" open-type="getUserInfo">
+                  <image src='../img/homepage/icon_shoucang_xian.png' class='iscolor'></image>
+              </button>
+              
+              <image src='../img/homepage/icon_shoucang_mian.png' class='iscolor' wx:if="{{select_s[index].state==1}}" catchtap='offcollect' data-id="{{item.goods_id}}" data-ids="{{index}}"></image>
+              </view>
+              <view class='groomimg' style='height:{{goodheight}}px;'><image class='selectliimg' src='{{item.cover}}' mode='aspectFill' lazy-load="true"></image></view>
+              <view class='selcbox'>
+                <view class='selc1'>{{item.title}}</view>
+                <view class='selc2' style='margin-top:6px;'><image class='' src='../img/quan_icon_time_black.png'></image><view class='selc2text'>{{starttime1[index]}}</view></view>
+                <view class='selc2' style='margin-top:2px;'><image style='width:9px;height:9px;' class='' src='../img/pmai.png'></image><view class='selc2text'>{{item.auction_name}}</view></view>
+                <view class='selprices' wx:if="{{item.now_price!==0}}">
+                  <view class='selprice1'>当前价:</view><view class='selprice2'>{{item.currency_symbol}}{{item.now_price}}</view>
+                </view>
+                <view class='selprices' wx:if="{{item.now_price==0}}">
+                  <view class='selprice1'>起拍价:</view><view class='selprice2'>{{item.currency_symbol}}{{item.start_price}}</view>
+                </view>
+              </view>
+            </view>
+            <view class='selectlis'></view>
+          </view>
+        </view>
+</view>
+
+<view id='swiper1' wx:if="{{sign1==1}}">
+        <view class='auc_housebox'>
+          <view class='auchothead' bindtap='goauctionhouselist'>
+            <view class='auchothead_left'><view class='auchothead_left1'>拍卖行</view><view class='auchothead_left2'>热门拍卖行为您推荐</view></view>
+            <image src='../img/my/nextth.png'></image>
+          </view>
+          <view class='auchotcont' catchtouchmove="forbidMove">
+            <scroll-view scroll-x="true">
+              <view class='swiper2_item' style='width:{{auchousewidth}}px;'>
+                <view class='auchouli' wx:for="{{auchouse}}" wx:key="index" wx:for-item="item" bindtap='goauchouse' data-id="{{item.id}}">
+                  <image src='{{item.cover}}' mode='aspectFill'></image>
+                  <view class='auchoulicont'>
+                    <view class='auchouliconts'>
+                      <view class='auchoulilogo'>
+                        <image src='{{item.logo}}' mode='aspectFill' wx:if="{{item.logo_type==1}}"></image>
+                        <text wx:if="{{item.logo_type==2}}">{{item.name}}</text>
+                      </view>
+                      <view style='margin-left:10px;width:76%;'>
+                        <view class='auchoulitop'>
+                          <view class='auchoulitoptt1'>{{item.name}}</view><view class='auchoulitoptt2'>近期{{item.auctions_num}}场</view>
+                        </view>
+                        <view class='auchoulibom'>
+                          <image src='../img/loct.png'></image>
+                          <view class='auchoulibomt1'>{{item.address}}</view>
+                        </view>
+                      </view>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </scroll-view> 
+          </view>
+        </view>
+        <view class='Selectedhead' style='margin-top:51px;'>
+          <image class='h1' src='../img/homepage/zuo@2x.png'></image>
+          <view class='h2'>热门拍卖会</view>
+          <image class='h1' src='../img/homepage/you@2x.png'></image>
+        </view>
+        <view class='auctionhotbox' id="auctop">
+          <view class='page2_sortbox' style='top:{{navHs}}px;'>
+            <scroll-view class='page2_sortbox_h' scroll-x="true">
+              <view wx:for="{{multiArray1}}" wx:key="index" class="page2_s_h_t {{item.tg==1? 'multiArray1_c': ''}}" bindtap='changelabe2' data-key='{{index}}'>{{multiArray1[index].t}}</view>
+            </scroll-view>
+          </view>
+          <view class='auctionhotboxcont'>
+            <view class='nopageimgbox' wx:if="{{auction_list==null}}"><image src="../img/nopages.png" class="nopageimg"></image></view>
+            <view class='sale' wx:for="{{auction_list}}" wx:key="index" wx:for-item="item" bindtap='goauction' data-id='{{item.id}}' style="position:relative;">
+              <view class='sale_head'>
+                <view class='sale_h_t1'>
+                  <view style="width:88%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{item.name}}</view>
+                    <view style='width:60rpx;height:60rpx;'>
+                      <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:30px;height:30px;display:flex;" size="mini" wx:if="{{auction_lists[index].state== 0}}" catchtap='global_collect' open-type="getUserInfo" data-id="{{item.id}}" data-ids="{{index}}">
+                          <image src='../img/collectof.png' class='isclo'></image>
+                      </button>
+                      <image src='../img/collecton.png' wx:if="{{auction_lists[index].state== 1}}" catchtap='global_collect_d' class='isclo' data-id="{{item.id}}" data-ids="{{index}}"></image>
+                    </view>
+                </view>
+                <view class='sale_h_t2'>
+                  <image src='../img/pu_fy.png'></image>
+                  <text>{{item.translate_name}}</text>
+                </view>
+                <view class='sale_h_t3'>
+                  <image src='../img/pmai.png'></image>
+                  {{item.auction_name}}
+                </view>
+                <view class='sale_h_t3'>
+                  <image src='../img/quan_icon_time_black.png'></image>
+                  <text wx:if="{{endclock[index]!==''}}">距开拍:</text><text wx:elif="{{endclock[index]==''}}">已开拍</text>
+                  {{endclock[index]}}
+                  </view>
+                </view>
+                <view class='sale_img'>
+                  <view class='a_imgbox'>
+                    <image wx:for="{{item.preview_imgs}}" wx:for-item="items" wx:key="index" src='{{items}}' mode="aspectFill"></image>
+                  </view>
+                  <image src='../img/btn_more.png' class='goimg'></image>
+                </view>
+              </view>
+          </view>
+        </view>
+</view>
+
+<view id='swiper1' wx:if="{{sign1==2}}">
+  <view class='goodsbox' style='top:{{navHs}}px;'>
+      <view class='goodstitbox'>
+        <scroll-view class='goodstitbox_view' scroll-x="true" scroll-left='{{scrollleft}}' scroll-with-animation="true">
+          <view style='display:flex;' class='goodstitbox_viewbox'>
+            <view wx:for="{{nav3}}" wx:key="index" wx:for-item="item" class="nav3item" data-id="{{item.type}}" bindtap='head3click'>
+              <view class="{{item.type==navindex?'tfont tfonts':'tfont'}}">{{item.name}}</view>
+              <view class="{{item.type==navindex?'tfontline tfontlines':'tfontline'}}"></view>
+            </view>
+          </view>
+        </scroll-view>
+      </view>
+    </view>
+    <view class='goospage3'>
+      <view class='nopageimgbox' wx:if="{{goodslist==null}}"><image src="../img/nopages.png" class="nopageimg"></image></view>
+      <view class="videol" wx:for="{{goodslist}}" wx:key="index" wx:for-item="item" style='position:relative;' bindtap='govideos' data-id="{{item.goods_id}}">
+        <image src="../img/video_play.png" class="isvideo" wx:if="{{item.class!==1}}"></image>
+          <image src="{{item.cover}}" class="v" mode="widthFix"></image>
+          <view class="z1" style=''>
+            <view class="zhots">
+              <text class="nowprictext" style='font-size:36rpx;' wx:if="{{item.now_price!==0}}">¥{{item.now_price}}</text>
+              <text class="nowprictext" style='font-size:36rpx;' wx:if="{{item.now_price==0}}">¥{{item.start_price}}</text>
+              <view class='ip_z'>
+                <image src='../img/redu.png'></image>
+                {{item.play_count}}
+              </view>
+            </view>
+            <view class="hotl"><view style='font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'>{{item.title}}</view></view>
+          </view>
+      </view>
+      <view class="videol"></view>
+  </view>
+</view>
+<!-- 主页内容 -->
+<button open-type="launchApp" app-parameter="" binderror="launchAppError" style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' type="primary" wx:if="{{scene==1036}}">
+  <image src='../img/openApp.png' id='openApps'></image>
+</button>
+<template is="template_downloadapp" wx:if="{{scene!==1036}}"></template>
+    

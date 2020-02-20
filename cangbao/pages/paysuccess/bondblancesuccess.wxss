@@ -1,0 +1,58 @@
+/* pages/paysuccess/paydisuccess.wxss */
+@import "../template/template.wxss";
+page{
+  background: #fff;
+}
+.header{
+  width:100%;
+  height:342rpx;
+  background:rgba(255,255,255,1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top:120px;
+  box-sizing: border-box;
+}
+.header1{
+  display: flex;
+  align-items: center;
+}
+.header1 image{
+  width:40rpx;
+  height:40rpx;
+}
+.header1 text{
+  font-size:40rpx;font-weight:600;color:rgba(51,51,51,1);margin-left:20rpx;
+}
+.header2{
+   display: flex;flex-direction: column;
+    align-items: center;
+    margin-top:182px;
+}
+.header2left{
+  width:343px;height:48px;
+  background:rgba(244,67,54,1);border-radius:3px;font-size:16px;font-weight:600;color:rgba(255,255,255,1);line-height: 48px;text-align: center;
+}
+.header2right{
+  width:176rpx;
+  height:60rpx;
+  border-radius:42rpx;
+  border:2rpx solid rgba(236,82,23,1);
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(236,82,23,1);
+  line-height: 60rpx;
+  margin-left: 40rpx;
+  text-align: center;
+}
+.header2bottom{
+  width:343px;height:48px;
+  background:rgba(243,243,243,1);border-radius:3px;font-size:16px;font-weight:500;color:rgba(51,51,51,1);line-height: 48px;text-align: center;
+  margin-top:12px;
+}
+.like{
+  width:100%;
+  height:790rpx;
+  background:rgba(255,255,255,1);
+  margin-top:20rpx;
+}

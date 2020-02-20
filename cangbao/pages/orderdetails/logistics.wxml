@@ -1,0 +1,90 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view wx:if="{{logistics!==null}}">
+  <view class="head">
+    <view class="heads">
+      <text class="text1">{{logistics.Freight_name}}：</text>
+      <text class="text2">{{logistics.LogisticCode}}</text>
+    </view>
+  </view>
+  <view class='content'>
+    <view class="cont" wx:if="{{logistics.Traces.length==0}}"><text style="color:rgba(170,170,170,1);margin-left:16px;">暂无轨迹信息</text></view>
+    <view class="cont" wx:if="{{logistics.Traces.length!==0}}">
+      <view class="cont1" wx:for="{{logistics.Traces}}" wx:key="index">
+        <view class='line_time'>
+          <text class='l_t_t1'>{{times[index].t1}}</text>
+          <text class='l_t_t2'>{{times[index].t2}}</text>
+        </view>
+        <view class="contleft">
+          <view class="strip"></view>
+          <view class='circu'>
+            <view class="circular">
+              <view class="smallcircular"></view>
+            </view>
+          </view>
+        </view>
+        <view class="contright">
+          <view class="text3">{{logistics.Traces[index].AcceptStation}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{types==3}}">
+  <view class="head">
+    <view class="heads">
+      <text class="text1">{{logistics1[0].Freight_name}}：</text>
+      <text class="text2">{{logistics1[0].LogisticCode}}</text>
+    </view>
+  </view>
+  <view class='content' wx:if="{{logistics1[0].Traces.length==0}}"><view class="cont"><text style="color:rgba(170,170,170,1);margin-left:16px;">暂无轨迹信息</text></view></view>
+  <view class='content' wx:if="{{logistics1[0].Traces.length!==0}}">
+    <view class="cont">
+      <view class="cont1" wx:for="{{logistics1[0].Traces}}" wx:key="index">
+        <view class='line_time'>
+          <text class='l_t_t1'>{{times[0][index].t1}}</text>
+          <text class='l_t_t2'>{{times[0][index].t2}}</text>
+        </view>
+        <view class="contleft">
+          <view class="strip"></view>
+          <view class='circu'>
+            <view class="circular">
+              <view class="smallcircular"></view>
+            </view>
+          </view>
+        </view>
+        <view class="contright">
+          <view class="text3">{{logistics1[0].Traces[index].AcceptStation}}</view>
+        </view>
+      </view>
+  <!-- 多个物流 -->
+      <view class='logistics_2' wx:for="{{logistics1.length-1}}" wx:key="index">
+        <view class='log_2_head'>
+          <text class='log2_t1'>{{logistics1[index+1].Freight_name}}：</text>
+          <text class='log2_t2'>{{logistics1[index+1].LogisticCode}}</text>
+        </view>
+        <view class="cont1" wx:for="{{times[index+1]}}" wx:for-item="item" wx:key="item">
+          <view class='line_time'>
+            <text class='l_t_t1'>{{item.t1}}</text>
+            <text class='l_t_t2'>{{item.t2}}</text>
+          </view>
+          <view class="contleft">
+            <view class="strip"></view>
+            <view class='circu'>
+              <view class="circular">
+                <view class="smallcircular"></view>
+              </view>
+            </view>
+          </view>
+          <view class="contright">
+            <view class="text3">{{item.t3}}</view>
+          </view>
+        </view>
+
+      </view>
+    </view>
+  </view>
+</view>
+<view class='kb_one'></view>
+

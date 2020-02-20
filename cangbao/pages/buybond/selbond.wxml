@@ -1,0 +1,64 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<!-- 限额弹框 -->
+<template is="payquota" wx:if="{{quota==1}}"></template>
+<!-- 拍品详情 -->
+<view class="buyheader">
+  <view class="bu1">
+    <view class="buyheaderimg">
+      <image src="{{cover}}"></image>
+    </view>
+    <view class="buyheaderdetails">
+      <view class="buytext">{{title}}</view>
+      <view class="bubo">
+        <view class="buymarkup">起拍价：¥{{start}}</view>
+        <view class="buymarkup">加价幅度：¥{{range}}</view>
+      </view>
+      
+    </view>
+  </view>
+  <view class="bu2">
+    <view>
+      <text class="bu1price">保证金：¥{{deposit}}</text>
+      <view class="bu1text" style='display: flex;justify-content:flex-end;'>注：正常交易可退</view>
+      <view class='quotabox' catchtap='goquota'>
+        <text>限额说明</text>
+        <image src='../img/quan_shiyi.png' id='it'/>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 选择支付部分 -->
+<view class="payments">
+    <view class="page__bd">
+        <view class="section section_gap">
+            <radio-group class="radio-group" bindchange="radioChange">
+              <view class="balance" id="balancebox" wx:for="{{paymode}}" wx:key="index">
+                <view class='rechargebutton' catchtap='gorecharge' wx:if="{{isrecharge==1&&item.pay_mark=='balance'}}">
+                  <text>立即充值</text>
+                  <image src='../img/my/right.png'/>
+                </view>
+                <view class="balcontent">
+                <block wx:if="{{true}}">
+                   <image src="../img/yezf-icon.png" wx:if="{{item.pay_mark=='balance'}}"></image>
+                   <image src="../img/wxzf-icon.png" wx:else="{{item.pay_mark=='wechat_mini'}}"></image>
+                </block>
+                  <text class="baltext1">{{paymode[index].pay_name}}</text>
+                  <text class="baltext2">{{paymode[index].ext}}</text>
+                </view>
+                <radio class="radio" value="{{paymode[index].pay_mark}}" checked="{{item.pay_mark==paytype?true:false}}"></radio>
+              </view>
+            </radio-group>
+        </view>
+    </view>
+</view>
+
+<view style="position:absolute;bottom:0;left:0;width:100%;">
+  <view style="display:flex; justify-content: center;align-items:center;height:70rpx;" bindtap='goread'>
+    <text style="font-size:24rpx;color:#AAAAAA;">支付即同意</text>
+    <text style="font-size:24rpx;color:rgba(255,55,64,1);">《藏宝平台保证金规则》</text>
+  </view>
+  <view class="ispay">
+    <view bindtap='ispay'>确认支付</view>
+  </view>
+</view>

@@ -1,0 +1,12 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class="header">
+  <view class="header1">
+    <image src="../img/my/success.png"></image>
+    <text>支付成功</text>
+  </view>
+  <view class="header2">
+    <view class="header2left" bindtap='goback'>返回首页</view>
+    <view class="header2right" bindtap='look'>查看订单</view>
+  </view>
+</view>

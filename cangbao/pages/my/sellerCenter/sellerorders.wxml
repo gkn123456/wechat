@@ -1,0 +1,232 @@
+<import src="../../template/template.wxml"/>
+<template is="template_s" data="{{navH,headtitle}}"></template>
+<!-- 头部内容 -->
+<view class='head' wx:if="{{selldet.return_stage==0}}">
+  <view class='heads'>
+    <view class='hd' wx:if="{{selldet.status==5}}">
+      <view class='heads_t'>交易完成</view>
+      <view class='heads_b'>完成时间：{{comtime}}</view>
+    </view>
+    <view class='hd' wx:if="{{selldet.status==3}}">
+      <view class='heads_t'>交易失败</view>
+      <view class='heads_b'>失败原因：{{selldet.fail_reason}}</view>
+    </view>
+    <view class='hd' wx:if="{{selldet.status==1}}">
+      <view class='heads_t'>竞拍成功，等待付款</view>
+      <view class='heads_b'>买家剩余{{clock}}付款，超时交易失败</view>
+    </view>
+    <view class='hd' wx:if="{{selldet.status==2 && selldet.distribution_status==0}}">
+      <view class='heads_t'>买家已付款，立即发货</view>
+      <view class='heads_b' wx:if="{{clock1!==''}}">您还剩余{{clock1}}发货，超时买家可申请自动退款</view>
+      <view class='heads_b' wx:if="{{clock1==''}}">发货超时，买家可申请退款</view>
+    </view>
+    <view class='hd' wx:if="{{selldet.status==2 && selldet.distribution_status==1}}">
+      <view class='heads_t'>已发货，等待确认收货</view>
+      <view class='heads_b'>买家剩余{{clock2}}，超时将自动确认收货</view>
+    </view>
+  </view>
+</view>
+<view class='head_s' wx:if="{{selldet.return_stage!==0}}">
+  <view class='heads_s'>
+    <view class='hd'>
+      <view class='heads_t' wx:if="{{selldet.return_stage==1}}">买家发起退货，等待卖家处理</view>
+      <view class='heads_b' wx:if="{{selldet.return_stage==1}}">您还剩余{{sel_t3}}处理申请，超时系统将自动同意退货申请</view>
+      <view class='heads_t' wx:if="{{selldet.return_stage==4}}">退货成功</view>
+      <view class='heads_b' wx:if="{{selldet.return_stage==4}}">已成功退款，剩余金额将返回您账户余额</view>
+
+      <view class='heads_t' wx:if="{{selldet.return_stage==2}}">等待买家发回退货</view>
+      <view class='heads_b' wx:if="{{selldet.return_stage==2}}">还剩余{{sel_t1}}，如买家逾期未发回退货系统将自动取消退货申请</view>
+
+      <view class='heads_t' wx:if="{{selldet.return_stage==3}}">请确认收货</view>
+      <view class='heads_b' wx:if="{{selldet.return_stage==3}}">您还剩余{{sel_t2}}确认收货，超时系统将自动确认收货</view>
+
+      <view class='heads_t' wx:if="{{selldet.return_stage==6}}">买家取消退货</view>
+      <view class='heads_t' wx:if="{{selldet.return_stage==5}}">卖家拒绝退货</view>
+      <view class='heads_b' wx:if="{{selldet.return_stage==5&&selldet.return_info.refuse_reason==1}}">拒绝申请理由：理由不符</view>
+      <view class='heads_b' wx:if="{{selldet.return_stage==5&&selldet.return_info.refuse_reason==2}}">拒绝申请理由：其它</view>
+      <view class='thsqh'>
+      <view class="failurebom" wx:for="{{selldet.process}}" wx:key="index">
+      <view style='height:100%;position:relative;'>
+        <view class='ydian'></view>
+        <view class='lines' wx:if="{{selldet.process.length>1}}"></view>
+      </view>
+      <view style='margin-left: 20rpx;'>
+        <view class="failurebomt">
+          <text>{{selldet.process[index].desc}}</text>
+        </view>
+        <view class="failurebombtext">
+          {{time1[index].text}}
+        </view>
+      </view>
+      </view>
+    </view>
+    </view>
+  </view>
+</view>
+<view class='line'></view>
+<!-- 物流信息 -->
+<view class='main' wx:if="{{selldet.distribution_status==1}}">
+  <view class='mh'>
+    <view class='mh_t'>
+      <view class='mh_tt'></view>
+      <view class='mh_tf'>物流信息</view>
+    </view>
+    <view class='mh_b' bindtap='gowuliu' data-types='{{selldet.type}}'>
+      <view class='mh_bt'>
+        <text>快递单号</text>
+        <text>{{wldetails.Freight_name}}</text>
+        <text>{{wldetails.LogisticCode}}</text>
+      </view>
+      <view class='mh_bb'>
+        <view class='mh_bbl'>
+          <view style="display:flex;align-items:center;"><image src='../../img/myimg/wode_icon_daishouhuo.png'></image></view>
+          <view class='mh_bblr' wx:if="{{wldetails.Traces.length!==0&&wldetails!==null}}">
+            <text class='mh_bblrf1'>{{wldetails.Traces[0].AcceptStation}}</text>
+            <text class='mh_bblrf2'>{{wldetails.Traces[0].AcceptTime}}</text>
+          </view>
+          <view class='mh_bblr' wx:if="{{wldetails.Traces.length==0||wldetails==null}}" style='font-size:24rpx;'>
+            暂无轨迹信息
+          </view>
+        </view>
+        <view style="display:flex;align-items:center;">
+          <image src='../../img/my/right.png' class='mh_bbr'></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 买家信息 -->
+<view class='main1'>
+  <view class='m_t'>
+    <view class='mh_tt'></view>
+    <view class='mh_tf'>买家信息</view>
+  </view>
+  <view class='m_b'>
+    <view class='m_bt'>
+      <text>买</text>
+      <text style="margin-left:24rpx;">家</text>
+      <text class='m_btf' bindtap='goperson'>{{selldet.user.nick_name}}</text>
+      <image src='../../img/my/right.png' class='m_btimg' bindtap='goperson'></image>
+    </view>
+    <view class='m_bb' wx:if="{{selldet.status!==1}}">
+      <view class='m_bbt'>
+        <text class='m_bbtf1'>收货人</text>
+        <text class='m_bbtf2'>{{selldet.accept_name}}</text>
+        <text class='m_bbtf3'>{{selldet.mobile}}</text>
+      </view>
+      <view class='m_bbm'>
+        <view class='m_bbmv'>{{selldet.pca_text}}{{selldet.address}}</view>
+        <view class='m_bbmfz' bindtap='copy1'>复制</view>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 拍品信息 -->
+<view class='shop' bindtap='govideo'>
+  <view class='shops'>
+    <view class='s_l'>
+      <view class='pp' wx:if="{{selldet.goods.type==1}}">拍品</view>
+      <view class='pps' wx:if="{{selldet.goods.type==2}}">商品</view>
+      <image src='{{selldet.goods.cover}}' mode='aspectFill'></image>
+    </view>
+    <view class='s_h'>
+      <view class='s_ht'>{{selldet.goods.title}}</view>
+      <view >
+        <view class='s_hb' wx:if="{{selldet.type==1}}">中拍金额：￥{{selldet.payable_amount}}</view>
+        <view class='s_hb' wx:if="{{selldet.type==2}}">商品金额：￥{{selldet.payable_amount}}</view>
+        <view class='s_hb' wx:if="{{selldet.return_stage!==0}}">退款金额：￥{{selldet.return_info.return_amount}}</view>
+      </view>
+    </view>
+  </view>
+  <view class='bzj' wx:if="{{selldet.type==1&&selldet.status!==5}}">
+    <view class='t1'>保证金:￥{{selldet.deposit_amount}}</view>
+    <view class='t2'>注:如卖方原因导致交易失败，保证金不退</view>
+  </view>
+</view>
+<!-- 订单信息 -->
+<view class='order'>
+  <view class='o_list'>
+    <view class='o_ll'><text class='o_lp1'>订单编号：</text><text class='o_lp2'>{{selldet.order_no}}</text></view>
+    <view class='o_llr' bindtap='copy2'>复制</view>
+  </view>
+
+  <view class='o_list' wx:if="{{selldet.pay_type!==null}}">
+    <view class='o_ll'><text class='o_lp1'>支付方式：</text><text class='o_lp2'>{{selldet.pay_type}}</text></view>
+    <view class='o_llr'></view>
+  </view>
+
+  <view class='o_list' wx:if="{{selldet.goods.type==1}}">
+    <view class='o_ll'><text class='o_lp1'>中拍时间：</text><text class='o_lp2'>{{endDate}}</text></view>
+    <view class='o_llr'></view>
+  </view>
+
+  <view class='o_list' wx:if="{{selldet.goods.type==2}}">
+    <view class='o_ll'><text class='o_lp1'>下单时间：</text><text class='o_lp2'>{{endDate}}</text></view>
+    <view class='o_llr'></view>
+  </view>
+  <view class='o_list' wx:if="{{selldet.status==3}}">
+    <view class='o_ll'><text class='o_lp1'>失败时间：</text><text class='o_lp2'>{{comtime}}</text></view>
+    <view class='o_llr'></view>
+  </view>
+  <view class='o_list' wx:if="{{selldet.status!==1&&selldet.status!==3}}">
+    <view class='o_ll'><text class='o_lp1'>付款时间：</text><text class='o_lp2'>{{paytime}}</text></view>
+    <view class='o_llr'></view>
+  </view>
+
+  <view class='o_list' wx:if="{{selldet.status!==1 && selldet.distribution_status==1}}">
+    <view class='o_ll'><text class='o_lp1'>发货时间：</text><text class='o_lp2'>{{sendtime}}</text></view>
+    <view class='o_llr'></view>
+  </view>
+
+  <view class='o_list' wx:if="{{selldet.status==5}}">
+    <view class='o_ll'><text class='o_lp1'>完成时间：</text><text class='o_lp2'>{{comtime}}</text></view>
+    <view class='o_llr'></view>
+  </view>
+</view>
+
+<view class='returnbox' wx:if="{{selldet.return_stage!==0}}">
+  <view class='returnboxt'>
+    <view class='mh_tt'></view>
+    <view class='mh_tf'>申请理由</view>
+    <text class='bes' wx:if="{{selldet.return_info.return_reason==0}}">其他</text>
+    <text class='bes' wx:if="{{selldet.return_info.return_reason==1}}">图物不符</text>
+    <text class='bes' wx:if="{{selldet.return_info.return_reason==2}}">收到商品破损</text>
+    <text class='bes' wx:if="{{selldet.return_info.return_reason==3}}">商品质量问题</text>
+    <text class='bes' wx:if="{{selldet.return_info.return_reason==4}}">未收到货</text>
+    <text class='bes' wx:if="{{selldet.return_info.return_reason==5}}">七天无理由退货</text>
+  </view>
+
+  <view class='main1' style="margin-top:20rpx;">
+  <view class='m_t'>
+    <view class='mh_tt'></view>
+    <view class='mh_tf'>退货信息</view>
+  </view>
+  <view class='m_b'>
+    <view class='m_bb'>
+      <view class='m_bbt'>
+            <text class='m_bbtf1' style='width:52px;'>收货人</text>
+            <text class='m_bbtf2'>{{selldet.return_address.accept_name}}</text>
+            <text class='m_bbtf3'>{{selldet.return_address.mobile}}</text>
+          </view>
+          <view class='m_bbt'>
+            <text class='m_bbtf1' style='width:52px;'>地址</text>
+            <text class='m_bbtf2'>{{selldet.return_address.pca_text}}{{selldet.return_address.address}}</text>
+          </view>
+          <view class='m_bbt' wx:if="{{selldet.return_info.delivery_info!==null}}">
+            <text class='m_bbtf1' style='width:52px;'>发货方式</text>
+            <text class='m_bbtf2'>{{selldet.return_info.delivery_info.freight_name}}({{selldet.return_info.delivery_info.delivery_code}})</text>
+          </view>
+    </view>
+  </view>
+</view>
+</view>
+<view class='kbtb'></view>
+<!-- 按键 -->
+
+<view class='bt'>
+  <view class='btn' bindtap='agree' wx:if="{{selldet.return_stage==1}}">同意申请</view>
+  <view class='btn1s' bindtap='refuse' wx:if="{{selldet.return_stage==1}}" style='margin-left:35px;'>拒绝申请</view>
+  <view class='btn' wx:if="{{selldet.distribution_status==0&&selldet.status==2}}" bindtap='down' data-id='{{selldet.order_id}}'>立即发货</view>
+  <view class='btn' bindtap='confirmreceiving' wx:if="{{selldet.return_stage==3}}">确认收货</view>
+  <view class='btn1s' bindtap='lx'>联系买家</view>
+</view>

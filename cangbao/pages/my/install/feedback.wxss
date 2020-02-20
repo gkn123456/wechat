@@ -1,0 +1,95 @@
+/* pages/my/install/feedback.wxss */
+@import "../../template/template.wxss";
+.header{
+  width: 100%;
+  background: #fff;
+  margin-top:20rpx;
+  padding:0 32rpx;
+  box-sizing: border-box;
+}
+.header_one{
+  width: 100%;
+  padding:32rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+.h_o_o{
+  width:4rpx;
+  height:20rpx;
+  background:#F44336;
+  border-radius: 30rpx;
+}
+.h_o_t{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(59,59,59,1);
+  margin-left: 10rpx;
+}
+.header_two{
+  width: 100%;
+  padding:32rpx 0;
+  box-sizing: border-box;
+  position: relative;
+}
+.textarea{
+  width: 100%;
+  background:#F6F6F6;
+  padding:32rpx;
+  box-sizing: border-box;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+}
+.textarea1{
+  width: 100%;
+  height:80rpx;
+  background:#F6F6F6;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+  padding-top:20rpx;
+  padding-left: 32rpx;
+  box-sizing:border-box;
+}
+.t_cont{
+  text-align: right;
+  font-size:24rpx;
+  font-weight:400;
+  color:rgba(204,204,204,1);
+  position: absolute;
+  bottom:56rpx;
+  right:24rpx;
+}
+.line{
+  width: 100%;
+  height: 2rpx;
+  background:#ECECEC ;
+}
+.header_th{
+  padding-bottom:32rpx;
+  box-sizing: border-box;
+}
+.footer{
+  width: 100%;
+  position: fixed;
+  bottom:0;
+  left: 0;
+}
+.f_1{
+  font-size:26rpx;
+  font-weight:400;
+  color:rgba(170,170,170,1);
+  text-align: center;
+  padding:32rpx 0;
+  box-sizing: border-box;
+}
+.f_btn{
+  width: 100%;
+  height: 98rpx;
+  background:rgba(244,67,54,1);
+  line-height: 98rpx;
+  text-align: center;
+  color:rgba(204,204,204,0.5);
+  font-size:36rpx;
+}

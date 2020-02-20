@@ -1,0 +1,40 @@
+<!--pageA/pages/auction/auction.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view style='width:100%;padding-top:p{{navH}}px;'>
+  <view class='page2_sortbox' style='top:{{navH}}px'>
+    <scroll-view class='page2_sortbox_h' scroll-x="true">
+      <view wx:for="{{multiArray1}}" wx:key="index" class="page2_s_h_t {{item.tg==1? 'multiArray1_c': ''}}" bindtap='changelabe2' data-key='{{index}}'>{{multiArray1[index].t}}</view>
+    </scroll-view>
+  </view>
+  <view class='page2_sortboxss'></view>
+  <view class='auctionhotboxcont'>
+    <view class='nopageimgbox' wx:if="{{auction_list==null}}"><image src="../img/nopages.png" class="nopageimg"></image></view>
+    <view class='sale' wx:for="{{auction_list}}" wx:key="index" wx:for-item="item" bindtap='goauction' data-id='{{item.id}}'>
+      <view class='sale_head'>
+        <view class='sale_h_t1'>
+          <view style="width:88%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">{{item.name}}</view>
+          <view style='width:60rpx;height:60rpx;'>
+            <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:30px;height:30px;display:flex;" size="mini" wx:if="{{auction_lists[index].state== 0}}" catchtap='global_collect' open-type="getUserInfo" data-id="{{item.id}}" data-ids="{{index}}">
+              <image src='../img/collectof.png' class='isclo'></image>
+            </button>
+            <image src='../img/collecton.png' wx:if="{{auction_lists[index].state== 1}}" catchtap='global_collect_d' class='isclo' data-id="{{item.id}}" data-ids="{{index}}"></image>
+          </view>
+        </view>
+        <view class='sale_h_t2'>
+          <image src='../img/pu_fy.png'></image><view style='width:88%;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;'>{{item.translate_name}}</view>
+        </view>
+        <view class='sale_h_t3'><image src='../img/pmai.png'></image><text>{{item.auction_name}}</text></view>
+        <view class='sale_h_t3'>
+          <image src='../img/quan_icon_time_black.png'></image>
+          <text wx:if="{{endclock[index]!==''}}">距开拍:</text><text wx:elif="{{endclock[index]==''}}">已开拍</text>
+          <text>{{endclock[index]}}</text>
+        </view>
+      </view>
+      <view class='sale_img'>
+        <view class='a_imgbox'><image wx:for="{{item.preview_imgs}}" wx:for-item="items" wx:key="index" src='{{items}}' mode="aspectFill"></image></view>
+        <image src='../img/btn_more.png' class='goimg'></image>
+      </view>
+    </view>
+  </view>
+</view>

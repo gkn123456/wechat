@@ -1,0 +1,25 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<form bindsubmit='formsubmit'>
+      <view class="from">
+        <view class='people_info_box'>
+            <view class='people_info_item'>
+                <view class="sjihao">手机号</view>
+                <view class='people_info_box_cont' style='border:0;'>
+                    {{id}}
+                    <image class="sjihaoimg" src="../../img/sm.png" bindtap='tkuan'></image>
+                </view>
+            </view>
+            <view class='people_info_item'>
+                <view class="sjihao">验证码</view>
+                <view class='people_info_box_contsinge'>
+                    
+                    <input type='number' value='' placeholder='填写验证码' class='single' bindinput='input_val1'></input>
+                    <view class="Obtain" bindtap='get_code' style='{{cstyle}}'>{{show_get_code}}</view>
+                </view>
+            </view>
+        </view>
+        <button class='wc_btn' name="wc_btn" form-type='submit' open-type="getUserInfo" class="confirm">下一步</button>
+        
+      </view>
+    </form>

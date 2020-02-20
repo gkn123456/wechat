@@ -1,0 +1,204 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<!-- 限额弹框 -->
+<template is="payquota" wx:if="{{quota==1}}"></template>
+<form bindsubmit="formSubmit" report-submit='true'>
+<scroll-view class='topTabSwiper' scroll-x="true" scroll-left	='{{scrollleft}}' scroll-with-animation="true" style="top:{{navH}}px;">
+  <view class='he'>
+      <view wx:for="{{nav}}" wx:key="index" class='tab  {{currentData == item.current? "tabBorer" : ""}}'  data-current = "{{item.current}}" data-type = "{{item.type}}" bindtap='checkCurrent'>
+        {{item.name}}
+        <view class="idx"><view ></view></view>
+      </view>
+  </view>
+</scroll-view>
+<view class='head1' wx:if="{{currentData==5}}" style='top:{{navHs}}px;'>
+  <view>
+    <view class='head_onebox'></view>
+    <view class="head_teobox">
+      <view wx:for="{{nav1}}" wx:key="index" class="h_list1 {{mtype1==item.type? 'on' : ''}}" bindtap='switchs1' data-type='{{item.type}}'>{{item.name}}</view>
+    </view>
+  </view>
+</view>
+<view style="width:100%;height:100%;" wx:if="{{currentData!=='5'}}">
+<view class='topTabSwiper1'></view>
+    <image src="../img/nopages.png" class="nopageimg" style="display:{{displays1}};"></image>
+    <view style="display:{{displays}};">
+      <view class="orderborder" wx:for="{{paydetalis}}" wx:key="index" style="display:{{displays}};">
+        <view class="orderheader">
+        <!-- 拍品商品头部logo(name) -->
+        <view style="display:flex;" bindtap='goparse' data-id='{{item.seller.user_id}}' wx:if="{{item.type!==3}}">
+          <image style="width:40rpx;height:40rpx;border-radius:50%;" src="{{item.seller.user_icon}}"></image>
+          <text class="paytext1">{{item.seller.nick_name}}</text>
+        </view>
+        <!-- 全球拍头部logo(name) -->
+        <view class='global_box' wx:if="{{item.type==3}}" bindtap='go_ahouse' data-id='{{item.seller.user_id}}'>
+          <view class='globalh'>
+            <image src='{{item.seller.seller_icon}}' class='global_img'></image>
+            <view  class='global_back'>{{item.seller.nick_name}}</view>
+          </view>
+        </view>
+        <!-- 订单各个状态 -->
+        <text class="paytext2" wx:if="{{item.status==1&&item.type!==3}}">待付款</text>
+        <text class="paytext2" wx:if="{{(item.status==2 && item.distribution_status==0&&item.type!==3)}}">待发货</text>
+        <text class="paytext2" wx:if="{{(item.status==2 && item.distribution_status==0&&item.type==3&&item.freight_status==2)}}">待发货</text>
+        <text class="paytext2" wx:if="{{(item.status==1 && item.distribution_status==0&&item.type==3)}}">待付款（拍品金额）</text>
+        <text class="paytext2" wx:if="{{(item.status==2 && item.distribution_status==0&&item.type==3&&item.freight_status!==2)}}">待付款（运费）</text>
+        <text class="paytext2" wx:if="{{item.status==2 && item.distribution_status==1}}">待收货</text>
+        <text class="paytext2" wx:if="{{item.status==5 && item.comment_status==0&&item.type!==3}}">待评价</text>
+        <text class="paytext2" wx:if="{{item.status==3}}">交易失败</text>
+        <text class="paytext2" wx:if="{{item.status==5&&item.comment_status==1&&item.type!==3}}">交易完成</text>
+        <text class="paytext2" wx:if="{{item.status==5&&item.type==3}}">交易完成</text>
+      </view>
+      <view class="ordercenter" bindtap="jumporder" data-id="{{item.order_id}}">
+        <view class="ordercenter_left">
+          <image src="{{item.goods.cover}}" mode="aspectFill" lazy-load="true"></image>
+          <view class='paiping' wx:if="{{item.type==1}}">拍品</view>
+          <view class='paiping1' wx:if="{{item.type==2}}">商品</view>
+          <view class='global_p' wx:if="{{item.type==3}}">全球拍</view>
+        </view>
+        <view class="ordercenter_right">
+          <view>
+            <view class="or_top">{{item.goods.title}}</view>
+            <!-- 全球拍显示 -->
+            <view class='golbal_t' wx:if="{{item.type==3}}"><image src='../img/pu_fy.png'></image><text>{{item.goods_note.title}}</text></view>
+          </view>
+          <view>
+            <!-- 全球拍显示 -->
+            <view class="or_center" wx:if="{{item.type==3&&item.freight_status!==1}}">
+            中拍金额：{{item.goods.currency_symbol}}{{item.goods.deal_price}}
+              <!-- <text style="color:rgba(111,111,111,1);font-size:20rpx;margin-left:8rpx;">(￥{{pmb_price[index].n}})</text> -->
+            </view>
+            <view class="or_center" wx:if="{{item.type==3&&item.freight_status==1&&item.status==2}}">
+            运费保险金额：{{item.goods.currency_symbol}}{{item.real_freight}}
+              <!-- <text style="color:rgba(111,111,111,1);font-size:20rpx;margin-left:8rpx;">(￥{{item.order_note.amount}})</text> -->
+            </view>
+            <!-- 拍商品显示 -->
+            <view class="or_center" wx:if="{{item.status!==3&&item.type==1}}">中拍金额：¥{{item.payable_amount}}</view>
+            <view class="or_center" wx:if="{{item.status!==3&&item.type==2}}">商品金额：¥{{item.payable_amount}}</view>
+            <view class="or_center1" wx:if="{{item.status==3}}">失败原因：{{item.fail_reason}}</view>
+            <view class="or_center1" wx:if="{{item.status==3}}">失败时间：{{clock3[index].text}}</view>
+            <view class="or_bottom1" wx:if="{{item.status==1}}">付款截止：{{clock[index].text}}</view>
+            <view class="or_bottom1" wx:if="{{item.status==2&&item.type==3&&item.freight_status==1}}">付款截止：{{disclock[index].text}}</view>
+            <view class="or_bottom1" wx:if="{{item.status==2 && item.distribution_status==0&&item.type!==3}}">{{clock1[index].text}}<text style="color:#1C1C1C;">未发货可申请退款</text>    </view>
+            <view class="or_bottom1" wx:if="{{item.status==2 && item.distribution_status==1}}">确认截止：{{clock2[index].text}}</view>
+            <view class="or_bottom" wx:if="{{item.status==5}}">完成时间：<text class="gl">{{clock3[index].text}}</text></view>
+          </view>
+        </view>
+      </view>
+      <view class="orderfooter">
+        <view wx:if="{{item.status==1&&item.type==1&&clock[index].text!==''}}" class="gop" data-id='{{item.order_id}}' bindtap='go_pays'>去付款</view>
+        <view wx:if="{{item.status==1&&item.type==2&&clock[index].text!==''}}" class="gop" bindtap='open' data-id='{{item.order_id}}' data-price='{{item.status==1&&item.order_amount}}'>去付款</view>
+        <view wx:if="{{(item.status==1&&item.type==3&&clock[index].text!=='')||(item.status==2&&item.freight_status==1&&item.type==3)}}" class="gop" bindtap='go_price_d' data-id='{{item.order_id}}' data-price='{{all_pmb_price[index].n}}'>去付款</view>
+        <view wx:if="{{item.status==2&&item.freight_status==0&&item.type==3}}" class='ashbtn'>去付款</view>
+        <view wx:if="{{item.status==1&&clock[index].text==''}}" class="zhiwei">去付款</view>
+        <!-- 提醒发货按钮 -->
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;border-radius:0;" size="mini" wx:if="{{item.type!==3 &&item.status==2 && item.distribution_status==0&&item.remind_status==0}}" bindtap='remind' data-id='{{item.order_id}}'>
+         <view class="detes">提醒发货</view>
+        </button>
+        <view class="dete" wx:if="{{item.type!==3 &&item.status==2 && item.distribution_status==0&&item.remind_status==1}}">提醒发货</view>
+        <view wx:if="{{item.type==3&&item.distribution_status==0&&item.status==2&&item.freight_status==2}}" class='tips_typs'>注：全球拍订单已下单，请耐心等待</view>
+        <!-- <view wx:if="{{item.type==3&&item.distribution_status==0&&item.status==2&&item.freight_status==0}}" class='tips_typs' style='margin-right:40rpx;'>已支付拍品金额，请等待核算运费</view> -->
+        <!-- 退款按钮 -->
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;border-radius:0;" size="mini" wx:if="{{item.type!==3 &&clock1[index].text==''&&item.status==2&&item.distribution_status==0}}" bindtap='refund' data-id='{{item.order_id}}'>
+         <view class="dete" style="border:2rpx solid rgba(115,115,115,1);color:rgba(115,115,115,1);margin:0;">退款</view>
+        </button>
+        <!-- 确认收货按钮 -->
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;border-radius:0;" size="mini" wx:if="{{item.status==2 && item.distribution_status==1}}" bindtap='confirmreceipt' data-id='{{item.order_id}}'>
+         <view class="gop">确认收货</view>
+        </button>
+        <!-- 查看物流 -->
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;margin-right:20rpx;border-radius:0;" size="mini" wx:if="{{item.status==2 && item.distribution_status==1}}" bindtap='towuliu' data-id='{{item.order_id}}' data-types='{{item.type}}'>
+         <view class="detels">查看物流</view>
+        </button>
+        <view wx:if="{{item.status==5 && item.comment_status==0&&item.type!==3}}" class="detes" bindtap='toevaluate' data-id='{{item.order_id}}'>去评价</view>
+        <!-- 删除订单按钮 -->
+        <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;border-radius:0;" size="mini" wx:if="{{item.status==5 || item.status==3}}" bindtap='detelord' data-id='{{item.order_id}}'>
+         <view class="detels">删除订单</view>
+        </button>
+        <view wx:if="{{item.type==3&&(item.status==1||(item.status==2&&item.freight_status!==2)||item.status==3||item.status==5)}}" id="otp1box">
+          <text id="otp1">货款总额：¥{{item.order_amount}}</text>
+          <text id="otp2" wx:if="{{item.status==2||item.status==5}}">运费：{{item.order_note.freight_info}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<view style="width:100%;height:100%;" wx:if="{{currentData=='5'}}">
+<view class='topTabSwiper11'></view>
+  <image src="../img/nopages.png" class="nopageimg" style="display:{{i}};"></image>
+  <view>
+    <view class="orderborder" wx:for="{{sh}}" wx:key="index" style='margin:0;'>
+      <view class="orderheader1">
+        <view style="display:flex;" bindtap='goparse' data-id='{{item.seller.user_id}}'>
+          <image style="width:40rpx;height:40rpx;border-radius:50%;" src="{{item.seller.user_icon}}"></image>
+          <text class="paytext1">{{item.seller.nick_name}}</text>
+        </view>
+        <text class="paytext2s" wx:if="{{item.return_stage==1}}">等待卖家处理</text>
+        <text class="paytext2s" wx:if="{{item.return_stage==2||item.return_stage==3}}">退款中</text>
+        <text class="paytext2s" wx:if="{{item.return_stage==5}}">卖家拒绝退货</text>
+        <text class="paytext2s" wx:if="{{item.return_stage==6}}">买家取消退货</text>
+        <text class="paytext2s" wx:if="{{item.return_stage==4}}">退货完成</text>
+      </view>
+      <view class="ordercenter1" bindtap="jumporder" data-id="{{item.order_id}}">
+        <view class="ordercenter_left">
+          <image src="{{item.goods.cover}}" mode="aspectFill"></image>
+          <view class='paiping' wx:if="{{item.type==1}}">拍品</view>
+          <view class='paiping1' wx:if="{{item.type==2}}">商品</view>
+          <view class='global_p' wx:if="{{item.type==3}}">全球拍</view>
+        </view>
+        <view class="ordercenter_right">
+          <view class="or_top">{{item.goods.title}}</view>
+          <view>
+            <view class="orcenter" wx:if="{{item.type==1}}">中拍金额：¥{{item.payable_amount}}</view>
+            <view class="orcenter" wx:if="{{item.type==2}}">商品金额：¥{{item.payable_amount}}</view>
+            <view class="orcenter">退款金额：¥{{item.return_amount}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 选择支付部分 -->
+  <view class="paym" style='{{sty1}}' bindtap='close'>
+    <view class="payments" catchtap='ct'>
+      <view style="position:absolute;bottom:0;left:0;width:100%;">
+        <view class="ispay">
+          <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;" size="mini" catchtap='ispay'>立即支付</button>
+        </view>
+      </view>
+      <view class='payh'>
+        <view class='quotabox' catchtap='goquota'><text>限额说明</text><image src='../img/quan_shiyi.png' id='it'/></view>
+        <image src='../img/addprice/chujia-btn-close.png' catchtap='close'/>
+      </view>
+      <view class="payheader"><view><text class="paytitle">付款金额：</text><text class="payprices">¥{{price}}</text></view>
+      <view></view>
+    </view>
+    <view class="page__bd">
+      <view class="section section_gap">
+        <radio-group class="radio-group" bindchange="radioChange">
+          <view class="balance" id="balancebox" wx:for="{{paymode}}" wx:key="index">
+            <view class='rechargebutton' catchtap='gorecharge' wx:if="{{isrecharge==1&&item.pay_mark=='balance'}}">
+              <text>立即充值</text>
+              <image src='../img/my/right.png'/>
+            </view>
+            <view class="balcontent">
+              <block wx:if="{{true}}">
+                <image src="../img/yezf-icon.png" wx:if="{{paymode[index].pay_mark=='balance'}}"></image>
+                <image src="../img/wxzf-icon.png" wx:else="{{paymode[index].pay_mark=='wechat_mini'}}"></image>
+              </block>
+              <text class="baltext1">{{paymode[index].pay_name}}</text>
+              <text class="baltext2">{{paymode[index].ext}}</text>
+            </view>
+            <radio class="radio" value="{{paymode[index].pay_mark}}" checked="{{paymode[index].pay_mark==paytype?true:false}}"></radio>
+          </view>
+        </radio-group>
+      </view>
+    </view>
+  </view>
+</view>
+</form>
+
+
+
+

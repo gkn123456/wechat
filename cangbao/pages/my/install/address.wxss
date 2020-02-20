@@ -1,0 +1,98 @@
+/* pages/my/install/address.wxss */
+@import "../../template/template.wxss";
+.addrtr{
+  background: #fff; 
+  box-sizing: border-box;
+  margin-top:20rpx;
+  position: relative;
+  width:100%;
+}
+.nopageimg{
+  width:314rpx ;
+  height:338rpx;
+  position: absolute;
+  top:50%;
+  left: 50%;
+  margin-top:-169rpx;
+  margin-left:-118rpx; 
+}
+.addtop{
+  display: flex;
+  align-items: center;
+  padding:46rpx 32rpx 46rpx 64rpx ;
+  justify-content: space-between;
+  width: 90%;
+}
+.bianimg{
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top:50%;
+  right:32rpx;
+  margin-top:-20rpx;
+}
+.adtext1{
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(66,66,66,1);
+}
+.adtext2{
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(66,66,66,1);
+  margin-left:30rpx;
+}
+.addtopy{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(66,66,66,1);
+  margin-top:32rpx;
+  width:90%;
+}
+.addtpy{
+  width:100%;
+}
+.addbottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.addbimg1{
+  width: 40rpx;
+  height: 40rpx;
+}
+.addbimg2{
+  width: 40rpx;
+  height: 40rpx;
+}
+.addbottom2{
+  display: flex;
+  align-items: center;
+}
+.addres{
+  width:100%;
+  height:98rpx;
+  background:rgba(244,67,54,1);
+  box-shadow:0rpx 0rpx 2rpx 0rpx rgba(183,28,28,1);
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:98rpx;
+  text-align: center;
+  position: fixed;
+  bottom:0;
+  left:0;
+}
+.addres1{
+  width:100%;
+  height:118rpx;
+
+}
+.moren{
+  width: 90rpx;
+  height: 90rpx;
+  position:absolute;
+  top:0;
+  left:0;
+
+}

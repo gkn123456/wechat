@@ -1,0 +1,98 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<!-- 分享 -->
+<template is="share" wx:if="{{whethershare==1}}"></template>
+<!-- 举报 -->
+<template is="report" wx:if="{{whethereport==1}}" data="{{report}}"></template>
+<!-- 海报 -->
+<template is="poster" wx:if="{{whetherposter==1}}" data="{{sharePicUrl,coverimg}}"></template>
+<view class='headbox'>
+  <view class='headimgs'><image class='headimg' src='{{details.cover}}' mode="aspectFill"></image></view>
+  <view class='headcont'>
+    <view>
+      <view class='h_c_1'>{{details.name}}</view>
+      <view class='h_c_2'><image class='img6' src='../img/pu_fy.png'></image><view style="width:90%;">{{details.translate_name}}</view></view>
+    </view>
+    <view style="margin-top:20px;">
+        <view class='h_c_3'>
+          <image class='img1' src='../img/loco.png'></image>
+          拍品数量：{{details.goods_num}}</view>
+        <view class='h_c_4' bindtap='go_auctionhouse' data-id='{{details.user.user_id}}'>
+          <image class='img2' src='../img/pmai.png'></image>
+          <view style='white-space:nowrap;'>拍卖行：</view>
+          <view class='text'>{{details.user.nick_name}}</view>
+          <image class='img5' src='../img/btn_red.png'></image>
+        </view>
+        <view class='h_c_5'>
+          <image class='img3' src='../img/quan_icon_time_black.png'></image>
+          开拍时间：{{start_time}}</view>
+        <view class='h_c_6'>
+          <image class='img4' src='../img/loct.png'></image>
+           <view style='white-space:nowrap;'>竞拍地点:</view>
+          <view class='h_c_6box'>
+            <view class="h_c_6font1">{{details.address}}</view><view class="h_c_6font2">({{details.translate_address}})</view>
+          </view>
+        </view>
+    </view>
+  </view>
+  <view class='Collectionbox'>
+    <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:28px;height:28px;display:flex;" size="mini" wx:if="{{is_collection== 0}}" bindtap='global_collect' open-type="getUserInfo"><image src='../img/collectof.png'></image></button>
+    <image src='../img/collecton.png' wx:if="{{is_collection== 1}}" bindtap='global_collect_d'></image>
+  </view>
+</view>
+
+<view class='groom'>
+  <view class='groom_top' style='top:{{navHs}}px'>
+    <view class='groom_topinput'>
+      <input placeholder='请输入拍品名称或LOT号' maxlength='50' confirm-type="搜索" bindinput="bindinput" value="{{value}}" placeholder-style='font-size:12px;color:rgba(198,198,198,1);' />
+      <view class='groom_topimg'>
+        <image src='../img/icon_saoyisao.png' wx:if="{{label==1}}"/><image src='../img/v_del.png' wx:if="{{label==0}}" catchtap='delvalue'/>
+      </view>
+    </view>
+    <view class='groom_sortbox'>
+      <view class='groom_sortli' bindtap='sort' data-id="1"><text class="{{istext==1?'litext on':'litext'}}">默认</text></view>
+      <view class='groom_sortli' bindtap='sort' data-id="2">
+        <text class="{{istext==2?'litext on':'litext'}}">LOT号</text>
+        <view class='sjiaobox'><view class="{{isimg1==1?'stop on':'stop'}}"></view><view class="{{isimg1==2?'sbom on':'sbom'}}"></view></view>
+        <view class='gline1'></view>
+        <view class='gline2'></view>
+      </view>
+      <view class='groom_sortli' bindtap='sort' data-id="3">
+        <text class="{{istext==3?'litext on':'litext'}}">价格</text>
+        <view class='sjiaobox'><view class="{{isimg2==1?'stop on':'stop'}}"></view><view class="{{isimg2==2?'sbom on':'sbom'}}"></view></view>
+      </view>
+    </view>
+  </view>
+  <view class='groom_box' wx:if="{{list_details!==null}}">
+    <view class='groom_li' wx:for="{{list_details}}" wx:key="index" bindtap='go_global' data-id='{{item.goods_id}}'>
+        <view style='width:28px;height:28px;position:absolute;top:12px;right:12px;'>
+          <button plain="true" formType="submit" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;with:28px;height:28px;display:flex;" size="mini" catchtap='collect' wx:if="{{select_s[index].state==0}}" data-id="{{item.goods_id}}" data-ids="{{index}}" open-type="getUserInfo">
+            <image src='../img/homepage/icon_shoucang_xian.png' class='iscolor'></image>
+          </button>  
+          <image src='../img/homepage/icon_shoucang_mian.png' class='iscolor' wx:if="{{select_s[index].state==1}}" catchtap='offcollect' data-id="{{item.goods_id}}" data-ids="{{index}}"></image>
+        </view>
+        <view class='groomimg'><image src='{{item.cover}}' mode="aspectFill" lazy-load="true"></image></view>
+        <view class='groomcont'>
+          <view class='groom_text1'>{{item.title}}</view>
+          <view class='groom_text2'><image src='../img/quan_icon_time_black.png'></image>{{starttime1[index].t}}</view>
+          <view class='groom_text3'><image src='../img/pmai.png'></image><text>{{item.auction_name}}</text></view>
+          <view class='groom_text4' wx:if="{{item.now_price==0}}">
+            <text class='g_t_1'>起拍价：</text><text class='g_t_2'>{{item.currency_symbol}}{{item.start_price}}</text>
+          </view>
+          <view class='groom_text4' wx:if="{{item.now_price!==0}}">
+            <text class='g_t_1'>当前价：</text><text class='g_t_2'>{{item.currency_symbol}}{{item.now_price}}</text>
+          </view>
+        </view>
+      </view>
+      <view class='groom_lis'></view>
+  </view>
+</view>
+<view class='no_all' wx:if="{{list_details==null}}">暂无拍卖信息</view>
+<button style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' type="primary" bindtap='up'>
+  <view src='../img/Icon_huidaodingbu_black.png' id='up' animation="{{animationDatas}}" style='opacity:0;'>
+    <image src='../img/downup.png' id="dup" animation="{{animationData}}" />
+  </view>
+</button>
+<view id='d5_lbutton' bindtap='openshare'><image src='../img/quan_icon_u.png' class='share'></image></view>
+<button open-type="launchApp" app-parameter="{{openAPPurl}}" binderror="launchAppError" style='border:0;margin:0;padding:0;' plain="true" hover-class="none" size="mini" id='d5_lbutton' type="primary" wx:if="{{scene==1036}}"><image src='../img/openApp.png' id='openApp'></image></button>
+<template is="auction_template_downloadapp" wx:if="{{scene!==1036}}"></template>

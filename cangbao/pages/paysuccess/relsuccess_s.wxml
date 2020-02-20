@@ -1,0 +1,24 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='pimg'>
+  <image src="https://images.cangbaopai.com/group3@3x.png" class="pay"></image>
+</view>
+<view class='pcenter'>
+  发布成功
+</view>
+<view class='pc1'>
+  <button type="primary" open-type="share"  plain="true" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini">
+    <image src="https://images.cangbaopai.com/friends_share@3x.png" class="pay1" bindtap='onShareAppMessage'></image>
+  </button>
+  <button type="primary" open-type="share"  plain="true" hover-class="none" style="border:0;padding:0;margin:0;display:flex;color:#000;font-size:32rpx;" size="mini">
+    <image src="https://images.cangbaopai.com/weixin_share@3x.png" class="pay2"></image>
+  </button>
+</view>
+<view class='pc2'>
+  分享可以获得更多曝光~
+</view>
+<view class='pc3'>
+  <view class='pc3_1' bindtap='agginsend'>再发一条</view>
+  <view class='pc3_2' bindtap='govideos'>立即查看</view>
+</view>
+<image src="../img/paysuccess/close.png" class="close" bindtap='close'></image>

@@ -1,0 +1,30 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="cont">
+  <view  wx:for="{{car}}" wx:key="index" style="display:flex;margin-top:40rpx;width:335px;overflow: scroll;">
+    <view style="display:flex;width:500px;">
+      <view class="conlst">
+            <view bindtap='gocash' data-urls='{{item.icon_url}}' data-names='{{item.bank_name}}' data-num="{{item.bank_number}}" data-carid="{{item.card_id}}">
+            <view class="conlsthead">
+              <image class="bimg" src="{{item.icon_url}}"></image>
+              <view class="btext">
+                <view class="btext1">{{item.bank_name}}</view>
+                <view class="btext2">储蓄卡</view>
+              </view>
+            </view>
+            <view class="conlstfoot">
+              <text>{{item.bank_number}}</text>
+            </view>
+          </view>
+      </view>
+      <view class="jban" bindtap='solution' data-cid='{{item.card_id}}'>解绑</view>
+    </view>   
+  </view>
+</view>
+
+<view class="add">
+  <view class="addbtn" bindtap='addcar'>
+    <image src="../../img/my/addiconyh.png" class="addimg"></image>
+    <text class="addtext">添加银行卡</text>
+  </view>
+</view>

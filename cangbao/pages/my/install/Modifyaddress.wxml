@@ -1,0 +1,47 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="header">
+  <view class="headertop">
+    <view class="detail1">
+      <text>收货人</text>
+      <input value="{{name}}" bindinput='formName'></input>
+    </view>
+    <view class="detail1">
+      <text>联系电话</text>
+      <input value="{{phone}}" bindinput='formphone'></input>
+    </view>
+    <view class="detail1" bindtap='selectDistrict'>
+      <text>所在地区</text>
+      <view style="display:flex;align-items:center;">
+          <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{region[index+1]}}">
+            <view class="picker" style="width:200px;">
+              {{region[0]}}{{region[1]}}{{region[2]}}
+            </view>
+          </picker>
+        
+        <image class="to1" src="../../img/my/right.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="headerend">
+    <textarea value="{{content}}" maxlength="-1" bindblur="formcontent" />
+  </view>
+</view>
+
+<view class="is">
+  <text>设为默认</text>
+  <view class="body-view">
+    <switch checked="{{trues}}" bindchange="switch1Change" />
+  </view>
+</view>
+
+<view class="is1">
+  <text class="istext" bindtap='cutaddress'>删除收货地址</text>
+</view>
+
+<view class="hold" bindtap='hold'>
+  保存
+</view>
+
+ 
+

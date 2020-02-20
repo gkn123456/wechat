@@ -1,0 +1,74 @@
+/* pages/my/install/install.wxss */
+@import "../../template/template.wxss";
+.setheader{
+  width:100%;
+  background:rgba(255,255,255,1);
+  margin-top: 20rpx;
+  padding-left:32rpx;
+  box-sizing: border-box;
+}
+.header1{
+  height:154rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right:48rpx;
+  box-sizing: border-box;
+}
+.header1z{
+  display: flex;
+  align-items: center;
+}
+.header1z text{
+  font-size:32rpx;
+  font-weight:500;
+  color:rgba(28,28,28,1);
+  margin-left: 20rpx;
+}
+.header1zimg1{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.header1zimg2{
+  width: 100rpx;
+  height: 32rpx;
+  margin-left: 8rpx;
+}
+.header1y{
+  width: 16rpx;
+  height: 28rpx;
+}
+.header2{
+  height:1rpx;
+  background: #ECECEC;
+  padding-right:48rpx;
+  box-sizing: border-box;
+}
+.header3{
+  height:90rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right:48rpx;
+  box-sizing: border-box;
+}
+.header3 text{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}
+.header3to{
+  width: 16rpx;
+  height: 28rpx;
+}
+.b_n{
+  display: flex;
+  align-items: center;
+}
+.b_num{
+  margin-right: 36rpx;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(68,68,68,1);
+}

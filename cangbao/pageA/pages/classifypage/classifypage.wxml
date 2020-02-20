@@ -1,0 +1,21 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='page'>
+  <image src='../img/classify/ic_nopage.png' class='nopage' wx:if="{{cate==null}}"></image>
+  <view class='video' wx:for="{{cate}}" wx:for-item="items" wx:key="index" bindtap='go_video' data-id='{{items.goods_id}}'>
+    <image src='../img/video_play.png' class='pictureimg' wx:if="{{items.class==2}}"></image>
+    <image src='{{items.cover}}' mode='aspectFill' class='video_img'></image>
+    <view class='video_tail'>
+      <view class='tail_price'>
+        <view class='tail_price_s' wx:if="{{items.now_price!==0}}">¥{{items.now_price}}</view>
+        <view class='tail_price_s' wx:if="{{items.now_price==0}}">¥{{items.start_price}}</view>
+        <view class='t_u_num'>
+          <image src='../img/classify/ic_du.png'></image>
+          <text>{{items.play_count}}</text>
+        </view>
+      </view>
+      <view class='tail_title'>{{items.title}}</view>
+    </view>
+  </view>
+  <view class='video' style='background:rgba(0,0,0,0)'></view>
+</view>

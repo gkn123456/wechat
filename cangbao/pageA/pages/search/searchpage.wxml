@@ -1,0 +1,20 @@
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+<view class='goospage3'>
+  <view class='nopageimgbox' wx:if="{{goodslist==null}}"><image src="../img/nopages.png" class="nopageimg"></image></view>
+  <view class="videol" wx:for="{{goodslist}}" wx:key="index" wx:for-item="item" style='position:relative;' bindtap='govideos' data-id="{{item.goods_id}}">
+    <image src="../img/video_play.png" class="isvideo" wx:if="{{item.class!==1}}"></image>
+      <image src="{{item.cover}}" class="v" mode="widthFix" lazy-load="true"></image>
+      <view class="z1" style=''>
+        <view class="zhots">
+          <text class="nowprictext" style='font-size:36rpx;' wx:if="{{item.now_price!==0}}">¥{{item.now_price}}</text>
+          <text class="nowprictext" style='font-size:36rpx;' wx:if="{{item.now_price==0}}">¥{{item.start_price}}</text>
+          <view class='ip_z'><image src='../img/redu.png'></image>{{item.play_count}}</view>
+        </view>
+        <view class="hotl">
+          <view style='font-size:26rpx;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;'>{{item.title}}</view>
+        </view>
+      </view>
+    </view>
+  <view class="videol"></view>
+</view>

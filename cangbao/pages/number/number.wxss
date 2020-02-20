@@ -1,0 +1,71 @@
+/* pages/number/number.wxss */
+@import "../template/template.wxss";
+.confirm{
+  height:88rpx;
+  background:#FF3740;
+  color:#fff;
+  font-size:32rpx;
+  margin-top:18rpx;
+}
+.from{
+  padding:0 58rpx;
+  box-sizing: border-box;
+  margin-top:154rpx;
+}
+input{
+  font-size:24rpx;
+  width: 100%;
+}
+.Tips{
+  width:100%;
+  height:54px;
+  display: flex;
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+  padding:0 56rpx;
+  box-sizing: border-box;
+}
+.Tips image{
+  width: 32rpx;
+  height: 32rpx;
+}
+.Tips text{
+  font-size: 24rpx;
+  color: #fff;
+  margin-left:32rpx;
+}
+.people_info_box_cont{
+  width: 100%;
+  height: 100rpx;
+  border-bottom: 2rpx solid #D8D8D8;
+  display: flex;
+  align-items: center;
+}
+.people_info_box_contsinge{
+  width: 100%;
+  height: 100rpx;
+  border-bottom: 2rpx solid #D8D8D8;
+  display: flex;
+  align-items: center;
+}
+.read{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:34rpx;
+}
+.reads{
+  font-size: 24rpx;
+  color: #CCCCCC;
+}
+.Obtain{
+  width: 160rpx;
+  height: 48rpx;
+  border: 2rpx solid #999;
+  border-radius: 4rpx;
+  font-size:24rpx;
+  color: #FF3740;
+  text-align: center;
+  line-height:48rpx ;
+}

@@ -1,0 +1,66 @@
+/* pages/my/mywallet/mywallet.wxss */
+@import "../../template/template.wxss";
+.head{
+  background: #fff;
+  padding:60rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.text1{
+  font-size:48rpx;
+  font-weight:500;
+  color:rgba(28,28,28,1);
+}
+.text2{
+  font-size:96rpx;
+  font-weight:500;
+  color:rgba(28,28,28,1);
+  line-height: 96rpx;
+}
+.pay{
+  background: #fff;
+}
+.paylist{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20rpx;
+  box-sizing: border-box;
+
+}
+.paylistimg1{
+  width:48rpx;
+  height:48rpx;
+}
+.paylistimg2{
+  width:40rpx;
+  height:44rpx;
+  margin-right: 40rpx;
+}
+.paylistcont{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  border-bottom: 1rpx solid #ECECEC;
+  padding:26rpx 0;
+  box-sizing: border-box;
+}
+.paylist:last-child .paylistcont{
+  border-bottom:0;
+}
+.paylistcont1{
+  width: 8%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:26rpx 0;
+  box-sizing: border-box;
+}
+.paylisttext{
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(28,28,28,1);
+}

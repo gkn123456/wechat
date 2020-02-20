@@ -1,0 +1,60 @@
+<!--pageA/pages/refusereturn/refusereturn.wxml-->
+<import src="../template/template.wxml"/>
+<template is="template_o" data="{{navH,headtitle}}"></template>
+
+<view class='header'>
+  <view class='h_t'>
+    <image class='h_timg' src='{{u.user.user_icon}}'></image>
+    <text class='h_tfot'>{{u.user.nick_name}}</text>
+  </view>
+  <view class='h_b'>
+    <view class='h_bl'>
+      <image class='h_bimg' src='{{u.goods.cover}}' mode="aspectFill"></image>
+    </view>
+    <view class='h_br'>
+      <view class='h_brt'>{{u.goods.title}}</view>
+      <view class='h_brm'>
+        <view class='h_brmfont1'>成交额：<text>{{u.real_amount}}</text></view>
+        <view class='h_brmfont2'>退款金额：{{u.return_info.return_amount}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='main'>
+  <view class='m_1' bindtap='open'>
+    <view class='m_1l'>拒绝申请原因</view>
+    <view class='m_1r'>
+      <text class='m_1rtext' wx:if="{{cTab==9}}">请选择</text>
+      <text class='m_1rtext1' wx:if="{{cTab!==9}}">{{cname}}</text>
+      <image src='../img/icon-next.png'></image>
+    </view>
+  </view>
+  <view class="weui-cells_after-title" style='display:{{v1}};'>
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <textarea class="weui-textarea" bindinput="bindTextAreaChange" placeholder="请说明其他原因" placeholder-style="font-size:28rpx;color:#D0D0D0;" auto-height value="{{info}}" maxlength="200" />
+        <view class="weui-textarea-counter">{{noteNowLen}}/200</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class='tijiao' bindtap='send'>
+  确认提交
+</view>
+
+<!-- 原因弹框 -->
+<view class='tkuang' bindtap='close' style='display:{{v}};'>
+  <view class='close'>关闭</view>
+  <view class='box'>
+    <view class='sqly'>拒绝申请原因</view>
+     <view class='box_list' wx:for="{{check}}" wx:key="index" catchtap='check' data-id='{{index}}' data-name='{{item.name}}'>
+      <view>{{item.name}}</view>
+      <view>
+        <view class="is {{cTab==index ? 'on' : ''}}"></view>
+      </view>
+     </view>
+     <view class='list'></view>
+  </view>
+</view>

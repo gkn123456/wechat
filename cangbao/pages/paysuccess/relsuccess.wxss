@@ -1,0 +1,79 @@
+/* pages/paysuccess/relsuccess.wxss */
+@import "../template/template.wxss";
+page{
+  background: #fff;
+}
+.pimg{
+  width: 100%;
+  margin-top:68rpx;
+  display: flex;
+  justify-content: center;
+}
+.pay{
+  width: 242rpx;
+  height: 240rpx;
+}
+.pcenter{
+  width: 100%;
+  text-align: center;
+  font-size: 44rpx;
+  color: #636363;
+  margin-top:46rpx;
+}
+.pc1{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top:58rpx;
+}
+.pay1{
+  width: 244rpx;
+  height: 122rpx;
+}
+.pay2{
+  width: 244rpx;
+  height: 122rpx;
+}
+.pc2{
+  width: 100%;
+  text-align: center;
+  font-size: 28rpx;
+  color: #909090;
+}
+.pc3{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 0;
+  bottom:94rpx;
+  width: 100%;
+}
+.pc3_1{
+  width: 204rpx;
+  height: 76rpx;
+  line-height: 76rpx;
+  font-size: 32rpx;
+  color: #FA6149;
+  text-align: center;
+  border:2rpx solid #FA6149;
+  border-radius: 2rpx;
+}
+.pc3_2{
+  width: 204rpx;
+  height: 76rpx;
+  line-height: 76rpx;
+  font-size: 32rpx;
+  color: #FA6149;
+  text-align: center;
+  border:2rpx solid #FA6149;
+  border-radius: 2rpx;
+  margin-left: 40rpx;
+}
+.close{
+  width: 46rpx;
+  height: 46rpx;
+  position: fixed;
+  top:144rpx;
+  right: 44rpx;
+}

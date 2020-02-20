@@ -1,0 +1,124 @@
+.page{
+  width:100%;
+  height:auto;
+  overflow:scroll;
+  -webkit-overflow-scrolling:touch;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.video:nth-child(odd){
+  width:46%;
+  height:240px;
+  border-right:1rpx solid #F8F8F8;
+  border-bottom:1rpx solid #F8F8F8;
+  box-sizing: border-box;
+  position: relative;
+  margin-bottom:8px;
+  background: #fff;
+  margin-right: 8px;
+}
+.videos{
+  width:46%;
+  height:240px;
+}
+.video:nth-child(even){
+  width:46%;
+  height:240px;
+  border-left:1rpx solid #F8F8F8;
+  border-bottom:1rpx solid #F8F8F8;
+  box-sizing: border-box;
+  margin-bottom:8px;
+  background: #fff;
+  position: relative;
+}
+.pictureimg{
+  width:22px;
+  height:22px;
+  position:absolute;
+  top:22rpx;
+  right:22rpx;
+}
+.video_img{
+  width: 100%;
+  height: 100%;
+}
+.video_tail{
+  width:100%;
+  height:121rpx;
+  position:absolute;
+  bottom:0;
+  left:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.45) 100%);
+  padding:14rpx 20rpx 20rpx 32rpx;
+  box-sizing:border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.tail_price{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tail_price_s{
+font-size:36rpx;
+  line-height: 36rpx;
+  font-weight:700;
+  color:rgba(255,255,255,1);
+}
+.tail_title{
+  font-size:26rpx;
+  line-height: 26rpx;
+  color:rgba(255,255,255,1);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.tail_user{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.t_u_icon{
+  display: flex;
+  align-items: center;
+}
+.t_u_icon image{
+  width:32rpx;
+  height:32rpx;
+  border-radius:50%;
+}
+.t_u_icon text{
+  font-size:22rpx;
+  color:#FFFFFF;
+  line-height:32rpx;
+  margin-left:8rpx;
+}
+.t_u_num{
+  background:rgba(0,0,0,0.08);
+  border-radius:18rpx;
+  display:flex;
+  align-items:center;
+  padding:3rpx 8rpx;
+  box-sizing:border-box;
+}
+.t_u_num image{
+  width:22rpx;
+  height:28rpx;
+}
+.t_u_num text{
+  font-size:20rpx;
+  color:rgba(255,255,255,1);
+  line-height:20rpx;
+  margin-left:8rpx;
+}
+.nopage{
+  width:314rpx;
+  height:338rpx;
+  position:absolute;
+  top:50%;
+  left:50%;
+  margin-top:-169rpx;
+  margin-left:-118rpx;
+}

@@ -1,0 +1,27 @@
+<!--pages/my/install/paper.wxml-->
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<view class="addressall">
+  <view class="addrtr" wx:for="{{list}}" wx:key="index">
+    <image class="moren" src="../../img/my/address/label.png" wx:if="{{list[index].default==1}}"></image>
+    <view class="addtop" bindtap='iden_paper' data-id='{{list[index].id}}'>
+      <view class="addtopy1" style="width:18%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">
+        <text class="adtext1">{{list[index].name}}</text>
+      </view>
+      <view class="addtopy1" style="width:60%;">
+        <text class="adtext2">{{json[index]}}</text>
+      </view>
+      <navigator url="./editpaper?id={{index}}" hover-class="none">
+        <image class="bianimg" src="../../img/my/address/bianji.png"></image>
+    </navigator>
+    </view>
+  </view>
+</view>
+
+<view class='clearimg' wx:if="{{list==null}}">
+  <image src='../../img/my/ic_clear1.png'></image>
+  <text>为保证商品能够顺利通过海关，请您尽快添加清关证件</text>
+</view>
+
+<view class="addres1"></view>
+<view class="addres" bindtap='addnew'>添加新证件</view>

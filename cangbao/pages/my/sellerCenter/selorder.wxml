@@ -1,0 +1,107 @@
+<import src="../../template/template.wxml"/>
+<template is="template_t" data="{{navH,headtitle}}"></template>
+<scroll-view class='head' scroll-x="true" scroll-left	='{{scrollleft}}' scroll-with-animation="true" style='top:{{navH}}px;'>
+  <view class='he'>
+    <view class="h_list {{mtype==item.type? 'on' : ''}}" bindtap='switchs' wx:for="{{nav}}" wx:key="index" wx:for-item="item" data-type='{{item.type}}'>
+      {{item.name}}
+      <view class="h_lt {{mtype==item.type? 'on1' : ''}}"></view>
+    </view>
+  </view>
+</scroll-view>
+<!-- 售后导航 -->
+<view class='head1' wx:if="{{mtype==5}}" style='top:{{navHs}}px;'>
+    <view class="h_list1 {{mtype1==item.type? 'on' : ''}}" bindtap='switchs1' wx:for="{{nav1}}" wx:key="index" wx:for-item="item" data-type='{{item.type}}'>
+      {{item.name}}
+    </view>
+</view>
+<view class='main' wx:if="{{mtype!=='5'}}">
+  <view class='btt'></view>
+  <!-- 竞拍中 -->
+  <image src="../../img/nopages.png" class="nopageimg" wx:if="{{u==''}}"></image>
+  <scroll-view class='doing' wx:if="{{u!==''}}">
+    <view class='d_box' wx:for="{{u}}" wx:key="index">
+      <view class='d_boxders'>
+        <view class='d_boxders1' bindtap='gogoodsdet' data-id='{{item.user.user_id}}'>
+          <image src='{{item.user.user_icon}}'></image>
+          <text>{{item.user.nick_name}}</text>
+        </view>
+        <view class='d_boxders2'>
+          <text wx:if="{{item.status==1}}">待付款</text>
+          <text wx:if="{{item.distribution_status==0&&item.status==2}}">待发货</text>
+          <text wx:if="{{item.distribution_status==1&&item.status!==5}}">待收货</text>
+          <text wx:if="{{item.status==5}}">交易完成</text>
+          <text wx:if="{{item.status==3}}">交易失败</text>
+        </view>
+      </view>
+      <view class='d_b_t' bindtap='godetail' data-id='{{item.order_id}}'>
+        <view class='typ' wx:if="{{item.type==1}}">拍品</view>
+        <view class='typ' wx:if="{{item.type==2}}" style='background:linear-gradient(136deg,rgba(143,219,131,1) 0%,rgba(106,201,91,1) 100%);'>商品</view>
+        <image class='d_b_img' src="{{item.goods.cover}}" mode="aspectFill"></image>
+        <view class='d_b_r'>
+          <view class='d_b_title'>{{item.goods.title}}</view>
+          <view class='d_b_clas'>
+            <view class='chenpay' wx:if="{{item.status!==1}}">收货人：{{item.accept_name}}</view>
+            <view class='chenpay' wx:if="{{item.type==2}}">成交金额：¥{{item.payable_amount}}</view>
+            <view class='chenpay' wx:if="{{item.type!==2}}">中拍金额：¥{{item.payable_amount}}</view>
+            <view class='shipyuany' wx:if="{{item.status==3}}">失败原因：{{item.fail_reason}}</view>
+            <view class='shiptime1' wx:if="{{item.status==1}}">付款截止：<text>{{clock1[index].text}}</text></view>
+            <view class='shiptime1' wx:if="{{item.distribution_status==0&&item.status==2&&clock2[index].text!==''}}">发货截止：<text>{{clock2[index].text}}</text></view>
+            <view class='shiptime1' wx:if="{{item.distribution_status==0&&item.status==2&&clock2[index].text==''}}">未发货买家可申请退款</view>
+            <view class='shiptime1' wx:if="{{item.distribution_status==1&&item.status!==5}}"><text>{{clock3[index].text}}</text>后自动确认</view>
+            <view class='cjtime' wx:if="{{item.status==5}}">完成时间：{{clock[index].text}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='d_b_b' wx:if="{{item.status!==5}}">
+        <view class='jtime'>
+          
+        </view>
+        <view class='btn'>
+
+          <view class='bt' wx:if="{{item.status!==5}}" bindtap='lx'>联系买家</view>
+          <view class='bt1' wx:if="{{item.distribution_status==0&&item.status==2}}" bindtap='down' data-id='{{item.order_id}}'>立即发货</view>
+
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+<!-- 二级页面 -->
+<view class='main' wx:if="{{mtype=='5'}}">
+  <view class='btt1'></view>
+  <!-- 竞拍中 -->
+  <image src="../../img/nopages.png" class="nopageimg" wx:if="{{u1==''}}"></image>
+  <scroll-view class='doing' wx:if="{{u1!==''}}">
+    <view class='d_box' wx:for="{{u1}}" wx:key="index" style='margin:0;'>
+      <view class='d_boxders'>
+        <view class='d_boxders1' bindtap='gogoodsdet' data-id='{{item.user.user_id}}'>
+          <image src='{{item.user.user_icon}}'></image>
+          <text>{{item.user.nick_name}}</text>
+        </view>
+        <view class='d_boxders2'>
+          <text wx:if="{{item.return_stage==1}}">等待卖家处理</text>
+          <text wx:if="{{item.return_stage==2}}">等待买家发货</text>
+          <text wx:if="{{item.return_stage==3}}">等待卖家收货</text>
+          <text wx:if="{{item.return_stage==4}}">退货成功</text>
+          <text wx:if="{{item.return_stage==5}}">卖家拒绝退货</text>
+          <text wx:if="{{item.return_stage==6}}">买家取消退货</text>
+        </view>
+      </view>
+      <view class='d_b_t' bindtap='godetail' data-id='{{item.order_id}}'>
+        <view class='typ' wx:if="{{item.type==1}}">拍品</view>
+        <view class='typ' wx:if="{{item.type==2}}" style='background:linear-gradient(136deg,rgba(143,219,131,1) 0%,rgba(106,201,91,1) 100%);'>商品</view>
+        <image class='d_b_img' src="{{item.goods.cover}}" mode="aspectFill"></image>
+        <view class='d_b_r'>
+          <view class='d_b_title'>{{item.goods.title}}</view>
+          <view class='d_b_clas'>
+            <view class='chenpay' wx:if="{{item.type!==2}}" style='color:rgba(170,170,170,1);'>中拍金额：¥{{item.payable_amount}}</view>
+            <view class='chenpay' wx:if="{{item.type==2}}" style='color:rgba(170,170,170,1);'>成交金额：¥{{item.payable_amount}}</view>
+            <view class='chenpay' style='color:rgba(170,170,170,1);'>退款金额：¥{{item.return_amount}}</view>
+          </view>
+        </view>
+      </view>
+      <view class='d_b_bs'>
+      </view>
+    </view>
+  </scroll-view>
+</view>

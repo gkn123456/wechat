@@ -1,0 +1,808 @@
+<view class="bc" style="top:{{statusBarHeight}}px;">
+  <view class='fh_box'>
+    <image src='../img/template/f_hs.png' class='f_hback'></image>
+    <view style='width:100%;height:100%;position:absolute;top:0;left:0;display:flex;justify-content:space-between;'>
+      <view style='width:50%;height:100%;' bindtap='back'><image src='../img/template/f_hs1.png' mode='aspectFit' class='back'></image></view>
+      <view style='width:50%;height:100%;' bindtap='backhome'><image src='../img/template/f_hs2.png' mode='aspectFit' class='backhome'></image></view>
+    </view>
+  </view>
+</view>
+<view class="player_page">
+  <video id="player" src="{{room.view_url}}" autoplay="{{true}}" object-fit="cover" show-center-play-btn="{{false}}" show-play-btn="{{false}}" controls="{{false}}"/>
+  <!-- <live-player id="player" src="{{room.view_url}}" mode="live" autoplay="true" bindstatechange="statechange" binderror="error"/> -->
+  <view class="videonull" wx:if="{{room.status==0}}"><text>- 暂时没有视频直播 -</text></view>
+  <view class="playerbox {{active ? ' active' : ''}}" bindtap="hideview">
+    <view class="playtop" style="height:{{navH+60}}px;{{topstyle}}" catchtap="Emptyfunction">
+      <view class="playtop_padding" style="height:{{navH}}px"></view>
+      <view class="anchor_details">
+        <view class="anchor_details_o">
+          <view class="anchor">
+            <view style="display:flex;align-items: center;">
+              <image class="anchor_user_icon" src="{{room.user.user_icon}}" catchtap="click_follow" />
+              <view class="anchor_user_center">
+                <view class="anchor_user_name">{{user_name}}</view>
+                <view class="anchor_user_c_bom">
+                  <image src="../img/number.png" />
+                  <view>{{room_number}}</view>
+                </view>
+              </view>
+            </view>
+            <button class="anchor_btn" wx:if="{{roomfollow==0}}" bindgetuserinfo='follow' open-type="getUserInfo">关注</button>
+            <image class="anchor_btn_y" src="../img/yescoll.png" wx:elif="{{roomfollow==1}}"></image>
+          </view> 
+          <view class="anchor_right">
+            <view class="anchor_id">
+              <image src="../img/userid.png" />
+              <view>ID:{{room.user_id}}</view>
+            </view>
+            <image src="../img/close_room.png" class="close_room" catchtap="back" />
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="tobepaid" catchtap="is_orderList" wx:if="{{is_orderLists}}">
+      <view  wx:if="{{waitorder.wait_pay_order_count>1}}">{{waitorder.wait_pay_order_count}}个待支付订单</view>
+      <view wx:if="{{waitorder.wait_pay_order_count==1}}">待支付订单</view>
+      <view  wx:if="{{waitorder.wait_pay_order_count==1}}"><image src="../img/clock.png"/>{{wait_time_down.h}}:{{wait_time_down.m}}:{{wait_time_down.s}}</view>
+    </view>
+    <view animation="{{animation_notice}}" class="bid_information" style="bottom:{{countdown==true?'394px':'290px'}}">
+      <view>{{notice}}</view>
+    </view>
+    <view class="welcomebox" animation="{{animation}}" style="bottom:{{(countdown==true||countdown_s==true)?'328px':'240px'}}">
+      <view>欢迎<text>{{name}}</text></view>
+    </view>
+    <view class="playleft" style="bottom:{{(countdown==true||countdown_s==true)?'164px':'75px'}}" catchtap="Emptyfunction">
+      <scroll-view scroll-y="true" scroll-top='{{scrolltop}}' scroll-with-animation="true">
+        <view wx:for="{{chat}}" wx:key="index" class="{{item.type==2?'chat_tips':'chat_contents'}}">
+          <view wx:if="{{item.type==2}}">{{item.content}}</view>
+          <view wx:if="{{item.type==1}}" class="chat_content_box">
+            {{item.name}}：<text class="chat_cont">{{item.content}}</text>
+          </view>
+          <view wx:if="{{item.type==4}}" class="chat_content_tip">
+            {{item.content}}
+          </view>
+          <view wx:if="{{item.type==5}}" class="chat_content_flollowtip">
+            {{item.content}}
+          </view>
+          <view wx:if="{{item.type==6}}" class="Private_chat_content_tip">
+            @{{user_name}} <text>{{item.content}}</text>
+          </view>
+          <view wx:if="{{item.type==3}}" class="chat_content_box" style="background:rgba(244,67,54,0.46);">
+            {{item.name}}：<text class="chat_cont">{{item.content}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="playfooter" catchtap="Emptyfunction">
+      <!-- 一口价 -->
+      <view class="goodsofferbox" wx:if="{{countdown_s}}">
+        <view class="goodsrotatebox"></view>
+        <view class="goodsoffer_s" catchtap="is_biteview" data-id="{{hot_auction_goods.goods_id}}" data-indx="0">
+          <view class="iconview_s">
+            <image class="goodsoffer_icon_s" src="{{hot_auction_goods.cover}}"></image>
+          </view>
+          <view class="goodsoffer_details_s">
+              <view class="goodsoffer_d_title">{{hotdoods_title}}</view>
+              <view class="goodsoffer_d_price">
+                <view class="goods_start_price_s">
+                  <view class="goods_start_price_t1_s">¥</view>
+                {{hot_auction_goods.sell_price}}
+                </view>
+              </view>
+            </view>
+        </view>
+      </view>
+      <!-- 拍卖 -->
+      <view class="goodsofferbox" wx:if="{{countdown}}">
+        <view class="goodsoffer {{is_countTime?'active':''}}">
+          <view class="goods_clockview">
+            <view class="goods_clockview1">即将结拍</view>
+            <view class="goods_clockview2">
+              <view class="goods_clockview2_t1">{{countdown_tiepat.s1}}</view>
+              <view class="goods_clockview2_t2">.{{countdown_tiepat.ms}} 秒</view>
+            </view>
+          </view>
+          <view class="goodsoffers">
+            <view class="iconview">
+              <image class="goodsoffer_icon" src="{{hot_auction_goods.cover}}"></image>
+              <view wx:if="{{hot_auction_goods.status==4||hot_auction_goods.status==5}}">拍卖结束</view>
+            </view>
+            <view class="goodsoffer_details">
+              <view class="goodsoffer_d_title">{{hotdoods_title}}</view>
+              <view class="goodsoffer_d_auction">
+                <image src="../img/auction.png"/>
+                <view wx:if="{{(hot_auction_goods.status==0||hot_auction_goods.status==1||hot_auction_goods.status==2)&&!interception}}">{{countdown_tiepat.h}}:{{countdown_tiepat.m}}:{{countdown_tiepat.s}}</view>
+                <view wx:if="{{interception&&(hot_auction_goods.status==1||hot_auction_goods.status==2)}}">截拍中</view>
+                <view wx:if="{{hot_auction_goods.status==4}}">已成交</view>
+                <view wx:if="{{hot_auction_goods.status==5}}">已流拍</view>
+              </view>
+              <view class="goodsoffer_d_price">
+                <view class="goods_start_price" wx:if="{{hot_auction_goods.status!==5}}">
+                  <view class="goods_start_price_t1">¥</view>
+                {{hot_auction_goods_price}}
+                </view>
+                <view class="goods_start_price" wx:if="{{hot_auction_goods.status==5}}">
+                  <view class="goods_start_price_vtips">暂无出价</view>
+                </view>
+                <view class="goods_start_btn" wx:if="{{!interception}}">
+                  <view class="offers goods_btn1" wx:if="{{hot_auction_goods.status==0}}">即将开始</view>
+                  <view class="offers goods_btn2" wx:if="{{(hot_auction_goods.status==1||hot_auction_goods.status==2)&&Bid_button_status==0&&!Bids_button_status}}" catchtap="popup_offer">立即出价</view>
+                  <view class="offers goods_btn2" wx:if="{{(hot_auction_goods.status==1||hot_auction_goods.status==2)&&Bids_button_status}}">正在出价</view>
+                  <view class="offers goods_btn2" wx:if="{{(hot_auction_goods.status==1||hot_auction_goods.status==2)&&Bid_button_status==2&&!Bids_button_status}}">已出价</view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="goodsrotatebox"></view>
+      </view>
+      <view class="playfooter_left">
+        <view class="Shoppingbag" catchtap="shopping">
+          <image src="../img/shop.png"></image>
+          <view wx:if="{{shoppingnum>0}}">{{shoppingnum}}</view>
+        </view>
+        <view class="comment" catchtap="is_input">
+          <image src="../img/comment.png"></image>
+          <view>跟主播说点什么…</view>
+        </view>
+      </view>
+      <view class="operation">
+        <view class="operation_o" catchtap="switch_set">
+          <image src="../img/setup.png" />
+        </view>
+        <button class="operation_o omargin">
+          <image src="../img/share.png" />
+        </button>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 点击头像-关注主播弹窗 -->
+<view class="follow_popups" wx:if="{{is_popup_follows}}" catchtap="click_follow">
+  <view class="follow_popupboxs" catchtap="Emptyfunction">
+    <view class="follow_popupboxs_top">
+      <view class="follow_popupboxs_top_left"><image src="../img/warning.png"/><view>举报</view></view>
+      <view class="follow_popupboxs_top_right"><image src="../img/t_close.png" catchtap="click_follow" /></view>
+    </view>
+    <view class="follow_popupboxs_center">
+      <image src="{{room.user.user_icon}}" class="follow_user_icon"/>
+      <view class="follow_user_name">{{user_name}}</view>
+      <view class="follow_user_shop">
+        <view class="follow_user_shop_li">
+          <view class="text1">{{seller.score}}</view><view class="text2">店铺评分</view>
+        </view>
+        <view class="follow_user_shop_li_line"></view>
+        <view class="follow_user_shop_li">
+          <view class="text1">{{seller.seller_follow_count}}</view><view class="text2">粉丝</view>
+        </view>
+      </view>
+      <view class="follow_user_btn">
+        <button class="follow_btn btn1" catchtap="privatechat">私聊</button>
+        <button class="follow_btn btn2" wx:if="{{roomfollow==0}}" bindgetuserinfo='follow' open-type="getUserInfo">关注</button>
+        <button class="follow_btn btn2" wx:if="{{roomfollow==1}}" catchtap='tofollow'>已关注</button>
+      </view>
+      <view class="follow_footer" catchtap="jump_person">
+        <view>进店逛逛</view><image src="../img/goshop.png"></image>
+      </view>
+    </view>
+  </view>
+</view>
+<!-- 关注主播弹框(30s后弹框)-->
+<view class="follow_popup {{active_popup_follow ? ' active_popup_follow' : ''}}" wx:if="{{is_popup_follow}}" catchtap="popup_follow">
+  <view class="follow_popupbox" catchtap="Emptyfunction">
+    <view class="follow_popupbox_imgbox">
+      <image src="{{room.user.user_icon}}"></image>
+    </view>
+    <view class="follow_popupbox_count">
+      <view class="follow_popupbox_count_title">时刻关注主播动态、不会错过任何好物！</view>
+      <button class="follow_popupbox_count_btn" bindgetuserinfo='follow' open-type="getUserInfo">关注主播</button>
+    </view>
+  </view>
+</view>
+<!-- 出价弹窗 -->
+<view class="foot_offer {{active_popup_offer ? ' active_popup_offer' : ''}}" wx:if="{{is_popup_offer}}" catchtap="popup_offer">
+  <view class="foot_offerbox" catchtap="Emptyfunction">
+    <view class="foot_offerbox_left">
+      <view class="btn_reduce {{reduceon==true?'':'reduceon'}}" catchtap="calculation_price" data-type="0">-{{price_range}}</view>
+      <view class="btn_num">{{now_payprice}}</view>
+      <view class="btn_plus" catchtap="calculation_price" data-type="1">+{{price_range}}</view>
+    </view>
+    <button class="btn_offers" catchtap="confirmation_of_bid" wx:if="{{Bid_button_status==0}}">出价</button>
+    <view class="btn_offers" wx:elif="{{Bid_button_status==2}}">已出价</view>
+    <view class="offer_bond" wx:if="{{offer_deposits>0}}">
+      <view class="offer_bond_l" >拍品保证金¥{{offer_deposits}}，拍卖结束后自动退回</view>
+      <view class="offer_bond_r" wx:if="{{!offer_deposit}}" catchtap="is_paytypes">缴纳保证金</view>
+      <view class="offer_bond_rs" wx:if="{{offer_deposit}}">已缴纳保证金</view>
+    </view>
+  </view>
+</view>
+<!-- 购物框 -->
+<view class="foot_shop {{active_shop ? ' active_shop' : ''}}" wx:if="{{is_shop}}" catchtap="shopping">
+  <view class="shoppingbox" catchtap="Emptyfunction">
+    <view class="shopping_title">
+      <view class="shopping_titlebox">
+        <view class="shopping_user_name">
+          <image src="{{room.user.user_icon}}" />
+        {{user_name}}
+        </view>
+        <view class="shopping_btn" catchtap="jump_person">进入卖家主页</view>
+      </view>
+    </view>
+    <view class="shopping_view">
+      <view class="shopnavbox">
+        <view wx:for="{{shopnav}}" wx:key="index" class="shopnav_li" catchtap="switch_shop" data-id="{{item.id}}">
+          <view class="shop_font {{shopnav_sign==item.id?'son':''}}"><text class="shop_text1">{{item.type}}</text><text class="shop_text2" wx:if="{{item.id==1}}">({{goodslist.length}})</text><text class="shop_text2" wx:if="{{item.id==0}}">({{goodslist_now.length}})</text></view>
+          <view class="{{shopnav_sign==item.id?'shop_line':'shop_lines'}}"></view>
+        </view>
+      </view>
+      <view style="width:100%;height:40px;"></view>
+      <view class="nullpage" wx:if="{{shopnav_sign==1&&goodslist.length==0}}">
+        <image src="../img/nullpage.png"></image>
+        <view>- 店主太懒了，没有在直播间摆好商品 -</view>
+      </view>
+      <view class="nullpage" wx:if="{{shopnav_sign==0&&goodslist_now.length==0}}">
+        <image src="../img/nullpage.png"></image>
+        <view>- 店主太懒了，没有在直播间摆好商品 -</view>
+      </view>
+      <scroll-view scroll-y="true" wx:if="{{shopnav_sign==1}}" class="shopping_view_paybox">
+        <view class="shopping_view_pay_li" wx:for="{{goodslist}}" wx:key="index">
+          <view class="shopping_view_pay_li_coverbox">
+            <image src="{{room.user.user_icon}}" class="shopping_view_pay_li_cover" />
+            <image src="../img/hot.png" class="hotimg" wx:if="{{item.order==1}}" />
+            <view class="numimg"  wx:if="{{item.order==0}}">
+              <image src="../img/numimg.png"/><view class="numview">{{index+1}}</view>
+            </view>
+          </view>
+          <view class="shopping_view_pay_li_contbox">
+            <view class="shopping_view_pay_li_c_top">
+              <view class="shopping_view_pay_li_c_topt1">{{item.title}}</view>
+            </view>
+            <view class="shopping_view_pay_li_c_topt2">
+              <text>已售{{item.sale_num}}</text><text style="margin-left:10px;">库存{{item.stock}}</text>
+            </view>
+            <view class="shopping_view_pay_li_c_bom">
+              <view class="shopping_view_pay_li_c_bomt1">¥{{item.sell_price}}</view>
+              <button class="shopping_view_pay_li_btn" catchtap="is_biteview" data-id="{{item.goods_id}}" data-indx="{{index}}">购买</button>
+            </view>
+          </view>
+        </view>
+        <view class="shopping_view_pay_lisview"></view>
+      </scroll-view>
+      <scroll-view scroll-y="true" wx:if="{{shopnav_sign==0}}" class="shopping_view_paybox">
+        <view class="shopping_view_abitePrice_li" wx:if="{{goodslist_now.length>0}}" wx:for="{{goodslist_now}}" wx:key="index">
+          <view class="shopping_view_abitePrice_li_top">
+            <view class="shopping_view_pay_li_coverbox">
+              <image src="{{item.cover}}" class="shopping_view_pay_li_cover" />
+              <image src="../img/hot.png" class="hotimg" wx:if="{{item.order==1}}"/>
+              <view class="numimg"  wx:if="{{item.order==0}}">
+                <image src="../img/numimg.png"/>
+                <view class="numview">{{index+1}}</view>
+              </view>
+              <view class="abitePrice_tips">
+                <text wx:if="{{item.status==0&&item.order==1}}">即将开始</text>
+                <text class="t2" wx:if="{{(item.status==1||item.status==2)&&item.order==1}}">直播中</text>
+                <text wx:if="{{(item.status==1||item.status==2)&&item.order==0}}">正在拍卖</text>
+                <text wx:if="{{item.status==0&&item.order==0}}">未开始</text>
+                <text wx:if="{{item.status==4}}">已成交</text>
+                <text wx:if="{{item.status==5}}">已流拍</text>
+              </view>
+            </view>
+            <view class="abitePrice_countbox">
+              <view>
+                <view class="abitePrice_count1">
+                <image src="../img/freeshipping.png" class="returnimg"/>
+                  <image src="../img/return.png" class="returnimg" wx:if="{{item.return==1}}"/>
+                  <view class="abitePrice_count1_title">{{item.title}}</view>
+                </view>
+                <view class="abitePrice_count2">
+                  <view class="abitePrice_count2_li"><view class="abitePrice_count2_li_t1">起</view><view class="abitePrice_count2_li_t2">¥{{item.start_price}}</view></view>
+                  <view class="abitePrice_count2_li" wx:if="{{item.range_price>0}}"><view class="abitePrice_count2_li_t1">加</view><view class="abitePrice_count2_li_t2">¥{{item.range_price}}</view></view>
+                  <view class="abitePrice_count2_li" wx:if="{{item.deposit_price!==0}}"><view class="abitePrice_count2_li_t1">保</view><view class="abitePrice_count2_li_t2">¥{{item.deposit_price}}</view></view>
+                </view>
+                <view class="abitePrice_count1_tips">
+                  <view class="abitePrice_count1_tips1" wx:if="{{item.status==1||item.status==2}}">{{timedowm_list[index].h}}:{{timedowm_list[index].m}}:{{timedowm_list[index].s}}后结束</view>
+                  <view class="abitePrice_count1_tips2" wx:if="{{item.status==0}}">等待主播开拍</view>
+                </view>
+              </view>
+              <view class="shopping_view_abitePrice_li_bom">
+                <view class="abitePrice_box">
+                  <view class="abitePrice_box_type1" wx:if="{{(item.status==0||item.status==1||item.status==2)&&item.now_price==0}}">当前价格：暂无出价</view>
+                  <view class="abitePrice_box_type2" wx:elif="{{(item.status==0||item.status==1||item.status==2)&&item.now_price>0}}">当前价格：<text>¥{{item.now_price}}</text></view>
+                  <view class="abitePrice_box_type2" wx:elif="{{item.status==4&&item.now_price!==0}}">成交价格：<text>¥{{item.now_price}}</text></view>
+                </view>
+                <button class="abitePrice_btn" catchtap="popup_offer" wx:if="{{item.status==1||item.status==2}}" >立即出价</button>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="shopping_view_pay_lisview"></view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
+<!-- 设置弹框 -->
+<view class="setup_viewbox" bindtap="switch_set" wx:if="{{switch_set}}">
+  <view class="setup_view" catchtap="Emptyfunction">
+    <view class="setup_box">
+      <view class="setup_boxli" catchtap="to_myorder">
+        <image src="../img/order.png"/><view>我的订单</view>
+      </view>
+      <view class="setup_boxli">
+        <image src="../img/btn_warning.png"/><view>举报</view>
+      </view>
+    </view>
+    <view class="rotatebox"></view>
+  </view>
+</view>
+<!-- 出价信息弹框 -->
+<view class="Bidinformation {{is_animation_price==1?'Bidinformation_on':''}}" animation="{{animation_price}}">
+  <view class="bidinformations">{{bidder_name}} 出价</view>
+  <view class="binformations">
+    <view class="binformation1">
+      <view class="binformation_t1">¥</view>
+      <view class="binformation_t2">{{bidder_price}}</view>
+    </view>
+    <view class="binformation2">
+      <view class="binformation_t1s">¥</view>
+      <view class="binformation_t2s">{{bidder_price}}</view>
+    </view>
+  </view>
+</view>
+<!-- 成交动图 -->
+<view class="dealbox" wx:if="{{is_deal==1}}">
+  <view class="deal" animation="{{animation_deal}}">
+    <image class="deal_a" src="../img/deal_a.png"/>
+    <image class="dealb_1" src="../img/dealb_1.png" style="{{animation_deal_rotate}}" />
+    <image class="dealb_2" src="../img/dealb_2.png"/>
+    <image class="deal_c" src="../img/deal_c.png"/>
+  </view>
+</view>
+<!-- 竞拍成功海报 -->
+<view class="paysuccessbox" wx:if="{{Successfulauction}}">
+  <view class="pay_success">
+    <image src="../img/backimg.png" class="success_back"></image>
+    <view class="pay_success_view">
+      <view class="pay_success_view_top">
+        <image src="../img/top_left.png" /><view>拍卖成功</view><image src="../img/top_right.png" />
+      </view>
+      <view class="pay_success_view_img">
+        <view class="pay_success_view_imgbox">
+          <image src="{{bidder_success.cover}}" />
+          <view class="pay_success_view_details">
+            <view class="p_success_view_cont1">{{bidder_hotgoods_title}}</view>
+            <view class="p_success_view_cont2">出价次数：{{bidder_success.bid_count}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="pay_success_view_price">
+        <view class="pay_success_view_price_t1">
+          <view class="t1_f1">恭喜</view><view class="t1_f2">{{bidder_nick_name}}</view>
+        </view>
+        <view class="pay_success_view_price_t2">
+          <view class="t2_f1">¥{{bidder_success.deal_price}}</view><view class="t2_f2">斩获好物</view>
+        </view>
+      </view>
+      <view class="pay_success_btns">
+        <view class="pay_success_btn">
+          <image src="../img/btn.png" />
+          <view class="pay_success_btncount" wx:if="{{order_id!==0}}" catchtap="lookorder">订单详情</view>
+          <view class="pay_success_btncount" wx:elif="{{order_id==0}}">知道了 {{count}}s</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <image src="../img/paysuccess_close.png" class="paysuccess_close" bindtap="close_Successfulauction"/>
+</view>
+<view class="inputbox" wx:if="{{is_input}}" bindtap="is_input">
+  <view class="input_view" catchtap="Emptyfunction">
+    <view class="input_count">
+      <scroll-view scroll-x="true" bindscroll="scroll" class="input_scrollview">
+        <view class="scroll_view">
+          <view catchtap="send_chatview" data-message="{{item}}" class="scroll_li" wx:for="{{chatview}}" wx:key="index">{{item}}</view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="inputs">
+      <input catchinput='sendchat' value="{{chatinpt}}"  placeholder="想买什么告诉主播" focus="true" maxlength="35" placeholder-style="font-size:14px;color:rgba(136,136,136,1);line-height:34px;"/>
+      <view class="inputbtn" catchtap="send">发送</view>
+    </view>
+  </view>
+</view>
+<view class="inputbox" bindtap="privatechat" wx:if="{{is_privatechat}}">
+  <view class="input_view" catchtap="Emptyfunction">
+    <view class="input_count">
+      <scroll-view scroll-x="true" bindscroll="scroll" class="input_scrollview">
+        <view class="scroll_view">
+          <view catchtap="private_send_chatview" data-message="{{item}}" class="scroll_li" wx:for="{{chatview}}" wx:key="index">{{item}}</view>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="inputs">
+      <view class="chatinp">
+        <input class="chat_inputs" catchinput='private_sendchat' value="{{private_chatinpt}}"  placeholder="私聊内容仅卖家可见" focus="true" maxlength="35" placeholder-style="font-size:14px;color:rgba(136,136,136,1);line-height:34px;"/>
+      </view>
+      <view class="inputbtn" catchtap="private_send">发送</view>
+    </view>
+  </view>
+</view>
+<!-- 支付一口价 -->
+<view class="bitebox {{is_active_biteview?'active_bite':''}}" wx:if="{{is_biteview}}" bindtap="is_biteview" data-id="close">
+  <view class="biteview" catchtap="Emptyfunction">
+    <view class="biteview_details">
+      <image src="{{goodslist.list[abite_goods_indx].cover}}" class="biteview_details_cover" />
+      <view class="biteview_d_count">
+        <view class="abitePrice_count1">
+          <view class="abitePrice_count1_title">{{goodslist[abite_goods_indx].title}}</view>
+          <view class="abitePrice_count1_tips"></view>
+        </view>
+        <view class="abitePrice_count2">
+          <view class="abitePrice_count2_li"><view class="abitePrice_count2_li_t1">邮</view><view class="abitePrice_count2_li_t2">包邮</view></view>
+          <view class="abitePrice_count2_li" wx:if="{{goodslist.list[abite_goods_indx].return==1}}"><view class="abitePrice_count2_li_t1">退</view><view class="abitePrice_count2_li_t2">7天包退</view></view>
+        </view>
+        <view class="abitePrice_count3">¥{{goodslist[abite_goods_indx].sell_price}}× {{abite_goods_num}}</view>
+      </view>
+    </view>
+    <view class="biteview_payview">
+      <view class="biteview_payview_type">购买数量</view>
+      <view class="biteview_payview_inputview">
+        <view class="biteview_payview_input_btn" catchtap="alite_change" data-type="0"><image src="{{abite_goods_num>1?'../img/j-j.png':'../img/j-h.png'}}" /></view>
+        <view class="biteview_payview_input">{{abite_goods_num}}</view>
+        <view class="biteview_payview_input_btn" catchtap="alite_change" data-type="1"><image src="{{abite_goods_num<goodslist.list[indx].stock?'../img/a-j.png':'../img/a-h.png'}}" /></view>
+      </view>
+    </view>
+    <view class="biteview_views" catchtap="isplace" data-type="0">
+      <view class="biteview_views_left" style="width:95%;">
+        <image src="../img/place.png"/>
+        <view wx:if="{{address==null}}" class="nullplace">请填写收货地址</view>
+        <view class="place_c" wx:if="{{address!==null}}">
+          <view class="place_c_t">
+            <view class="place_c_t_f1">{{address[address_sign].accept_name}}</view>
+            <view class="place_c_t_f2">86-{{address[address_sign].mobile}}</view>
+          </view>
+          <view class="place_c_b">{{address[address_sign].pca_text}}{{address[address_sign].address}}</view>
+        </view>
+      </view>
+      <view class="biteview_views_right">
+        <image src="../img/next_btn.png"></image>
+      </view>
+    </view>
+    <view class="biteview_views" catchtap="is_paytype" data-type="abite">
+      <view class="biteview_views_left">
+        <image src="../img/bal.png"/><view class="g_v_l_f">支付方式</view>
+      </view>
+      <view class="biteview_views_right">
+        <view wx:if="{{paytype=='wechat_mini'}}">微信</view>
+        <view wx:elif="{{paytype=='balance'}}">余额</view>
+        <image src="../img/next_btn.png"></image>
+      </view>
+    </view>
+    <view class="biteview_footer">
+      <view class="biteview_footer_price">
+        <view class="biteview_footer_price1">待支付</view>
+        <view class="biteview_footer_price2">¥{{goodslist[abite_goods_indx].sell_price*abite_goods_num}}</view>
+      </view>
+      <view class="biteview_footer_btn" catchtap="jump_ware" data-type="abite">去支付</view>
+    </view>
+  </view>
+</view>
+<!-- 卖家生成订单 -->
+<view class="bitebox {{is_active_sellview?'active_bites':''}}" bindtap="is_Closingorder" wx:if="{{is_Closingorder}}">
+  <view class="biteviews" catchtap="Emptyfunction">
+    <view class="biteview_titles">
+      <view class="biteview_titles_left">
+        <image src="{{order_details.seller.user_icon}}"/>
+        <view class="biteview_t_user_name">{{order_details.seller.nick_name}}</view>
+        <view class="biteview_t_type" wx:if="{{order_details.mode==1}}">为您生成了订单</view>
+      </view>
+      <view class="biteview_titles_right">待支付{{orderd_time_down.h}}:{{orderd_time_down.m}}:{{orderd_time_down.s}}</view>
+    </view>
+    <view class="biteview_details">
+      <image src="{{order_details.goods.cover}}" class="biteview_details_cover" />
+      <view class="biteview_d_count">
+        <view class="abitePrice_count1">
+          <view class="abitePrice_count1_title">{{order_details.goods.title}}</view>
+          <view class="abitePrice_count1_tips"></view>
+        </view>
+        <view class="abitePrice_count2">
+          <view class="abitePrice_count2_li"><view class="abitePrice_count2_li_t1">邮</view><view class="abitePrice_count2_li_t2">包邮</view></view>
+          <view class="abitePrice_count2_li" wx:if="{{order_details.goods.return==1}}"><view class="abitePrice_count2_li_t1">退</view><view class="abitePrice_count2_li_t2">7天包退</view></view>
+        </view>
+        <view class="abitePrice_count3" wx:if="{{order_details.type==4}}">¥{{order_details.goods_price}} × {{order_details.goods_num}}</view>
+        <view class="abitePrice_count3" wx:if="{{order_details.type==5}}">¥{{order_details.goods.deal_price}} × 1</view>
+      </view>
+    </view>
+    <view class="biteview_views" catchtap="isplace" data-type="1">
+      <view class="biteview_views_left" style="width:95%;">
+        <image src="../img/place.png"/>
+        <view wx:if="{{order_details.accept_name==''}}" class="nullplace">请填写收货地址</view>
+        <view class="place_c" wx:if="{{order_details.accept_name!==''}}">
+          <view class="place_c_t">
+            <view class="place_c_t_f1">{{order_details.accept_name}}</view>
+            <view class="place_c_t_f2">86-{{order_details.mobile}}</view>
+          </view>
+          <view class="place_c_b">{{order_details.pca_text}}{{order_details.address}}</view>
+        </view>
+      </view>
+      <view class="biteview_views_right">
+        <image src="../img/next_btn.png"></image>
+      </view>
+    </view>
+    <view class="biteview_views" catchtap="is_paytype" data-type="immediate">
+      <view class="biteview_views_left">
+        <image src="../img/bal.png"/><view class="g_v_l_f">支付方式</view>
+      </view>
+      <view class="biteview_views_right">
+        <view wx:if="{{paytype=='wechat_mini'}}">微信</view>
+        <view wx:elif="{{paytype=='balance'}}">余额</view>
+        <image src="../img/next_btn.png"></image>
+      </view>
+    </view>
+    <view class="biteview_footer">
+      <view class="biteview_footer_price">
+        <view class="biteview_footer_price1">待支付</view>
+        <view class="biteview_footer_price2">¥{{order_details.payable_amount}}</view>
+      </view>
+      <view class="biteview_footer_btn" catchtap="to_pay" data-type="immediate">去支付</view>
+    </view>
+  </view>
+</view>
+<!-- 选择地址 -->
+<view class="bitebox" wx:if="{{isplace}}" data-type="3">
+  <view class="biteviews1">
+    <view class="place_title">
+      <image catchtap="isplace" src="../img/live/back.png" class="backsimg" data-type="3"/>选择收货地址
+    </view>
+    <scroll-view class="placelistview" scroll-y="true">
+      <view class="addrtr" wx:for="{{address}}" wx:key="index" catchtap="selectaddress" data-id="{{item.address_id}}" data-ids="{{index}}">
+        <image class="moren" src="../../pages/img/my/address/label.png" wx:if="{{item.default==1}}"></image>
+        <view class="addtop" bindtap='goorder' data-id='{{item.address_id}}' data-wareid='{{index}}'>
+          <view class="addtpy">
+            <view class="addtopy1">
+              <text class="adtext1">{{item.accept_name}}</text>
+              <text class="adtext2">{{item.mobile}}</text>
+            </view>
+            <view class="addtopy">{{item.pca_text}}{{item.address}}</view>
+          </view>
+        </view>
+        <image class="bianimg" src="../../pages/img/my/address/bianji.png" catchtap="is_edit" data-id="{{index}}"></image>
+      </view>
+      <view class="addres1"></view>
+    </scroll-view>
+    <view class="placebtn">
+      <view class="placebtnview" catchtap="is_newplace">添加新地址</view>
+    </view>
+  </view>
+</view>
+<!-- 添加新地址 -->
+<view class="bitebox" wx:if="{{is_newplace}}">
+  <view class="biteviews1" style="padding:0;background:#fff;">
+    <view class="place_title" style="border:none;">
+      <image catchtap="is_newplace" src="../img/live/back.png" class="backsimg"/>编辑/添加收货地址
+    </view>
+    <view style="height: 484px;overflow:scroll;">
+      <view class="header" style="padding: 0 16px;box-sizing:border-box;">
+        <view class="headertop">
+          <view class="detail1">
+            <text>收货人</text>
+            <input value="{{name}}" bindinput='formName' placeholder='请填写名字'></input>
+          </view>
+          <view class="detail1">
+            <text>联系电话</text>
+            <input value="{{phone}}" bindinput='formphone' placeholder='请填写手机号'></input>
+          </view>
+          <view class="detail1" bindtap='selectDistrict'>
+            <text>所在地区</text>
+            <view style="display:flex;align-items:center;">
+                <picker mode="region" bindchange="bindRegionChange" value="{{region}}" custom-item="{{region[index+1]}}">
+                  <view class="picker" style="width:200px;">
+                    {{region[0]}}{{region[1]}}{{region[2]}}
+                  </view>
+                </picker>
+              <image class="to1" src="../img/next_btn.png"></image>
+            </view>
+          </view>
+        </view>
+        <view class="headerend">
+          <textarea value="{{content}}" maxlength="-1" bindblur="formcontent" placeholder='请填写详细地址,不少于5个字'/>
+        </view>
+      </view>
+      <view style="width:100%;height:10px;background:#f8f8f8;"></view>
+      <view class="selectview">
+        <view class="selectview_f">设为默认</view>
+        <view class="selectview_x">
+          <image src="../img/publish_select.png" wx:if="{{address_default==0}}" catchtap="isaddress_default" data-id="1"/>
+          <image src="../img/x_c.png" wx:if="{{address_default==1}}" catchtap="isaddress_default" data-id="0"/>
+        </view>
+      </view>
+    </view>
+    <view class="placebtn">
+      <view class="placebtns_b1" catchtap="cutaddress">删除收货地址</view>
+      <view class="placebtns_b2" catchtap="hold">保存</view>
+    </view>
+  </view>
+</view>
+<!-- 支付方式 -->
+<view class="bitebox" wx:if="{{is_paytype}}" data-type="{{auctionstype}}">
+  <view class="biteviews1">
+    <view class="place_titles">
+      <image catchtap="is_paytype" data-type="{{auctionstype}}" src="../img/live/back.png" class="backsimg"/>选择支付方式
+    </view>
+    <view style="margin-top:55px;">
+      <text class="paytitle">付款金额：</text>
+      <text class="payprices" wx:if="{{auctionstype=='abite'}}">¥{{goodslist[abite_goods_indx].sell_price*abite_goods_num}}</text>
+      <text class="payprices" wx:elif="{{auctionstype=='immediate'}}">¥{{order_details.payable_amount}}</text>
+    </view>
+    <view class="page__bd" catchtap="cc">
+        <view class="section section_gap">
+            <radio-group class="radio-group" catchchange="radioChange">
+              <view class="balance" id="balancebox" wx:for="{{paymode}}" wx:key="index">
+                <view class='rechargebutton' catchtap='gorecharge' wx:if="{{isrecharge==1&&item.pay_mark=='balance'}}">
+                  <text>立即充值</text>
+                  <image src='../../pages/img/my/right.png'/>
+                </view>
+                <view class="balcontent">
+                <block wx:if="{{true}}">
+                   <image src="../../pages/img/yezf-icon.png" wx:if="{{paymode[index].default==0}}"></image>
+                   <image src="../../pages/img/wxzf-icon.png" wx:else="{{paymode[index].default==1}}"></image>
+                </block>
+                  <text class="baltext1">{{paymode[index].pay_name}}</text>
+                  <text class="baltext2">{{paymode[index].ext}}</text>
+                </view>
+                <radio class="radio" value="{{paymode[index].pay_mark}}" checked="{{paymode[index].pay_mark==paytype?true:false}}"></radio>
+              </view>
+            </radio-group>
+        </view>
+    </view>
+  </view>
+</view>
+<!-- 支付成功 -->
+<view class="bitebox" wx:if="{{is_paysues}}" bindtap="is_paysues">
+  <view class="biteviews1" catchtap="">
+    <view class="paysuccessview">
+      <view class="paysuccess_tips">
+        <image src="../img/paysuccess.png" />
+        <view>支付成功</view>
+      </view>
+      <view class="lok" catchtap="lokorder">查看订单</view>
+      <view class="now">知道了 {{paydowncount}}s</view>
+    </view>
+  </view>
+</view>
+<!-- 生成订单列表 -->
+<view class="bitebox {{is_orderList?'active_bites':''}}" bindtap="is_orderList" wx:if="{{is_orderList==true}}">
+  <view class="biteviews" catchtap="Emptyfunction" style="padding:0;background:#F8F8F8;">
+    <scroll-view scroll-y="true">
+    <view style="padding:0 16px;box-sizing:border-box;background:#FFF;margin-bottom:10px;" wx:for="{{live_order}}" wx:key="index">
+      <view class="biteview_titles">
+        <view class="biteview_titles_left">
+          <image src="{{item.seller.user_icon}}"/>
+          <view class="biteview_t_user_name">{{item.seller.nick_name}}</view>
+          <view class="biteview_t_type" wx:if="{{item.mode==1}}">为您生成了订单</view>
+        </view>
+        <view class="biteview_titles_right">待支付 {{liveorder_countTime[index].h}}:{{liveorder_countTime[index].m}}:{{liveorder_countTime[index].s}}</view>
+      </view>
+      <view class="biteview_details" style="padding: 16px 0 14px 0;">
+        <image src="{{item.goods.cover}}" class="biteview_details_cover" />
+        <view class="biteview_d_count">
+          <view class="abitePrice_count1">
+            <view class="abitePrice_count1_title">{{item.goods.title}}</view>
+            <view class="abitePrice_count1_tips"></view>
+          </view>
+          <view class="abitePrice_count2">
+            <view class="abitePrice_count2_li"><view class="abitePrice_count2_li_t1">邮</view><view class="abitePrice_count2_li_t2">包邮</view></view>
+            <view class="abitePrice_count2_li" wx:if="{{item.return==1}}"><view class="abitePrice_count2_li_t1">退</view><view class="abitePrice_count2_li_t2">7天包退</view></view>
+          </view>
+          <view class="abitePrice_count3" wx:if="{{item.type==5}}">¥{{item.goods.deal_price}} × 1</view>
+          <view class="abitePrice_count3" wx:if="{{item.type==4}}">¥{{item.goods_price}} × {{item.goods_num}}</view>
+        </view>
+      </view>
+      <view class="biteview_list_price">
+        <view class="biteview_list_price_t1">合计：</view><view class="biteview_list_price_t2"><text class="biteview_list_price_t2_f1">¥</text><text class="biteview_list_price_t2_f2">{{item.payable_amount}}</text></view>
+      </view>
+      <view class="biteview_list_btns">
+        <button class="customer" open-type="contact"><image src="../img/customer.png"/>联系客服</button>
+        <button class="biteview_list_paybtn" catchtap="to_pay_list" data-id="{{item.order_id}}">去付款</button>
+      </view>
+    </view>
+    </scroll-view>
+  </view>
+</view>
+<!-- 支付保证金 -->
+<view class="bitebox" bindtap="is_paytypes" wx:if="{{is_deposit}}">
+  <view class="biteviews1" catchtap="Emptyfunction">
+    <view class="biteview_details" style="border-bottom:1px solid #ECECEC;">
+      <image src="{{hot_auction_goods.cover}}" class="biteview_details_cover" />
+      <view class="biteview_d_count">
+        <view class="abitePrice_count1">
+          <view class="abitePrice_count1_title">{{hot_auction_goods.title}}</view>
+          <view class="abitePrice_count1_tips"></view>
+        </view>
+        <view class="abitePrice_count2">
+          <view class="abitePrice_count2_li"><view class="abitePrice_count2_li_t1">邮</view><view class="abitePrice_count2_li_t2">包邮</view></view>
+          <view class="abitePrice_count2_li" wx:if="{{hot_auction_goods.return==1}}"><view class="abitePrice_count2_li_t1">退</view><view class="abitePrice_count2_li_t2">7天包退</view></view>
+        </view>
+        <view class="abitePrice_count3">
+          <view class="deposit_price_t">保证金</view>
+          <view>
+            <text class="deposit_price_t1">¥</text><text class="deposit_price_t2">{{hot_auction_goods.deposit_price}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="biteview_views" catchtap="is_paytype" data-type="immediate">
+      <view class="biteview_views_left">
+        <image src="../img/bal.png"/><view class="g_v_l_f">支付方式</view>
+      </view>
+      <view class="biteview_views_right"></view>
+    </view>
+    <view class="page_bd">
+        <view class="section section_gap">
+            <radio-group class="radio-group" bindchange="radioChanges">
+              <view class="balance" id="balancebox" wx:for="{{paymode}}" wx:key="index">
+                <view class='rechargebutton' catchtap='gorecharge' wx:if="{{isrecharge_s==1&&item.pay_mark=='balance'}}">
+                  <text>立即充值</text>
+                  <image src='../../pages/img/my/right.png'/>
+                </view>
+                <view class="balcontent">
+                <block wx:if="{{true}}">
+                   <image src="../../pages/img/yezf-icon.png" wx:if="{{paymode[index].pay_mark=='balance'}}"></image>
+                   <image src="../../pages/img/wxzf-icon.png" wx:else="{{paymode[index].pay_mark=='wechat_mini'}}"></image>
+                </block>
+                  <text class="baltext1">{{paymode[index].pay_name}}</text>
+                  <text class="baltext2">{{paymode[index].ext}}</text>
+                </view>
+                <radio class="radio" value="{{paymode[index].pay_mark}}" checked="{{paymode[index].pay_mark==paytype?true:false}}" color="#FF3740"></radio>
+              </view>
+            </radio-group>
+        </view>
+    </view>
+    <view class="biteview_footer">
+      <view class="biteview_footer_price">
+        <view class="biteview_footer_price1">待支付</view>
+        <view class="biteview_footer_price2">¥{{hot_auction_goods.deposit_price}}</view>
+      </view>
+      <view class="biteview_footer_btn" catchtap="pay_deposit">支付保证金</view>
+    </view>
+  </view>
+</view>
+<!-- 登陆框 -->
+<view class="bitebox {{login_active?'active':''}}" wx:if="{{is_login}}">
+  <view class="loginbox">
+    <view class="loginview">
+      <view class="loginv_title">
+        <image src="../img/login_logo.png"/>
+        <view>藏宝</view>
+      </view>
+      <view class="loginv_desc">登录后才可以与卖家沟通和购买商品哦～</view>
+      <button class="loginv" bindgetuserinfo='loginbtn' open-type="getUserInfo">微信一键登录</button>
+    </view>
+  </view>
+</view>
+<!-- 新手引导 -->
+<!-- 1 -->
+<view class="newtips1" wx:if="{{newtips==1&&is_new}}" bindtap="newtips" data-type="2">
+  <view class="newtips1s"></view>
+  <image src="../img/tips/t1.png" class="tips_hand"></image>
+  <view class="newtips1_count">
+    <view class="newtips_title">(1/3)如何购买商品</view>
+    <view class="newtips_title2">点击购，即可查看卖家发布的直播间拍品</view>
+    <image src="../img/tips/t_c1.png" class="newtipimg"/>
+  </view>
+</view>
+<!-- 2 -->
+<view class="newtips1" wx:if="{{newtips==2&&is_new}}" bindtap="newtips" data-type="3">
+  <view class="newtips1s1"></view>
+  <image src="../img/tips/t1.png" class="tips_hand1"></image>
+  <view class="newtips1_count">
+    <view class="newtips_title">(2/3)与主播沟通一下</view>
+    <view class="newtips_title2">点击输入栏，向主播询价</view>
+  </view>
+</view>
+<!-- 3 -->
+<view class="newtips2" wx:if="{{newtips==3&&is_new}}">
+  <image src="../img/tips/t2.png" class="tips_hand2"></image>
+  <view class="newtips1_count1">
+    <view class="newtips_title">(3/3)单击可清屏观看直播</view>
+  </view>
+  <view class="newtips1_btn" bindtap="newtips" data-type="4">我知道了</view>
+</view>
